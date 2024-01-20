@@ -12,7 +12,7 @@
   color: #00B3D5;
 }
 
-button {
+.call_To_Action_section .button {
   background-color: #01B0D3;
 }
 
@@ -32,6 +32,7 @@ main {
   /* background-color: aqua; */
   border: 1px solid aqua; 
 }
+
 
 
 
