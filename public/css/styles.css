@@ -6,8 +6,12 @@
 }
 
 /* larger view  */
-nav {
+
+nav ul {
   display: flex;
+}
+
+nav {
   margin-top: .75rem
 }
 
