@@ -7,7 +7,22 @@
   box-sizing: border-box;
 }
 
+.call_To_Action_section {
+  background-color: #ffffffbf;
+  color: #00B3D5;
+}
+
+button {
+  background-color: #01B0D3;
+}
+
 /* larger view  */
+
+nav {
+  background-color: black;
+  color:white;
+  margin-top: .75rem
+}
 
 nav ul {
   display: flex;
@@ -18,7 +33,5 @@ main {
   border: 1px solid aqua; 
 }
 
-nav {
-  margin-top: .75rem
-}
+
 
