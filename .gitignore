@@ -17,3 +17,4 @@ node_modules
 pnpm-lock.yaml
 package.json
 sandbox
+README.md

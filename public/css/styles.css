@@ -16,22 +16,136 @@
   background-color: #01B0D3;
 }
 
+h1{
+  color: black;
+}
+
+
 /* larger view  */
 
+html {
+  max-width: 900px;
+  /* margin: 30px; */
+  background-image: url('../images/site/checkerboard.jpg');
+}
+
 nav {
-  background-color: black;
-  color:white;
+  /* background-color: black; */
   margin-top: .75rem
 }
 
 nav ul {
   display: flex;
+  list-style: none; 
+  background-color: black;
 }
 
-main {
-  /* background-color: aqua; */
-  border: 1px solid aqua; 
+.homeNav a {
+  text-decoration: none;
+  color: white;
 }
+
+#review li a {
+  text-decoration: none;
+}
+
+nav li {
+  margin-right: 15px; 
+}
+
+nav ul li {
+  padding: 10px; /* Add padding for better visibility and aesthetics */
+}
+
+body {
+  border: 3px solid #01B0D3; 
+  background-color: #fff;
+  margin: 35px;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.siteName a,
+#tools a {
+  text-decoration: none;
+  color: #333; /* Set your desired text color */
+  font-weight: bold; /* Set your desired font weight */
+}
+
+img.homepage_hero_image {
+  height: auto;
+  width: 100%;
+}
+
+.call_To_Action_section {
+  background-color: rgba(255, 255, 255, 0.892); 
+  /* border: 2px solid #cb1919; */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  max-width: 250px;
+  position: absolute;
+  left: 15px;
+}
+
+.heroContainer{
+  position: relative;
+}
+
+.button {
+  background-color: #007bff; 
+  color: #fff; 
+  padding: 10px 20px; /* Add padding to the button */
+  border: none; /* Remove button border */
+  border-radius: 5px; 
+}
+
+.button:hover {
+  background-color: #0056b3; 
+}
+
+
+@media screen and (max-width: 651px) {
+  #review {
+    order: -1;
+  }
+
+  #add-ons {
+    display: flex;
+    justify-content: center
+    }
+}
+
+@media screen and (min-width: 652px) {
+  .homeg_rid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows:auto; 
+  }
+  
+  #review {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  }
+  
+  /* #add-ons {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  } */
+  
+  /* .add-ons_images {
+    display: flex;
+  } */
+  
+  #add-ons {
+  display: flex;
+  justify-content: center
+  }
+}
+
 
 
 
