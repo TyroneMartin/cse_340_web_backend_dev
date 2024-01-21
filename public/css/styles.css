@@ -25,8 +25,11 @@ h1{
 
 html {
   max-width: 900px;
-  /* margin: 30px; */
+  margin: 0 auto;
   background-image: url('../images/site/checkerboard.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
 }
 
 nav {
@@ -38,6 +41,8 @@ nav ul {
   display: flex;
   list-style: none; 
   background-color: black;
+  margin: 25px;
+  align-items: center; 
 }
 
 .homeNav a {
@@ -61,6 +66,8 @@ body {
   border: 3px solid #01B0D3; 
   background-color: #fff;
   margin: 35px;
+  max-width: 900px;
+  padding: 15px
 }
 
 #top-header {
@@ -117,6 +124,36 @@ img.homepage_hero_image {
     display: flex;
     justify-content: center
     }
+
+  background-image {
+    display: none;
+  }
+
+  html {
+    background-image: none; /* Remove background image on smaller screens */
+  }
+
+}
+
+@media screen and (max-width: 641px) {
+
+  nav ul {
+    font-size: 5px;
+    margin: 0;
+  }
+
+  .call_To_Action_section {
+    max-width: 50px;
+    margin-top: -27px;
+    max-width: 133px;
+  }
+
+  body {
+    border: none;
+    margin-top: -26px
+  }
+
+
 }
 
 @media screen and (min-width: 652px) {
