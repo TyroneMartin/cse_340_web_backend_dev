@@ -46,18 +46,6 @@ h1{
   color: black;
 }
 
-
-/* larger view  */
-
-html {
-  max-width: 900px;
-  margin: 0 auto;
-  background-image: url('../images/site/checkerboard.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; /* Prevent the background image from repeating */
-}
-
 nav {
   /* background-color: black; */
   margin-top: .75rem
@@ -89,8 +77,6 @@ nav ul li {
 }
 
 body {
-  border: 3px solid #01B0D3; 
-  background-color: #fff;
   margin: 35px;
   max-width: 900px;
   padding: 15px
@@ -107,7 +93,10 @@ body {
 #tools a {
   text-decoration: none;
   color: #333; /* Set your desired text color */
-  font-weight: bold; /* Set your desired font weight */
+}
+
+.siteName a:first-child {
+  font-weight: bold; 
 }
 
 img.homepage_hero_image {
@@ -142,88 +131,138 @@ img.homepage_hero_image {
 
 #add-ons {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
   }
 
-
-@media screen and (max-width: 651px) {
-  #review {
-    order: -1;
+  #review ul  li{
+    margin-bottom: 10px; /* Adjust the value to add more or less spacing */
   }
 
-.add-ons_images {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
- } 
-}
+  @media screen and (min-width: 651px) {
+    nav ul li {
+      font-size: 1.4rem;
+    }
 
-@media screen and (max-width: 641px) {
+  }
+  
 
-  nav ul {
-    font-size: 10px;
-    margin: 0;
+
+  @media screen and (max-width: 652px) {
+    #add-ons {
+      flex-wrap:nowrap;
+  }
+
+  #review h2 {
+    margin-top: 93px;
   }
 
   .call_To_Action_section {
-    max-width: 50px;
-    margin-top: -27px;
-    max-width: 133px;
+    max-width: 150px;
   }
 
-  body {
-    border: none;
-    margin-top: -26px
+  section#review {
+    margin-top: 100px 
   }
 
-  nav ul li {
-    padding: 0px;
-    margin: 6px;
+  nav ul {
+    font-size: 10px;
+    margin: 0px -42px 0px -37px;
+    font-size: 0.4rem;
   }
 
-  #review {
-    margin-top: 55px;
+  .siteName a:first-child {
+    font-size: 25px;
   }
 
+  h1 p {
+    font-size: 15px;
+  }
 
+  p.copyright {
+    font-size: smaller;
+  }
+
+  #review ul li {
+    font-size: 1rem;
+  }
+
+  #review h2 {
+    font-size: 1rem;
+  }
+
+  .Upgrades-Delorean-Container-grid h2  {
+    font-size: 1rem;
+  }
 
 }
 
+
+/* Larger view */
 @media screen and (min-width: 652px) {
+
   .homeg_rid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows:auto; 
+    grid-template-rows: 1fr 1fr; 
   }
 
-  nav ul li {
-    padding: 0px;
-    margin: 6px;
-    padding: 12px;
-  }
-  
-  #review {
-  grid-column: 2/3;
+  .homegrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-template-rows: auto auto; /* Two rows with content-based height */
+    gap: 20px;  /* Gap between grid items */
+
+}
+
+/* Style for the first column in the first row */
+#review {
+  grid-column: 2 / 3; 
+}
+
+/* Style for the second column in the first row */
+.Upgrades-Delorean-Container-grid {
+  grid-column: 1 / 2; /* Span from column 2 to column 3 */
   grid-row: 1/2;
-  }
+}
+
+/* Apply styles to both columns in the first row */
+.grid-column_1,
+.grid-column_2 {
+  padding: 10px;
+  /* background-color: #e0e0e0; */
+}
+
+
+/* Style for the second row */
+#add-ons {
+  grid-row: 2 / 3; 
+}
   
-  /* #add-ons {
-    grid-column: 1/2;
-    grid-row: 1/2;
-  } */
-  
-  /* .add-ons_images {
-    display: flex;
-  } */
-  
-  /* #add-ons {
+  #add-ons {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  } */
+  flex-wrap: nowrap
+}
+
+html {
+  max-width: 900px;
+  margin: 0 auto;
+  background-image: url('../images/site/checkerboard.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+}
+
+
+body {
+  border: 5px solid #01B0D3; 
+  background-color: #fff;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 
 
-
+}
 
