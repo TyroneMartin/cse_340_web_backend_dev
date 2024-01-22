@@ -322,5 +322,21 @@ img.homepage_hero_image {
 }
 
 
+.add-ons_images img  {
+  background-color: #01B0D3; 
+  padding: 10px; 
+  border-radius: 5px; 
+  width: fit-content;
+}
+
+.add-ons_images a {
+  color: black; 
+  text-decoration: none; 
+}
+
+.add-ons_images a:hover {
+  color: #007bff; 
+}
+
 
 
