@@ -129,6 +129,7 @@ img.homepage_hero_image {
   border: none;
   /* Remove button border */
   border-radius: 5px;
+  width: fit-content;
 }
 
 .button:hover {
