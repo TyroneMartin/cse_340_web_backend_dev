@@ -7,20 +7,21 @@
   box-sizing: border-box;
 }
 
-h1, p {
-  font-family: 'Roboto', sans-serif; 
+h1,
+p {
+  font-family: 'Roboto', sans-serif;
 }
 
 h2 {
-  font-family: 'Noto Sans', sans-serif; 
+  font-family: 'Noto Sans', sans-serif;
 }
 
 p {
-  font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif;
 }
 
 li {
-  font-family: 'Noto Sans', sans-serif; 
+  font-family: 'Noto Sans', sans-serif;
 }
 
 .logoText {
@@ -32,7 +33,7 @@ li {
   background-color: #ffffffbf;
   color: #00B3D5;
   text-align: left;
-  padding-bottom:15px;
+  padding-bottom: 15px;
 }
 
 .call_To_Action_section .button {
@@ -42,7 +43,7 @@ li {
 
 }
 
-h1{
+h1 {
   color: black;
 }
 
@@ -53,10 +54,10 @@ nav {
 
 nav ul {
   display: flex;
-  list-style: none; 
+  list-style: none;
   background-color: black;
   margin: 25px;
-  align-items: center; 
+  align-items: center;
 }
 
 .homeNav a {
@@ -69,11 +70,12 @@ nav ul {
 }
 
 nav li {
-  margin-right: 15px; 
+  margin-right: 15px;
 }
 
 nav ul li {
-  padding: 10px; /* Add padding for better visibility and aesthetics */
+  padding: 10px;
+  /* Add padding for better visibility and aesthetics */
 }
 
 body {
@@ -92,11 +94,12 @@ body {
 .siteName a,
 #tools a {
   text-decoration: none;
-  color: #333; /* Set your desired text color */
+  color: #333;
+  /* Set your desired text color */
 }
 
 .siteName a:first-child {
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 img.homepage_hero_image {
@@ -105,53 +108,67 @@ img.homepage_hero_image {
 }
 
 .call_To_Action_section {
-  background-color: rgba(255, 255, 255, 0.892); 
+  background-color: rgba(255, 255, 255, 0.892);
   /* border: 2px solid #cb1919; */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width and height */
   max-width: 250px;
   position: absolute;
   left: 15px;
 }
 
-.heroContainer{
+.heroContainer {
   position: relative;
 }
 
 .button {
-  background-color: #007bff; 
-  color: #fff; 
-  padding: 10px 20px; /* Add padding to the button */
-  border: none; /* Remove button border */
-  border-radius: 5px; 
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  /* Add padding to the button */
+  border: none;
+  /* Remove button border */
+  border-radius: 5px;
 }
 
 .button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 
 #add-ons {
   display: flex;
   /* justify-content: center; */
   flex-wrap: wrap;
+}
+
+#review ul li {
+  margin-bottom: 10px;
+  /* Adjust the value to add more or less spacing */
+}
+
+@media screen and (min-width: 651px) {
+  nav ul li {
+    font-size: 1.4rem;
   }
 
-  #review ul  li{
-    margin-bottom: 10px; /* Adjust the value to add more or less spacing */
+  body {
+    margin-top: -29px
+  }
+}
+
+
+
+@media screen and (max-width: 652px) {
+  #add-ons {
+    flex-wrap: nowrap;
   }
 
-  @media screen and (min-width: 651px) {
-    nav ul li {
-      font-size: 1.4rem;
-    }
+  body {
+    margin: -29px 64px 0 1px;
 
   }
-  
 
 
-  @media screen and (max-width: 652px) {
-    #add-ons {
-      flex-wrap:nowrap;
-  }
 
   #review h2 {
     margin-top: 93px;
@@ -162,7 +179,7 @@ img.homepage_hero_image {
   }
 
   section#review {
-    margin-top: 100px 
+    margin-top: 100px
   }
 
   nav ul {
@@ -191,78 +208,118 @@ img.homepage_hero_image {
     font-size: 1rem;
   }
 
-  .Upgrades-Delorean-Container-grid h2  {
+  .Upgrades-Delorean-Container-grid h2 {
     font-size: 1rem;
   }
 
 }
 
+@media screen and (min-width: 653px)
+{
+  body {
+    border:#333 ;
+  }
+
+  nav ul {
+    margin: 6px;
+  }
+
+  .homegrid {
+    display: block;
+  
+  }
+
+
+}
 
 /* Larger view */
+
+@media screen and (max-width: 889px) {
+
+  body {
+    border: none;
+
+  }
+
+}
+
+
+@media screen and (min-width: 900px) {
+
+  body {
+    border: 5px solid #01B0D3;
+
+  }
+
+}
+
 @media screen and (min-width: 652px) {
 
   .homeg_rid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr;
   }
 
   .homegrid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    grid-template-rows: auto auto; /* Two rows with content-based height */
-    gap: 20px;  /* Gap between grid items */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    /* Two rows with content-based height */
+    gap: 20px;
+    /* Gap between grid items */
 
-}
+  }
 
-/* Style for the first column in the first row */
-#review {
-  grid-column: 2 / 3; 
-}
+  /* Style for the first column in the first row */
+  #review {
+    grid-column: 2 / 3;
+  }
 
-/* Style for the second column in the first row */
-.Upgrades-Delorean-Container-grid {
-  grid-column: 1 / 2; /* Span from column 2 to column 3 */
-  grid-row: 1/2;
-}
+  /* Style for the second column in the first row */
+  .Upgrades-Delorean-Container-grid {
+    grid-column: 1 / 2;
+    /* Span from column 2 to column 3 */
+    grid-row: 1/2;
+  }
 
-/* Apply styles to both columns in the first row */
-.grid-column_1,
-.grid-column_2 {
-  padding: 10px;
-  /* background-color: #e0e0e0; */
-}
+  /* Apply styles to both columns in the first row */
+  .grid-column_1,
+  .grid-column_2 {
+    padding: 10px;
+    /* background-color: #e0e0e0; */
+  }
 
 
-/* Style for the second row */
-#add-ons {
-  grid-row: 2 / 3; 
-}
-  
+  /* Style for the second row */
   #add-ons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap
-}
+    grid-row: 2 / 3;
+  }
 
-html {
-  max-width: 900px;
-  margin: 0 auto;
-  background-image: url('../images/site/checkerboard.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; /* Prevent the background image from repeating */
-}
+  #add-ons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap
+  }
 
-
-body {
-  border: 5px solid #01B0D3; 
-  background-color: #fff;
+  html {
     max-width: 900px;
     margin: 0 auto;
+    background-image: url('../images/site/checkerboard.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Prevent the background image from repeating */
+  }
+
+
+  body {
+    background-color: #fff;
+    max-width: 900px;
+    margin: 0 auto;
+  }
 }
 
 
 
-}
 
