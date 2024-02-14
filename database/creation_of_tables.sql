@@ -260,3 +260,8 @@ UPDATE public.inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
 
+
+    -- #  pnpm run dev  use to get localhost:5500
+    -- npm install pg
+
+

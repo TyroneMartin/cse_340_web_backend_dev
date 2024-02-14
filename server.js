@@ -1,4 +1,4 @@
-/* ******************************************
+ /* ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
@@ -10,6 +10,9 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
+const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute")
+
 
 /* ***********************
  * View Engine and Templates 
@@ -22,12 +25,20 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes 
  *************************/
 app.use(require("./routes/static"))
-// const static = require("./routes/static")
 
 // Index route 
-app.get("/", function(req, res){
-  res.render("index", {title: "Home"})
-})
+app.get("/", baseController.buildHome)
+// Inventory routes
+app.use("/inv", inventoryRoute)
+
+
+// Controller function
+baseController.buildHome = function(req, res) {
+  res.render("index", { title: "Home" });
+};
+
+
+
 
 /* ***********************
  * Local Server Information

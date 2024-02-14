@@ -60,12 +60,17 @@ nav ul {
   align-items: center;
 }
 
-.homeNav a {
+/* .homeNav a {
   text-decoration: none;
   color: white;
-}
+} */
 
-#review li a {
+/* #review li a {
+  text-decoration: none;
+} */
+
+nav a {
+  color: white;
   text-decoration: none;
 }
 
@@ -306,13 +311,13 @@ img.homepage_hero_image {
   html {
     max-width: 900px;
     margin: 0 auto;
-    background-image: url('../images/site/checkerboard.jpg');
+    /* background-image: url('../images/site/checkerboard.jpg'); */
+    background-image: url('../images/site/small_check.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     /* Prevent the background image from repeating */
   }
-
 
   body {
     background-color: #fff;

@@ -1,10 +1,4 @@
-# Each item listed in this file will be ignored by git
-# and will not be uploaded to github. The blank lines
-# and comments are unnecessary, but included for 
-# clarification.
-
-# node_modules is a storage folder for Node and
-# can get very large.
+# node_modules is a storage folder for Node and can get very large.
 node_modules
 
 # .env file is for local use only. It contains
@@ -13,8 +7,20 @@ node_modules
 .env
 
 # .DS_Store is only for Mac users
-**/.DS_Store
+# **/.DS_Store
+
+
 pnpm-lock.yaml
 package.json
 sandbox
 README.md
+
+# debugging config file
+
+.vscode 
+# .vscode/*
+launch.json
+
+
+
+
