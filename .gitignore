@@ -20,6 +20,7 @@ README.md
 .vscode 
 # .vscode/*
 launch.json
+inventory_quary_local.sql
 
 
 

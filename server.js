@@ -11,7 +11,7 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const baseController = require("./controllers/baseController")
-const inventoryRoute = require("./routes/inventoryRoute")
+const inventoryRoute = require("./routes/inventory-route")
 
 
 /* ***********************
@@ -24,12 +24,18 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes 
  *************************/
-app.use(require("./routes/static"))
+app.use(require("./routes/static"));
 
 // Index route 
-app.get("/", baseController.buildHome)
+app.get("/", baseController.buildHome);
 // Inventory routes
-app.use("/inv", inventoryRoute)
+// app.use("/inv", inventoryRoute)
+app.use("/inv", require("./routes/inventory-route"));
+
+// File Not Found Route - must be last route in list
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
 
 
 // Controller function

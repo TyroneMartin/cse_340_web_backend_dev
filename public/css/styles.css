@@ -344,4 +344,13 @@ img.homepage_hero_image {
 }
 
 
+/* removing bullet points from image listing */
+
+
+ul#inv-display {
+  list-style-type: none;
+}
+
+
+
 
