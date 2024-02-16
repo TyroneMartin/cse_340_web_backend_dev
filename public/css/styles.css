@@ -352,5 +352,11 @@ ul#inv-display {
 }
 
 
+.errorPageImage {
+  display: block; /* Ensure the image is displayed as a block element */
+  margin: 0 auto; 
+  max-width: 600px; 
+}
+
 
 
