@@ -1,4 +1,4 @@
- /* ******************************************
+/* ******************************************
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
@@ -13,6 +13,8 @@ const app = express()
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventory-route")
 
+// Require utilities module
+const utilities = require("./utilities");
 
 /* ***********************
  * View Engine and Templates 
@@ -25,23 +27,17 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes 
  *************************/
 app.use(require("./routes/static"));
-
 // Index route -- Unit 3 activity
-app.get("/", baseController.buildHome);
-// Inventory routes
+app.get("/", utilities.handleErrors(baseController.buildHome)) // app.get("/", baseController.buildHome);  (add update)
+// Inventory routes - Unit 3 activity
 // app.use("/inv", inventoryRoute)
-app.use("/inv", require("./routes/inventory-route"));
+app.use("/inv", require("./routes/inventory-route"))
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
 
-
-// Controller function
-baseController.buildHome = function(req, res) {
-  res.render("index", { title: "Home" });
-};
 
 /* ***********************
 * Express Error Handler
@@ -50,12 +46,22 @@ baseController.buildHome = function(req, res) {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  if (err.status === 404) {
+    message = err.message} else {
+    message = "Oh no! There was a crash. Maybe try a different route?"
+    // message = "Sorry, we appear to have lost that page."
+  }
   res.render("errors/error", {
     title: err.status || 'Server Error',
-    message: err.message,
+    message,
     nav,
   })
 })
+
+// Controller function
+baseController.buildHome = function(req, res) {
+  res.render("index", { title: "Home" });
+};
 
 /* ***********************
  * Local Server Information
