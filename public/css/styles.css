@@ -375,16 +375,15 @@ background-image: none;
 .errorPageImage {
   display: block; /* Ensure the image is displayed as a block element */
   margin: 0 auto; 
-  max-width: 600px; 
+  max-width: 100%; 
 }
 
 /* grid classifications  styling*/
 
 
 main h1 {
-  text-align: center;
+  text-align: left;
   font-family: 'Roboto', sans-serif;
-
 }
 
 
@@ -408,8 +407,6 @@ main h1 {
   text-align: center;
 }
 
-
-
 #inv-display h2 a{
   text-decoration: none;
   color: inherit;
@@ -420,7 +417,6 @@ main h1 {
 #inv-display h2:hover {
   color:#605858; 
 }
-
 
 #inv-display .namePrice {
   padding: 15px; 
