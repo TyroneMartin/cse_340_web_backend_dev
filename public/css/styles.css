@@ -349,14 +349,102 @@ img.homepage_hero_image {
 
 ul#inv-display {
   list-style-type: none;
+  /* background-color: #ddd; */
 }
 
+
+ul#inv-display img {
+width: 300px !important;
+height: auto ;
+border-top-left-radius: 8px; 
+border-top-right-radius: 8px; 
+background-image: none;
+}
+
+#inv-display li img {
+  max-width: 100%; 
+  height: auto; 
+}
+
+#inv-display {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; /* Center items horizontally */
+}
 
 .errorPageImage {
   display: block; /* Ensure the image is displayed as a block element */
   margin: 0 auto; 
   max-width: 600px; 
 }
+
+/* grid classifications  styling*/
+
+
+main h1 {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+
+/* CSS for grid View */
+
+#inv-display li {
+  width: 300px; 
+  height: auto;
+  border: 2px solid #0d0c0c; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  margin: 35px; 
+  display: inline-block; /* Display grids in a row */
+  text-align: center;
+
+}
+
+
+#inv-display li {
+  list-style-type: none; 
+  text-align: center;
+}
+
+
+
+#inv-display h2 a{
+  text-decoration: none;
+  color: inherit;
+  /* color: #000000; */
+  transition: color 0.1s ease; /* Smooth transition */
+}
+
+#inv-display h2:hover {
+  color:#605858; 
+}
+
+
+#inv-display .namePrice {
+  padding: 15px; 
+
+}
+
+#inv-display h2 {
+  font-size: 1.2em; /* Heading font size */
+  margin-bottom: 10px; /* Margin bottom for heading */
+}
+
+#inv-display span {
+  font-size: 1.1em; 
+  /* font-weight: bold;  */
+  /* color: #007bff;  */
+}
+
+#inv-display .namePrice hr {
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  background-color: brown;
+  height: 3px;
+}
+
 
 
 
