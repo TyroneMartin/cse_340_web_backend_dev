@@ -552,5 +552,11 @@ main h1 {
   }
 }
 
+/* Apply hover effect to the navigation bar links */
+nav ul li a:hover {
+  color: #ff0000; /* Change color on hover */
+  text-decoration: underline; /* Add underline on hover */
+}
+
 
 
