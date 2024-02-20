@@ -28,4 +28,23 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId};
+/* ***************************
+ *  Get detailed information of an inventory item by its ID
+ * ************************** */
+async function getInventoryById(inv_id) {
+  try {
+    const data = await pool.query(
+      `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_color, inv_miles, inv_image 
+      FROM public.inventory 
+      WHERE inv_id = $1`,
+      [inv_id]
+    );
+    return data.rows[0]; // Assuming inv_id is unique, so only one row is returned
+  } catch (error) {
+    console.error("getInventoryById error: ", error);
+    throw error;
+  }
+}
+
+// module.exports = {getClassifications, getInventoryByClassificationId};
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById };

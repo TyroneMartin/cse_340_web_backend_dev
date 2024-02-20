@@ -174,8 +174,6 @@ img.homepage_hero_image {
 
   }
 
-
-
   #review h2 {
     margin-top: 93px;
   }
@@ -189,9 +187,8 @@ img.homepage_hero_image {
   }
 
   nav ul {
-    font-size: 10px;
-    margin: 0px -42px 0px -37px;
-    font-size: 0.4rem;
+    margin: 0px -77px 0px -26px;
+    font-size: 0.5rem;
   }
 
   .siteName a:first-child {
@@ -217,7 +214,6 @@ img.homepage_hero_image {
   .Upgrades-Delorean-Container-grid h2 {
     font-size: 1rem;
   }
-
 }
 
 @media screen and (min-width: 653px)
@@ -234,18 +230,52 @@ img.homepage_hero_image {
     display: block;
   
   }
-
-
 }
 
 /* Larger view */
 
+.lastHr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0; /* Increase spacing between last section and hr */
+}
+
 @media screen and (max-width: 889px) {
 
   body {
-    border: none;
-
+    border: 11px;
   }
+
+}
+
+hr.firstHr {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 80%; 
+  margin: -20px 42px 0 0px; 
+}
+
+.top-margin {
+  margin-top: 35px  
+}
+
+
+
+@media screen and (max-width: 684px) {
+
+  nav ul {
+font-size: 0.5rem;
+margin: 11px -77px 0px -40px;
+  }
+
+  hr.firstHr {
+    width: 70%; 
+    height: 1px;
+  }
+
+  .top-margin {
+  margin-top: 30px  
+}
 
 }
 
@@ -253,8 +283,25 @@ img.homepage_hero_image {
 @media screen and (min-width: 900px) {
 
   body {
-    border: 5px solid #01B0D3;
+    border: 15px solid #01B0D3;
+  }
 
+  .large-view-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Two columns, the first taking up 1 fraction and the second 2 fractions */
+    column-gap: 20px; /* Gap between columns */
+  }
+  
+  .large-view-content {
+    grid-column: 2/3; 
+  }
+  
+  .classificationDetail-Image {
+    max-width: 100%; 
+    grid-column: 1/2; 
+    height: aoto;
+    place-self: center;
+    margin-top: -400px;
   }
 
 }
@@ -311,18 +358,19 @@ img.homepage_hero_image {
   html {
     max-width: 900px;
     margin: 0 auto;
-    /* background-image: url('../images/site/checkerboard.jpg'); */
-    background-image: url('../images/site/small_check.png');
-    background-size: cover;
+    background-image: url('../images/site/checkerboard.jpg');
+    /* background-image: url('../images/site/small_check.png'); */
+    /* background-size: cover; */
     background-position: center;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     /* Prevent the background image from repeating */
   }
 
   body {
     background-color: #fff;
     max-width: 900px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    margin: 20px;
   }
 }
 
@@ -441,6 +489,40 @@ main h1 {
   height: 3px;
 }
 
+
+/* inv/detail page */
+
+/* Styles for image */
+.classificationDetail-View {
+  max-width: 100%;
+  height: auto;
+  margin: 10px auto; 
+  display: block; 
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px; /* Increase spacing between h1 and hr */
+}
+
+.content {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.bold .first-word {
+  font-weight: bold;
+  color: black;
+  text-align: left;
+}
+
+.price {
+  font-weight: bold;
+  color: green;
+  /* font-size: 2rem; */
+}
 
 
 
