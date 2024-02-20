@@ -287,22 +287,22 @@ margin: 11px -77px 0px -40px;
   }
 
   .large-view-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* Two columns, the first taking up 1 fraction and the second 2 fractions */
-    column-gap: 20px; /* Gap between columns */
-  }
-  
-  .large-view-content {
-    grid-column: 2/3; 
-  }
-  
-  .classificationDetail-Image {
-    max-width: 100%; 
-    grid-column: 1/2; 
-    height: aoto;
-    place-self: center;
-    margin-top: -400px;
-  }
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Two columns, the first taking up 1 fraction and the second 2 fractions */
+  column-gap: 20px; /* Gap between columns */
+}
+
+.large-view-content {
+  grid-column: 2/3; 
+}
+
+.classificationDetail-Image {
+  max-width: 100%; 
+  grid-column: 1/2; 
+  height: aoto;
+  place-self: center;
+  margin-top: -400px;
+}
 
 }
 
@@ -522,6 +522,34 @@ main h1 {
   font-weight: bold;
   color: green;
   /* font-size: 2rem; */
+}
+
+/* Style for both thumbnail and full-size image */
+.classificationDetail-Image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Style for the thumbnail */
+.thumbnail {
+  display: block; /* Ensure the thumbnail is displayed */
+}
+
+/* Style for the full-size image */
+.full-size {
+  display: none; /* Hide the full-size image by default */
+}
+
+/* Media query for large screens */
+@media screen and (min-width: 768px) {
+  /* Hide the thumbnail on large screens */
+  .thumbnail {
+    display: none;
+  }
+  /* Display the full-size image on large screens */
+  .full-size {
+    display: block;
+  }
 }
 
 

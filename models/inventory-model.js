@@ -34,7 +34,7 @@ async function getInventoryByClassificationId(classification_id) {
 async function getInventoryById(inv_id) {
   try {
     const data = await pool.query(
-      `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_color, inv_miles, inv_image 
+      `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_color, inv_miles, inv_image, inv_thumbnail 
       FROM public.inventory 
       WHERE inv_id = $1`,
       [inv_id]

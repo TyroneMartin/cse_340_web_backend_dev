@@ -112,6 +112,8 @@ invCont.getInventoryById = async function (req, res, next) {
       color: item.inv_color,
       mileage: item.inv_miles,
       image: item.inv_image,
+      thumbnail: item.inv_thumbnail,
+     
     });
   } catch (err) {
     next(err);
