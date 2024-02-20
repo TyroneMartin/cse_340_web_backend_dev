@@ -299,7 +299,7 @@ margin: 11px -77px 0px -40px;
 .classificationDetail-Image {
   max-width: 100%; 
   grid-column: 1/2; 
-  height: aoto;
+  height: auto;
   place-self: center;
   margin-top: -400px;
 }
