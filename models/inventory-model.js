@@ -7,7 +7,12 @@ async function getClassifications(){
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
-module.exports = {getClassifications}
+/* ***************************
+ *  Get all account data
+ * ************************** */
+async function buildLogin(){
+  return await pool.query("SELECT * FROM public.account ORDER BY account_lastname")
+}
 
 
 /* ***************************
@@ -39,12 +44,32 @@ async function getInventoryById(inv_id) {
       WHERE inv_id = $1`,
       [inv_id]
     );
-    return data.rows[0]; // Assuming inv_id is unique, so only one row is returned
+    return data.rows[0]; //  index with reture the first ID from inv_id, so only one row is returned
   } catch (error) {
     console.error("getInventoryById error: ", error);
     throw error;
   }
 }
 
-// module.exports = {getClassifications, getInventoryByClassificationId};
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById };
+
+/* ***************************
+ *  Post all account data to the account database 
+ * ************************** */
+
+async function createAccount(account_email, account_password, account_firstname, account_lastname, account_type) {
+  try {
+    const data = await pool.query(
+      `INSERT INTO public.account (account_email, account_password, account_firstname, account_lastname, account_type)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [account_email, account_password, account_firstname, account_lastname, account_type]
+    );
+    return data.rows;
+  } catch (error) {
+    console.error("createAccount error:", error);
+    throw error; // Re-throwing the error for the caller to handle if needed
+  }
+}
+
+
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, createAccount }

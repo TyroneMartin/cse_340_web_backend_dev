@@ -1,20 +1,9 @@
-<div class="large-view-container">
-  <div class="large-view-content">
-    <h1 class="page-title"><%= title %></h1>
-    <hr class="firstHr">
-    <div class="content">
-      <!-- <p class="bold top-margin"><span class="first-word">Price:</span> <span class="price">$<%= price %></span></p> -->
-      <p class="bold top-margin"><span class="first-word">Price:</span> <span class="price">$<%= new Intl.NumberFormat('en-US').format(price) %></span></p>
-      <p class="bold"><span class="first-word">Description:</span> <%= Description %></p>
-      <p class="bold"><span class="first-word">Model:</span> <%= model %></p>
-      <p class="bold"><span class="first-word">Color:</span> <%= color %></p>
-      <!-- <p class="bold"><span class="first-word">Mileage:</span> <%= mileage %></p> -->
-      <p class="bold"><span class="first-word">Mileage:</span> <%= new Intl.NumberFormat('en-US').format(mileage) %></p>
-    </div>
-    <hr class="lastHr">
-  </div>
-  <!-- Display thumbnail for small screens -->
-  <img src="<%= thumbnail %>" alt="<%= title %>" class="thumbnail classificationDetail-Image">
-  <!-- Display full-size image for large screens -->
-  <img src="<%= image %>" alt="<%= title %>" class="full-size classificationDetail-Image">
-</div>
+<% if (title) { %>
+  <h1 class="page-title"><%= title %></h1>
+  <% } else {
+      res.redirect('/')
+  } %>
+      
+  <%# messages() %>
+      
+  <%- grid %>

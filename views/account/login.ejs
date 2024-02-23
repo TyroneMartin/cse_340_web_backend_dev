@@ -1,0 +1,10 @@
+<% if (title) { %>
+    <h1 class="login_page_title"><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+        
+    <%# messages() %>
+        
+    <%- grid %>
+  
