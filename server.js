@@ -58,10 +58,9 @@ app.use(require("./routes/static"));
 // Index route -- Unit 3 activity
 app.get("/", utilities.handleErrors(baseController.buildHome))  // add update
 // Inventory routes - Unit 3 activity
-app.use("/inv", require("./routes/inventory-route"))
+app.use("/inv", inventoryRoute)
 //  routes - Unit 4 activity
-app.use("/account", require("./routes/account-route"))
-
+app.use("/account", accountRoute)  // or  app.use("/account", require("./routes/account-route")) but using variable name
 
 
 // File Not Found Route - must be last route in list
