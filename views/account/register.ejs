@@ -1,0 +1,9 @@
+<% if (title) { %>
+    <h1 class="register_page_title"><%= title %></h1>
+    <% messages() %>
+    <% } else {
+        res.redirect('/')
+    } %>
+        
+        
+    <%- grid %>
