@@ -104,26 +104,24 @@ Util.buildDetailGrid = async function(data, title){ // Add title parameter
 
 Util.buildLogin = async function () {
   let grid = ''; // Initialize grid variable
-  
-  // if(data) {
     grid += '<form action="/login" method="post">'
     grid += '<fieldset>'
     grid += '<legend>Login Information</legend>' // Add legend for fieldset
     grid += '<div class="content">'
     grid += '<div class="FormContainer">'
-    grid += '<label for="email"><b>Email:</b></label>'    
-    grid += '<input type="text" placeholder="Enter email" name="email" required>'
-    grid += '<label for="password"><b>Password:</b></label>'
-    grid += '<input type="password" placeholder="Enter password" name="password" required>'
-    grid += '<button type="submit">Login</button>'
+    grid += '<label for="email" name="account_email" ><b>Email:</b></label>'    
+    grid += '<input type="text" placeholder="Enter email" name="account_email" required>'
+    grid += '<label name="account_password"><b>Password:</b></label>'
+    grid += '<input type="password" placeholder="Enter password" name="account_password required>'
+    // grid += '<button class ="loginButton" type="submit">Login</button>'
+    grid += '<label name="account_password">&nbsp;</label>'
+    grid += '<input type="submit" class ="loginButton" value="Login">'
+    grid += '<p>No account? <a href="/register">Sign-up</a></p>'
+    grid += '<check bok>'
     grid += '</div>'
     grid += '</div>'
     grid += '</fieldset>'
     grid += '</form>'
-  // } else { 
-  //   grid += '<p class="notice">Sorry, this page can\'t be loaded.</p>'
-  // }
-  
   return grid;
 };
 
