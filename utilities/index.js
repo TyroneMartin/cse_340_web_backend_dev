@@ -104,7 +104,7 @@ Util.buildDetailGrid = async function(data, title){ // Add title parameter
 
 Util.buildLogin = async function () {
   let grid = ''; // Initialize grid variable
-    grid += '<form action="/login" method="post">'
+    grid += '<form action="/account/register" method="post">'
     grid += '<fieldset>'
     grid += '<legend>Login Information</legend>' // Add legend for fieldset
     grid += '<div class="content">'
