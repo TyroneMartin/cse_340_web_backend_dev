@@ -52,24 +52,4 @@ async function getInventoryById(inv_id) {
 }
 
 
-/* ***************************
- *  Post all account data to the account database 
- * ************************** */
-
-async function createAccount(account_email, account_password, account_firstname, account_lastname, account_type) {
-  try {
-    const data = await pool.query(
-      `INSERT INTO public.account (account_email, account_password, account_firstname, account_lastname, account_type)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING *`,
-      [account_email, account_password, account_firstname, account_lastname, account_type]
-    );
-    return data.rows;
-  } catch (error) {
-    console.error("createAccount error:", error);
-    throw error; // Re-throwing the error for the caller to handle if needed
-  }
-}
-
-
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, createAccount }
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin }

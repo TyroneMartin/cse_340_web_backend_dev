@@ -109,19 +109,16 @@ Util.buildLogin = async function () {
     grid += '<legend>Login Information</legend>' // Add legend for fieldset
     grid += '<div class="content">'
     grid += '<div class="FormContainer">'
-    grid += '<label for="email" name="account_email" ><b>Email:</b></label>'    
+    grid += '<label for="account_email"><b>Email:</b></label>'    
     grid += '<input type="text" placeholder="Enter email" name="account_email" required>'
-    grid += '<label name="account_password"><b>Password:</b></label>'
+    grid += '<label for="account_password"><b>Password:</b></label>'
     // grid += '<span><input type="password" placeholder="Enter password" name="account_password required></span>'
-    grid +='<span><input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" required></span>'
-    grid += '<label name="account_password">&nbsp;</label>'
-
+    grid +='<span><input type="password" id="password" name="account_password" placeholder="Enter password" autocomplete="current-password" required></span>'
+    // grid += '<label name="account_password">&nbsp;</label>'
     grid += '<span class="showPasswordContainer">'
     grid += '<input type="checkbox" id="showPasswordCheck" name="showPassword" value="showPassword">'
     grid += '<label for="showPassword" id="showPasswordText">Show password</label>'
     grid += '</span>'
-
-
     grid += '<input type="submit" class ="loginButton" id = "pswdBtn" value="Login">'
     // grid += '<button class ="loginButton" type="submit">Login</button>'
     grid += '<p>No account? <a href="../account/register">Sign-up</a></p>'
@@ -137,18 +134,18 @@ Util.buildLogin = async function () {
 
 Util.buildRegister = async function () {
   let grid = ''; // Initialize grid variable
-    grid += '<form action="/register" method="post">'
+    grid += '<form action="/account/register" method="post">'
     grid += '<fieldset class = "fieldsetForRegistration">'
     grid += '<legend>Registration Form</legend>' // Add legend for fieldset
     grid += '<div class="containerRegistrationForm">'
     grid += '<div class="FormContainer_Register">'
-    grid += '<label for="account_firstname" name="account_firstname" ><b>Last name:</b></label>'    
+    grid += '<label for="account_firstname"><b>Last name:</b></label>'    
     grid += '<input type="text" placeholder="Enter last name" name="account_firstname" required>'
-    grid += '<label for="account_lastname" name="account_lastname" ><b>First name:</b></label>'    
+    grid += '<label for="account_lastname"><b>First name:</b></label>'    
     grid += '<input type="text" placeholder="Enter first name" name="account_lastname" required>'
-    grid += '<label for="account_firstname" name="account_firstname" ><b>Email address:</b></label>' 
+    grid += '<label for="account_email"><b>Email address:</b></label>' 
     grid += '<input type="email" placeholder="Johndoe@domain.com" name="account_email" required>'
-    grid += '<label name="account_password"><b>Password:</b></label>'
+    grid += '<label for ="account_password"><b>Password:</b></label>'
     grid += '<input type="password" placeholder="Enter password" name="account_password" required>'
     grid += '<span class="showPasswordContainer">'
     grid += '<input type="checkbox" id="showPassword" name="showPassword" value="showPassword">'

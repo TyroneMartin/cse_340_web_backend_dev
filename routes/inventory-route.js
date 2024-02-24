@@ -2,7 +2,7 @@
 const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
-// const utilities = require("../utilities/")
+// const utilities = require("../utilities/")  // use utilities to the get navigation data, however, not being called here
 
 /* ***************************
 * Route to build inventory by classification view  * Unit 3, Activity 

@@ -14,13 +14,17 @@ const env = require("dotenv").config()
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventory-route")
 const accountRoute = require("./routes/account-route")
-
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
-// Require utilities module
 // Express Package and Router Functionality
-const app = express();
+// const app = express();
 const router = express.Router()
+const bodyParser = require("body-parser")
+// const cookieParser = require("cookie-parser")
+
+
+
+const app = express();
 
 /* ***********************
  * Middleware
@@ -45,6 +49,9 @@ app.use(function(req, res, next){
   next()
 })
 
+// Express Messages Middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 /* ***********************
  * View Engine and Templates 
  *************************/
@@ -62,8 +69,6 @@ app.get("/", utilities.handleErrors(baseController.buildHome))  // add update
 app.use("/inv", inventoryRoute)
 //  routes - Unit 4 activity
 app.use("/account", accountRoute)  // or  app.use("/account", require("./routes/account-route")) but using variable name
-
-
 
 
 // File Not Found Route - must be last route in list
