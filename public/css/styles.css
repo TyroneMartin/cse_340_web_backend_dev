@@ -584,6 +584,7 @@ nav ul li a:hover {
 }
 
 .FormContainer input[type="text"],
+.FormContainer input[type="email"],
 .FormContainer input[type="password"] {
   width: calc(100% - 20px);
   padding: 10px;
@@ -678,6 +679,7 @@ fieldset {
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  /* background-color: #e8f0fe; */
 }
 
 .FormContainer_Register .loginButton {
@@ -741,6 +743,27 @@ fieldset.fieldsetForRegistration {
   border-radius: 4px;
 }
 
+input:required:invalid, input:focus:invalid {
+  border: 1px solid red;
+  background-image: url(../images/site/invalid.webp);
+  background-position: right top;
+  background-repeat: no-repeat;
+  background-position: calc(99% - 6px) center;
+  background-size: auto 17px;
+}
+
+
+input:required:valid {
+  /* .FormContainer_Register input[type="text"]:valid,
+  .FormContainer_Register input[type="email"]:valid,
+  .FormContainer_Register input[type="password"]:valid { */
+    background-image: url(../images/site/valid.webp);
+    background-repeat: no-repeat;
+    background-position: calc(99% - 6px) center, right top; /* Combine both positions */
+    background-size: auto 17px;
+  }
+
+
 .FormContainer_Register .loginButton {
   width: 100%;
   padding: 10px;
@@ -780,3 +803,4 @@ fieldset.fieldsetForRegistration {
   display: inline-block;
   vertical-align: top;
 }
+
