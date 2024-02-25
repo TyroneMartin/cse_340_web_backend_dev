@@ -3,6 +3,7 @@
  * Unit 4, deliver login view activity *
  *                                     *
  * ****************************** */  
+const accountModel = require("../models/account-model")
 const utilities = require("../utilities/")  // Corrected the path to utilities
 
 const accountController = {} // Added accountController as an empty object
@@ -50,24 +51,29 @@ accountController.buildRegister = async function (req, res, next) {
     account_email,
     account_password
   )
-  // console.log(regResult)
+  console.log("Registration Result", regResult)
   if (regResult) {
     req.flash(
       "notice",
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`
     )
+    const grid = await utilities.buildLogin()
     res.status(201).render("account/login", {
       title: "Login",
       nav,
+      grid
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
+    const grid = await utilities.buildRegister()
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
       error: null,
-    })
+      grid
+    })  
   }
+  
 }
 
   

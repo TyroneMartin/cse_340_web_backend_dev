@@ -132,11 +132,11 @@ Util.buildLogin = async function () {
       // ---------
       // For password field
     grid += '<label for="account_password"><b>Password:</b></label>'
-    grid +='<span><input type="password" id="password" name="account_password" placeholder="Enter password" autocomplete="current-password" required></span>'
+    grid +='<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" required></span>'
       // ---------
       // For Check box to show password()
     grid += '<span class="showPasswordContainer">'
-    grid += '<input type="checkbox" id="showPasswordCheck" name="showPassword" value="showPassword">'
+    grid += '<input type="checkbox" onclick="showPassword()" id="showPasswordCheck" name="showPassword">'
     grid += '<label for="showPasswordCheck" id="showPasswordText">Show password</label>'
     grid += '</span>'
     // ---------
@@ -162,25 +162,26 @@ Util.buildRegister = async function () {
   grid += '<div class="containerRegistrationForm">';
   grid += '<div class="FormContainer_Register">';
   // For First Name
-  grid += '<label for="account_firstname"><b>Last name:</b></label>';
+  grid += '<label for="accountFirstname"><b>Last name:</b></label>';
   grid +=
-    '<input type="text" placeholder="Enter last name" name="account_firstname" required>';
+    '<input type="text" id = "accountFirstname" placeholder="Enter last name" name="account_firstname" required>';
   // For Last Name
-  grid += '<label for="account_lastname"><b>First name:</b></label>';
+  grid += '<label for="accountLastname"><b>First name:</b></label>';
   grid +=
-    '<input type="text" placeholder="Enter first name" name="account_lastname" required>';
+    '<input type="text" id= "accountLastname" placeholder="Enter first name" name="account_lastname" required>';
   // For Email
-  grid += '<label for="account_email"><b>Email address:</b></label>';
+  grid += '<label for="accountEmail"><b>Email address:</b></label>';
   grid +=
-    '<input type="email" placeholder="Johndoe@domain.com" name="account_email" required>';
+    '<input type="email" id= "accountEmail" placeholder="Johndoe@domain.com" name="account_email" required>';
   // For Password
-  grid += '<label for ="account_password"><b>Password:</b></label>';
+  grid += '<label for ="accountPassword"><b>Password:</b></label>';
   grid +=
-    '<input type="password" placeholder="Create password" name="account_password" pattern="^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*s).{12,}$" required>';
+    '<input type="password" id = "accountPassword"placeholder="Create password" name="account_password"  required>';
+    // pattern="^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*s).{12,}$"
   // For check box to showpassword()
   grid += '<span class="showPasswordContainer">';
   grid +=
-    '<input type="checkbox" id="showPasswordCheck" name="showPassword">';
+    '<input type="checkbox" id="showPasswordCheck">';
   grid +=
     '<label for="showPasswordCheck" id="showPasswordText">Show password</label>';
   grid += "</span>";
