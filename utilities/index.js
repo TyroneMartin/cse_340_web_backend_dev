@@ -136,7 +136,7 @@ Util.buildLogin = async function () {
       // ---------
       // For Check box to show password()
     grid += '<span class="showPasswordContainer">'
-    grid += '<input type="checkbox" onclick="showPassword()" id="showPasswordCheck" name="showPassword">'
+    grid += '<input type="checkbox" id="checkbox" name="showPassword">'
     grid += '<label for="showPasswordCheck" id="showPasswordText">Show password</label>'
     grid += '</span>'
     // ---------
@@ -149,13 +149,11 @@ Util.buildLogin = async function () {
   return grid;
 };
 
-
 Util.buildVerifiedView = async function () {
   let grid = ''; // Initialize grid variable
     grid += '<h2>Welcome to the login page</h2>'
   return grid;
 };
-
 
 /* **************************************
  * Build the Register view HTML
@@ -181,17 +179,18 @@ Util.buildRegister = async function () {
   grid += '<label for="accountEmail"><b>Email address:</b></label>';
   grid +=
     '<input type="email" id= "accountEmail" placeholder="Johndoe@domain.com" name="account_email" required>';
-  // For Password
-  grid += '<label for ="accountPassword"><b>Password:</b></label>';
-  grid +=
-    '<input type="password" id = "accountPassword"placeholder="Create password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>';
-  // For check box to showpassword()
-  grid += '<span class="showPasswordContainer">';
-  grid +=
-    '<input type="checkbox" id="showPasswordCheck">';
-  grid +=
-    '<label for="showPasswordCheck" id="showPasswordText">Show password</label>';
-  grid += "</span>";
+  // ---------
+  // For password field
+  grid += '<label for="account_password"><b>Password:</b></label>'
+  grid +='<span><input type="password" id="account_password" name="account_password" placeholder="Create password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></span>'
+  // ---------
+  // For Check box to show password()
+  grid += '<span class="showPasswordContainer">'
+  grid += '<input type="checkbox" id="checkbox" name="showPassword">'
+  grid += '<label for="showPasswordCheck" id="showPasswordText">Show password</label>'
+  grid += '</span>'
+  // --------
+
   // For submit button
   grid +=
     '<input type="submit" class ="loginButton" id = "pswdBtn" value="Register">';

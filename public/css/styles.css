@@ -752,7 +752,6 @@ input:required:invalid, input:focus:invalid {
   background-size: auto 17px;
 }
 
-
 input:required:valid {
   /* .FormContainer_Register input[type="text"]:valid,
   .FormContainer_Register input[type="email"]:valid,
@@ -762,7 +761,6 @@ input:required:valid {
     background-position: calc(99% - 6px) center, right top; /* Combine both positions */
     background-size: auto 17px;
   }
-
 
 .FormContainer_Register .loginButton {
   width: 100%;
@@ -803,4 +801,3 @@ input:required:valid {
   display: inline-block;
   vertical-align: top;
 }
-

@@ -23,6 +23,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
       title: className + " vehicles",
       nav,
       grid,
+      errors: null,
     })
   } catch (err) {
     next(err); 
@@ -40,6 +41,7 @@ invCont.intentionalError = async function (req, res, next) {
       title: className + " vehicles",
       nav,
       grid,
+      errors: null,
     })
   } catch (err) {
     next(err); 
@@ -63,6 +65,7 @@ invCont.getInventoryById = async function (req, res, next) {
       title,
       nav,
       grid,
+      errors: null,
     })
   } catch (err) {
     next(err); 

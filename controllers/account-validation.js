@@ -17,6 +17,7 @@ validate.checkRegData = async (req, res, next) => {
         account_firstname,
         account_lastname,
         account_email,
+        errors: null,
       })
       return
     }

@@ -90,6 +90,7 @@ app.use(async (err, req, res, next) => {
     message,
     nav,
     status : err.status || 500,
+    errors: null,
   })
 })
 

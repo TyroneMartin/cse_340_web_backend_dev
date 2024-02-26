@@ -22,6 +22,7 @@ accountController.buildLogin = async function (req, res, next) {
         nav,
         title: "Login",
         grid,
+        errors: null,
       })
     } catch (err) {
       next(err);
@@ -40,6 +41,7 @@ accountController.buildRegister = async function (req, res, next) {
         title: "Register",
         nav,
         grid,
+        errors: null,
       })
     } catch (err) {
       next(err);
@@ -57,6 +59,7 @@ accountController.buildRegister = async function (req, res, next) {
   //         title: `Welcome to the ${req.body.account_firstname} ${req.body.account_lastname}`,
   //         nav,
   //         grid,
+  //        errors: null,
   //       })
   //     } catch (err) {
   //       next(err);

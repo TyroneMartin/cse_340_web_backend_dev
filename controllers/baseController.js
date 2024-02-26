@@ -6,7 +6,7 @@ baseController.buildHome = async function(req, res){
   // these flash messages are for testing purposes
   // req.flash("notice", "This is a flash message.")
   // req.flash("error", "The values were entered incorrectly.")
-  res.render("index", {title: "Home", nav})
+  res.render("index", {title: "Home", nav, errors: null,})
 }
 
 module.exports = baseController
