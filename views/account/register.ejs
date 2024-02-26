@@ -1,9 +1,12 @@
 <% if (title) { %>
     <h1 class="register_page_title"><%= title %></h1>
-    <% messages() %>
+    <div class="flash-notice">
+
+    <% messages.notice %>
+        </div>
     <% } else {
         res.redirect('/')
-    } %>
-        
+
+    <% } %>
         
     <%- grid %>

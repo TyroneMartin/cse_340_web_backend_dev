@@ -149,6 +149,14 @@ Util.buildLogin = async function () {
   return grid;
 };
 
+
+Util.buildVerifiedView = async function () {
+  let grid = ''; // Initialize grid variable
+    grid += '<h2>Welcome to the login page</h2>'
+  return grid;
+};
+
+
 /* **************************************
  * Build the Register view HTML
  * ************************************ */
@@ -176,8 +184,7 @@ Util.buildRegister = async function () {
   // For Password
   grid += '<label for ="accountPassword"><b>Password:</b></label>';
   grid +=
-    '<input type="password" id = "accountPassword"placeholder="Create password" name="account_password"  required>';
-    // pattern="^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*s).{12,}$"
+    '<input type="password" id = "accountPassword"placeholder="Create password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>';
   // For check box to showpassword()
   grid += '<span class="showPasswordContainer">';
   grid +=
@@ -206,6 +213,13 @@ Util.buildRegister = async function () {
 
   return grid;
 };
+
+
+
+
+
+
+
 
 /* ****************************************
  * Middleware For Handling Errors

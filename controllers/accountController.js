@@ -1,12 +1,18 @@
+const accountModel = require("../models/account-model")
+const utilities = require("../utilities/")  // Corrected the path to utilities
+
 /* *******************************     *
  * Account Controllers                 *
  * Unit 4, deliver login view activity *
  *                                     *
  * ****************************** */  
-const accountModel = require("../models/account-model")
-const utilities = require("../utilities/")  // Corrected the path to utilities
 
 const accountController = {} // Added accountController as an empty object
+
+
+/* ****************************************
+*  Deliver login view
+* *************************************** */
 
 accountController.buildLogin = async function (req, res, next) {
   try {
@@ -21,6 +27,7 @@ accountController.buildLogin = async function (req, res, next) {
       next(err);
     }
   }
+
 
 /* ****************************************
 *  Deliver registration view
@@ -40,7 +47,26 @@ accountController.buildRegister = async function (req, res, next) {
   }
 
 /* ****************************************
-*  Process Registration
+*  Deliver veried login view
+* *************************************** */
+  // accountController.verifiedView = async function (req, res, next) {
+  //   try {
+  //       let nav = await utilities.getNav()
+  //       const grid = await utilities.buildVerifiedView()  // Generate for registration form HTML
+  //       res.render("account/login", {
+  //         title: `Welcome to the ${req.body.account_firstname} ${req.body.account_lastname}`,
+  //         nav,
+  //         grid,
+  //       })
+  //     } catch (err) {
+  //       next(err);
+  //     }
+  //   }
+
+
+
+/* ****************************************
+*  Process Registration data to the database
 * *************************************** */
   accountController.registerAccount = async function (req, res) {
   let nav = await utilities.getNav()

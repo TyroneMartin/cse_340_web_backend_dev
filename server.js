@@ -16,13 +16,9 @@ const inventoryRoute = require("./routes/inventory-route")
 const accountRoute = require("./routes/account-route")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
-// Express Package and Router Functionality
-// const app = express();
 const router = express.Router()
 const bodyParser = require("body-parser")
 // const cookieParser = require("cookie-parser")
-
-
 
 const app = express();
 

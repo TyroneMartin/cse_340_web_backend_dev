@@ -19,5 +19,9 @@ router.get('/register', utilities.handleErrors(accountController.buildRegister))
 // Enable the Registration Route
 router.post('/register', utilities.handleErrors(accountController.registerAccount))
 
+
+// router.post('/login', utilities.handleErrors(accountController.buildVerifiedView))
+
+
 // Export router to be used elsewhere
 module.exports = router
