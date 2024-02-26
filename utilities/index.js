@@ -137,7 +137,7 @@ Util.buildLogin = async function () {
       // For Check box to show password()
     grid += '<span class="showPasswordContainer">'
     grid += '<input type="checkbox" id="checkbox" name="showPassword">'
-    grid += '<label for="showPasswordCheck" id="showPasswordText">Show password</label>'
+    grid += '<label for="showPasswordCheck">Show password</label>'
     grid += '</span>'
     // ---------
     // For submit button section
@@ -187,7 +187,7 @@ Util.buildRegister = async function () {
   // For Check box to show password()
   grid += '<span class="showPasswordContainer">'
   grid += '<input type="checkbox" id="checkbox" name="showPassword">'
-  grid += '<label for="showPasswordCheck" id="showPasswordText">Show password</label>'
+  grid += '<label for="showPasswordCheck">Show password</label>'
   grid += '</span>'
   // --------
 
