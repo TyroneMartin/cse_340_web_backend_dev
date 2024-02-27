@@ -19,6 +19,7 @@ const expressLayouts = require("express-ejs-layouts")
 const router = express.Router()
 const bodyParser = require("body-parser")
 // const cookieParser = require("cookie-parser")
+const validator = require('validator');
 
 const app = express();
 
