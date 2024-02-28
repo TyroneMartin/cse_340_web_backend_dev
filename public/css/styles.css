@@ -750,6 +750,7 @@ input:required:invalid, input:focus:invalid {
   background-repeat: no-repeat;
   background-position: calc(99% - 6px) center;
   background-size: auto 17px;
+  background-color: transparent;
 }
 
 input:required:valid {

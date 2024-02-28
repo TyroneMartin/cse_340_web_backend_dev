@@ -1,4 +1,6 @@
 const utilities = require(".")
+
+const accountModel = require("../models/account-model")
 const { body, validationResult } = require("express-validator")
 
 
@@ -53,7 +55,7 @@ validate.registationRules = () => {
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
-  const grid = await utilities.buildRegister()
+// const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
   const { account_firstname, account_lastname, account_email } = req.body
   let errors = []
   errors = validationResult(req)
@@ -66,7 +68,7 @@ validate.checkRegData = async (req, res, next) => {
       account_firstname,
       account_lastname,
       account_email,
-      grid,
+      // grid,
     })
     return 
   }

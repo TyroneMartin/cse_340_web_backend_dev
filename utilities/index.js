@@ -149,74 +149,20 @@ Util.buildLogin = async function () {
   return grid;
 };
 
-Util.buildVerifiedView = async function () {
-  let grid = ''; // Initialize grid variable
-    grid += '<h2>Welcome to the login page</h2>'
-  return grid;
-};
+// Util.buildVerifiedView = async function () {
+//   let grid = ''; // Initialize grid variable
+//     grid += '<h2>Welcome to the login page</h2>'
+//   return grid;
+// };
 
 /* **************************************
  * Build the Register view HTML
  * ************************************ */
 
-Util.buildRegister = async function () {
-  let grid = ""; // Initialize grid variable
-  grid += "<p>All fields are required</p>";
-  grid += '<form id = "registerForm" action="/account/register" method="post">';
-  grid += '<fieldset class = "fieldsetForRegistration">';
-  grid += "<legend>Registration Form</legend>"; // Add legend for fieldset
-  grid += '<div class="containerRegistrationForm">';
-  grid += '<div class="FormContainer_Register">';
-  // For First Name
-  grid += '<label for="accountFirstname"><b>Last name:</b></label>';
-  grid +=
-    '<input type="text" id = "accountFirstname" placeholder="Enter last name" name="account_firstname" required>';
-  // For Last Name
-  grid += '<label for="accountLastname"><b>First name:</b></label>';
-  grid +=
-    '<input type="text" id= "accountLastname" placeholder="Enter first name" name="account_lastname" required>';
-  // For Email
-  grid += '<label for="accountEmail"><b>Email address:</b></label>';
-  grid +=
-    '<input type="email" id= "accountEmail" placeholder="Johndoe@domain.com" name="account_email" required>';
-  // ---------
-  // For password field
-  grid += '<label for="account_password"><b>Password:</b></label>'
-  grid +='<span><input type="password" id="account_password" name="account_password" placeholder="Create password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></span>'
-  // ---------
-  // For Check box to show password()
-  grid += '<span class="showPasswordContainer">'
-  grid += '<input type="checkbox" id="checkbox" name="showPassword">'
-  grid += '<label for="showPasswordCheck">Show password</label>'
-  grid += '</span>'
-  // --------
-
-  // For submit button
-  grid +=
-    '<input type="submit" class ="loginButton" id = "pswdBtn" value="Register">';
-  // Password requirements listing section
-  grid +=
-    '<P class = "passwordRequirement">*The password should meet the follow:</P>';
-  grid += '<div class="passwordRequirements">';
-  grid += "<ul>";
-  grid += "<li>12 characters in length, minimum</li>";
-  grid += "<li>Contain at least 1 capital letter</li>";
-  grid += "<li>Contain at least 1 number</li>";
-  grid += "<li>Contain at least 1 special character</li>";
-  grid += "</ul>";
-  grid += "</div>";
-  grid += "</div>";
-  grid += "</div>";
-  grid += "</fieldset>";
-  grid += "</form>";
-
-  return grid;
-};
-
-
-
-
-
+// Util.buildRegister = async function () {
+// Remove on 2/27/24 and placed in the register view due to ejs codes bugs
+// data missing data can be found in the register view/github history
+// -------------------
 
 
 

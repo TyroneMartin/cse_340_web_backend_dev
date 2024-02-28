@@ -1,21 +1,94 @@
 <% if (title) { %>
-    <h1 class="register_page_title"><%= title %></h1>
-    <div class="flash-notice">
-        <%= messages.notice %>
-    </div>
-    <% } else {
-        res.redirect('/')
-    } %>
+<h1 class="register_page_title"><%= title %></h1>
+<div class="flash-notice"><%= messages.notice %></div>
+<% } else { res.redirect("/") } %> <%- messages() %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
 
-    <%- messages() %>
+ <%#- grid %>
 
-    <% if (errors) { %>
-        <ul class="notice">
-       <% errors.array().forEach(error => { %>
-         <li><%= error.msg %></li>
-      <%  }) %>
-       </ul>
-      <% } %>
-
-      <%- grid %>
+ <p>All fields are required</p>
+ <form id="registerForm" action="/account/register" method="post">
+   <fieldset class="fieldsetForRegistration">
+     <legend>Registration Form</legend>
+         <%# // Add legend for fieldset %>
+     <div class="containerRegistrationForm">
+       <div class="FormContainer_Register">
+         <%# // For First Name %>
+         <label for="accountFirstname"><b>Last name:</b></label>
+ 
+         <input
+           type="text"
+           id="accountFirstname"
+           placeholder="Enter last name"
+           name="account_firstname"
+           value="<%= locals.account_firstname %>"
+           required
+         /> <%# // For Last Name %>
+         <label for="accountLastname"><b>First name:</b></label>
+ 
+         <input
+           type="text"
+           id="accountLastname"
+           placeholder="Enter first name"
+           name="account_lastname"
+           value="<%= locals.account_lastname %>"
+           required
+         /> <%# // For Email %>
+         <label for="accountEmail"><b>Email address:</b></label>
+ 
+         <input
+           type="email"
+           id="accountEmail"
+           placeholder="Johndoe@domain.com"
+           name="account_email"
+           value="<%= locals.account_email %>"
+           required
+         />
+         <%# // --------- %> <%# // For password field %>
+ 
+         <label for="account_password"><b>Password:</b></label>
+         <span
+           ><input
+             type="password"
+             id="account_password"
+             name="account_password"
+             placeholder="Create password"
+             pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+             required
+         /></span>
+         <%# // --------- %> <%# // For Check box to show password() %>
+ 
+         <span class="showPasswordContainer">
+           <input type="checkbox" id="checkbox" name="showPassword" />
+           <label for="showPasswordCheck">Show password</label>
+         </span>
+         <%# // --------- %> <%# // For submit button %>
+ 
+         <input
+           type="submit"
+           class="loginButton"
+           id="pswdBtn"
+           value="Register"
+         />
+ 
+         <%# // Password requirements listing section %>
+ 
+         <P class="passwordRequirement">*The password should meet the follow:</P>
+         <div class="passwordRequirements">
+           <ul>
+             <li>12 characters in length, minimum</li>
+             <li>Contain at least 1 capital letter</li>
+             <li>Contain at least 1 number</li>
+             <li>Contain at least 1 special character</li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </fieldset>
+ </form>
  

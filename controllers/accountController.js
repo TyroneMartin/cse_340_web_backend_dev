@@ -35,11 +35,13 @@ accountController.buildLogin = async function (req, res, next) {
 accountController.buildRegister = async function (req, res, next) {
   try {
       let nav = await utilities.getNav()
-      const grid = await utilities.buildRegister()  // Generate for registration form HTML
+      // const grid = await utilities.buildRegister()  // Generate for registration form HTML
+      // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
+
       res.render("account/register", {
         title: "Register",
         nav,
-        grid,
+        // grid,
         errors: null,
       })
     } catch (err) {
@@ -88,13 +90,13 @@ try {
   // regular password and cost (salt is generated automatically)
   hashedPassword = await bcrypt.hashSync(account_password, 10)
 } catch (error) {
-  const grid = await utilities.buildRegister()
+  // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
   req.flash("notice", 'Sorry, there was an error processing the registration.')
   res.status(500).render("account/register", {
     title: "Registration",
     nav,
     errors: null,
-    grid,
+    // grid,
   })
 }
   console.log("Registration Result", regResult)
@@ -116,12 +118,12 @@ try {
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
-    const grid = await utilities.buildRegister()
+  // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
       error: null,
-      grid
+      // grid
     })  
   }
   
