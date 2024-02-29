@@ -75,15 +75,7 @@ accountController.buildRegister = async function (req, res, next) {
   accountController.registerAccount = async function (req, res) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_password } = req.body
-  const regResult = await accountModel.registerAccount(
-    account_firstname,
-    account_lastname,
-    account_email,
-    account_password
-  )
 
-
-// start
 // Hash the password before storing
 let hashedPassword
 try {
@@ -99,6 +91,12 @@ try {
     // grid,
   })
 }
+  const regResult = await accountModel.registerAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    hashedPassword,
+  )
   console.log("Registration Result", regResult)
   if (regResult) {
     req.flash(

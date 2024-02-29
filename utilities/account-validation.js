@@ -31,7 +31,7 @@ validate.registationRules = () => {
       .withMessage("A valid email is required.")
       .custom(async (account_email) => {
         const emailExists = await accountModel.checkExistingEmail(account_email)
-        if (emailExists) {
+        if (emailExists > 0) {
           throw new Error("Email exists. Please log in or use different email")
         }
       }),
@@ -49,6 +49,36 @@ validate.registationRules = () => {
       .withMessage("Password does not meet requirements."),
   ]
 }
+
+validate.loginRules = () => {
+  return [   // Validation rules for account registration
+    // firstname is required and must be string
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required."),
+
+    // password is required and must be strong password
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements.")
+  ]
+}
+
+
+
+
+
+
+
 
 
 /* ******************************
@@ -74,5 +104,28 @@ validate.checkRegData = async (req, res, next) => {
   }
   next()
 }
+
+
+
+validate.checkLoginData = async (req, res, next) => {
+  // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
+    const { account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      let nav = await utilities.getNav()
+      res.render("account/register", {
+        errors,
+        title: "Registration",
+        nav,
+        account_email,
+        // grid,
+      })
+      return 
+    }
+    next()
+  }
+
+
 
 module.exports = validate
