@@ -73,14 +73,6 @@ validate.loginRules = () => {
   ]
 }
 
-
-
-
-
-
-
-
-
 /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
@@ -105,11 +97,9 @@ validate.checkRegData = async (req, res, next) => {
   next()
 }
 
-
-
 validate.checkLoginData = async (req, res, next) => {
   // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
-    const { account_email } = req.body
+    const { account_email, account_password  } = req.body
     let errors = []
     errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -119,6 +109,7 @@ validate.checkLoginData = async (req, res, next) => {
         title: "Registration",
         nav,
         account_email,
+        account_password,
         // grid,
       })
       return 
