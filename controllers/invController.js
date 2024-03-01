@@ -73,6 +73,31 @@ invCont.getInventoryById = async function (req, res, next) {
 }
 
 
+// invCont.addNewVehicleClassification = async function (req, res, next) {
+//   try {
+
+//     const grid = await utilities.(data)
+//     let nav = await utilities.getNav()  // use utilities to the get navigation data
+//     const title = "Add New Vehicle Classification"
+//     res.render("./inventory/classification", {
+//       title,
+//       nav,
+//       grid,
+//       errors: null,
+//     })
+//   } catch (err) {
+//     next(err); 
+//   }
+// }
+
+
+
+
+
+
+
+
+
 
 
 

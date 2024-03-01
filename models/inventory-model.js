@@ -52,4 +52,28 @@ async function getInventoryById(inv_id) {
 }
 
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin }
+
+
+
+
+
+
+
+
+/* *****************************
+*   Add new cars to the database query
+* *************************** */
+async function addNewVehicleClassification(inv_classification, inv_make, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) { 
+  try {
+    const sql = "INSERT INTO vehicle_table (classification, make, description, image, thumbnail, price, year, miles, color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *";
+    const values = [inv_classification, inv_make, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color];
+    return await pool.query(sql, values);
+  } catch (error) {
+    console.error("addNewVehicleClassification error:", error.message);
+    throw error;
+  }
+}
+
+
+
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, addNewVehicleClassification }

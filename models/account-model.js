@@ -27,10 +27,24 @@ async function checkExistingEmail(account_email){
   }
 }
 
+/* **********************
+ *   Check if email and password exist
+ * ********************* */
+
+async function checkExistingAndPassword(account_email, account_password) {
+  try {
+    const sql = "SELECT * FROM account WHERE account_email = $1 and account_password = $2";
+    const result = await pool.query(sql, [account_email, account_password]);
+    if (result.rows.length > 0) {
+      return true; // Account exists
+    } else {
+      return false; // Account does not exist
+    }
+  } catch (error) {
+    throw error.message; // Propagate the error
+  }
+}
 
 
 
-
-
-
-  module.exports = {registerAccount, checkExistingEmail}
+  module.exports = {registerAccount, checkExistingEmail, checkExistingAndPassword}

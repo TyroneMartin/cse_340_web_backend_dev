@@ -13,6 +13,8 @@ const session = require("express-session")
 const env = require("dotenv").config()
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventory-route")
+// const inventoryRoute2 = require("./site-name/inv/")
+
 const accountRoute = require("./routes/account-route")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
@@ -66,6 +68,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))  // add update
 app.use("/inv", inventoryRoute)
 //  routes - Unit 4 activity
 app.use("/account", accountRoute)  // or  app.use("/account", require("./routes/account-route")) but using variable name
+// app.use("/inv", inventoryRoute2) 
 
 
 // File Not Found Route - must be last route in list

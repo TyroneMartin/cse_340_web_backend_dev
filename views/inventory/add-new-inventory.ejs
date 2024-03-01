@@ -1,0 +1,64 @@
+<!-- <%# Unit 3, Assignment 4, Building management page %> -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+        
+    <%# messages() %>
+        
+    <%# grid %>
+
+    <p>All fields are required.</p>
+ <form id="managmentForm" action="/account/register" method="post">
+   <fieldset class="managementPageForm">
+     <legend>Add a new Vehicle</legend>
+         <%# // Add legend for fieldset %>
+     <div class="containerClassification">
+
+        <%# // Add or select classification %>
+        <label for="invClassification">Select the classification:</label>
+        <select id="inv_classification" name="inv_classification" required>
+            <option value="" disabled selected>Choose a classification</option>
+            <option value="Custom">Custom</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Sport">Sport</option>
+            <option value="SUV">SUV</option>
+            <option value="Truck">Truck</option>
+        </select>
+
+         <%# // Make Entery %>
+         <label for="invMake"><b>Make</b></label>
+         <input name="inv_make" id="invMake" type="text" placeholder="Min of 3 characters" required>
+         <%# // For Description %>
+         <label for="invDescription"><b>Description</b></label> 
+         <input name="inv_description" id="invDescription" type="textara"  rows="4" cols="50" placeholder="Enter accurate data to describe your car for it to be posted on the website, free of grammatical errors." required>
+          <%# // Image Path %>
+          <label for="invImage"><b>Image Path</b></label>
+          <input name="inv_image" id="invImage" type="text" required>
+          <%# // Thumbnail Path %>
+          <label for="invThumbnail"><b>Thumbnail Path</b></label>
+          <input name="inv_thumbnail" id="invThumbnail" type="text" required>
+          <%# // Price %>
+          <label for="invPrice"><b>Price</b></label>
+          <input name="inv_price" id="invPrice" type="text" placeholder="decimal or integer" required>
+          <%# // year %>
+          <label for="invYear"><b>Year</b></label>
+         <input name="inv_year" id="invYear" type="text" placeholder="4-digit year" required>
+          <%# // miles %>
+          <label for="invMiles"><b>Miles</b></label>
+          <input name="inv_miles" id="invMiles" type="text" placeholder="digits only" required>
+         <%# // color %>
+          <label for="invColor"><b>Color</b></label>
+          <input name="inv_color" id="invColor" type="text" required>
+          <%# // For submit button %>
+         <input
+         type="submit"
+         class="Add_to_classification_list_Button"
+         id="classification_list_Button"
+         value="Userclassificationdata"
+       />
+       </div>
+     </div>
+   </fieldset>
+ </form>

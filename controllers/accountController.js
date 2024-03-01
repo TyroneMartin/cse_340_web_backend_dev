@@ -127,6 +127,58 @@ try {
   
 }
 
+
+// For management page
+accountController.buildManagement = async function (req, res) {
+  try {
+      let nav = await utilities.getNav()
+      res.render("./account/management", {
+        title: "Vehicle Management",
+        nav,
+        // grid,
+        errors: null,
+      })
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ****************************************
+*  User adding classification page
+* *************************************** */
+accountController.addNewVehicleClassification = async function (req, res, next) {
+  try {
+      let nav = await utilities.getNav()
+      // const grid = await utilities.buildRegister()  // Generate for registration form HTML
+      // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
+
+      res.render("inv/type", {
+        title: "New Vehicle",
+        nav,
+        // grid,
+        errors: null,
+      })
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
   
   module.exports = accountController 
   

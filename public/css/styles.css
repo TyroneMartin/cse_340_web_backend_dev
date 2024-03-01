@@ -802,3 +802,44 @@ input:required:valid {
   display: inline-block;
   vertical-align: top;
 }
+
+
+/* For management page */
+#managementPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh; /* Adjust height as needed */
+  background-color: #f0f0f0; /* Set background color */
+}
+
+.managementpage {
+  text-align: center;
+}
+
+.addCategoryImage {
+  max-width: 100%; /* Ensures the image resizes properly */
+  max-height: 200px; /* Adjust maximum height as needed */
+  margin-bottom: 20px; /* Add some space below the image */
+}
+
+.managementpage_button_contin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button_for_link {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #007bff; /* Adjust color as needed */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.button_for_link:hover {
+  background-color: #0056b3; /* Adjust color as needed */
+}

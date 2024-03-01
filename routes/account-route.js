@@ -19,6 +19,13 @@ router.get('/login', utilities.handleErrors(accountController.buildLogin))
 // Deliver registration View 
 router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
+
+// Deliver management View 
+router.get("/management", accountController.buildManagement)
+
+
+
+
 // router.post('/login', utilities.handleErrors(accountController.buildVerifiedView))
 
 
@@ -44,11 +51,13 @@ router.post(
 
 
 // router.post(
-//   "/login",
+//   "/register",
 //   logValidate.loginRules(), // Middleware for validating login data
 //   logValidate.checkLogData, // Middleware for checking login data
 //   utilities.handleErrors(baseController.buildHome) // Middleware for handling errors
 // )
+
+
 
 // Export router to be used elsewhere
 module.exports = router
