@@ -73,6 +73,22 @@ invCont.getInventoryById = async function (req, res, next) {
 }
 
 
+// For management page
+invCont.buildManagement = async function (req, res) {
+  try {
+      let nav = await utilities.getNav()
+      res.render("./inventory/management", {
+        title: "Vehicle Management",
+        nav,
+        // grid,
+        errors: null,
+      })
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 // invCont.addNewVehicleClassification = async function (req, res, next) {
 //   try {
 

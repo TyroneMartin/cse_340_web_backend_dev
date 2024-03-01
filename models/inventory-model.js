@@ -52,14 +52,6 @@ async function getInventoryById(inv_id) {
 }
 
 
-
-
-
-
-
-
-
-
 /* *****************************
 *   Add new cars to the database query
 * *************************** */

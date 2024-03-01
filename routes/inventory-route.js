@@ -14,6 +14,9 @@ router.get("/type/:classificationId", invController.buildByClassificationId)
 router.get("/intentional_error", invController.intentionalError)
 router.get("/detail/:inv_id", invController.getInventoryById)
 
+// Deliver management View 
+router.get("/", invController.buildManagement)
+
 // router.get("/add-classification", invController.addNewVehicleClassification)
 
 

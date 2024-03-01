@@ -128,20 +128,7 @@ try {
 }
 
 
-// For management page
-accountController.buildManagement = async function (req, res) {
-  try {
-      let nav = await utilities.getNav()
-      res.render("./account/management", {
-        title: "Vehicle Management",
-        nav,
-        // grid,
-        errors: null,
-      })
-    } catch (err) {
-      next(err);
-    }
-  }
+
 
 
 
