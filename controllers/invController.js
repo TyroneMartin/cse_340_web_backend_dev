@@ -107,6 +107,26 @@ invCont.buildAddClassification = async function (req, res, next) {
 };
 
 
+invCont.AddClassification = async function (req, res, next) {
+  try {
+    // Access data from req.body
+    const addClassificationData = req.body.classification_name;
+    let nav = await utilities.getNav(); // use utilities to get navigation data
+    const title = "Add New Classification";
+    
+    // Update nav bar with classification_name data and store to the database
+    nav = addClassificationData.classification_name;
+    res.render("./inventory/classification", {
+      title,
+      nav,
+      errors: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 
 
 

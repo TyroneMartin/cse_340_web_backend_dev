@@ -2,8 +2,9 @@
 const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
-// const accountController = require("../controllers/accountController")
-// const utilities = require("../utilities/")  // use utilities to the get navigation data, however, not being called here
+const accountController = require("../controllers/accountController")  
+const utilities = require("../utilities/") 
+
 
 /* ***************************
 * Route to build inventory by classification view  * Unit 3, Activity 
@@ -18,14 +19,34 @@ router.get( "/add-classification", invController.buildAddClassification)
 // Deliver management View 
 router.get("/", invController.buildManagement)
 
-// router.get("/add-classification", invController.addNewVehicleClassification)
 
 
 // router.post(
 //   "/add-classification",
-//   invController.AddClassification
+//   invController.AddClassification(), // Middleware for validating login data
+//   utilities.handleErrors(invController.buildAddClassification) // Middleware for handling errors
 // )
 
+
+router.post(
+  '/add-classification',
+  invController.AddClassification, // Middleware for validating classification data
+  async function(req, res, next) {
+    try {
+      // Access data from req.body
+      const classification_name = req.body.classification_name;
+      
+      // Add classification_name to navigation bar and database
+      await utilities.getNav(); 
+      await AddClassificationIntoDatabase(classification_name);
+
+      // Redirect 
+      res.redirect('/add-classification'); 
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 
 

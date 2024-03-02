@@ -66,6 +66,20 @@ async function addNewVehicleClassification(inv_classification, inv_make, inv_des
   }
 }
 
+/* *****************************
+* Function to add classification_name into the database
+* *************************** */
+async function AddClassificationIntoDatabase(classification_name) { 
+  try {
+    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *";
+
+    const values = [classification_name];
+    return await pool.query(sql, values);
+  } catch (error) {
+    console.error("Add new classification error:", error.message);
+    throw error;
+  }
+}
 
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, addNewVehicleClassification }
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, addNewVehicleClassification, AddClassificationIntoDatabase }
