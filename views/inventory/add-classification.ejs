@@ -1,10 +1,23 @@
 <!-- <%# Unit 3, Assignment 4, Building management page %> -->
 <% if (title) { %>
-    <h1><%= title %></h1>
+    <h1 class="addClassification_title"><%= title %></h1>
     <% } else {
         res.redirect('/')
     } %>
         
-    <%# messages() %>
+    <%- messages() %>
         
     <%# grid %>
+
+    <form id="addClassificationForm" action="/inv/add-classification" method="post">
+        <fieldset class="managementPageForm">
+            <h2>Enter new category if your Vehicle classification is not listed</h2>
+            <legend>This field is required</legend>
+            <div class="containerAddClassificationForm">
+                <label for="classification_name"><b>Classification Name:</b></label>
+                <input name="classification_name" id="addClassification" type="text" placeholder="Only alphabetic characters are allowed" required>
+                <input type="submit" class="Add_to_classification_list_Button" id="classification_list_Button">
+            </div>
+        </fieldset>
+    </form>
+

@@ -21,37 +21,25 @@ router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
 
 // router.post('/login', utilities.handleErrors(accountController.buildVerifiedView))
-
-
-// Process the login attempt
-router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)
+// replace 
 
 /* ***************************
 * Proccess Registration * Unit 4 Activity  middleware
  * ************************** */
-
-// Process the registration data (middleware) for checking registration data
 router.post(
-    "/register",
-    regValidate.registationRules(),
-    regValidate.checkRegData,   // custom middleware for checking registration data
-    utilities.handleErrors(accountController.registerAccount)
+  "/register",
+  regValidate.registationRules(),
+  regValidate.checkRegData,   // custom middleware for checking registration data
+  utilities.handleErrors(accountController.registerAccount)
+
 )
 
-
-// router.post(
-//   "/register",
-//   logValidate.loginRules(), // Middleware for validating login data
-//   logValidate.checkLogData, // Middleware for checking login data
-//   utilities.handleErrors(baseController.buildHome) // Middleware for handling errors
-// )
-
-
+router.post(
+  "/login",
+  logValidate.loginRules(), // Middleware for validating login data
+  logValidate.checkLoginData, // Middleware for checking login data
+  utilities.handleErrors(baseController.buildHome) // Middleware for handling errors
+)
 
 // Export router to be used elsewhere
 module.exports = router

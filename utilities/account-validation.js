@@ -117,31 +117,5 @@ validate.checkLoginData = async (req, res, next) => {
     next()
   }
 
-  validate.checkLoginData = async (req, res, next) => {
-    const { account_email, account_password } = req.body;
-    let errors = validationResult(req);
-  
-    try {
-      const existingAccount = await checkExistingAndPassword(account_email, account_password);
-      if (existingAccount) {
-        next(); // Proceed to the next middleware if account exists
-      } else {
-        let nav = await utilities.getNav();
-        res.render("account/register", {
-          errors: [{ msg: "Account not found. Please register." }], // Add an error message
-          title: "Registration",
-          nav,
-          account_email,
-          account_password
-        })
-      }
-    } catch (error) {
-      // Handle any errors
-      console.error("Error:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  }
-
-
 
 module.exports = validate
