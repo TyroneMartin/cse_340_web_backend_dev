@@ -1,13 +1,13 @@
-<!-- <%# Unit 3, Assignment 4, Building management page %> -->
-<% if (title) { %>
-    <h1 class="addClassification_title"><%= title %></h1>
-    <% } else {
-        res.redirect('/')
-    } %>
-        
-    <%- messages() %>
-        
-    <%# grid %>
+    <% if (title) { %>
+        <h1 class="addClassification_title"><%= title %></h1>
+        <div class="flash-notice"><%= messages.notice %></div>
+        <% } else { res.redirect("/") } %> <%- messages() %> <% if (errors) { %>
+        <ul class="notice">
+          <% errors.array().forEach(error => { %>
+          <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+        <% } %>
 
     <form id="addClassificationForm" action="/inv/add-classification" method="post">
         <fieldset class="managementPageForm">

@@ -91,13 +91,14 @@ invCont.buildManagement = async function (req, res) {
   }
 };
 
-// For adding items to the classification page
+
+// Build page for add classification item to be delivered or render to the browser
 invCont.buildAddClassification = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
     res.render("./inventory/add-classification", {
-      title: "Add New Classifications",
       nav,
+      title: "Add New Classifications",
       // grid,
       errors: null,
     });
@@ -107,16 +108,19 @@ invCont.buildAddClassification = async function (req, res, next) {
 };
 
 
-invCont.AddClassification = async function (req, res, next) {
+   // Access data from req.body, which pulls the data from the form... used for post method
+invCont.postAddClassification   = async function (req, res, next) {
   try {
-    // Access data from req.body
+ 
     const addClassificationData = req.body.classification_name;
     let nav = await utilities.getNav(); // use utilities to get navigation data
     const title = "Add New Classification";
     
     // Update nav bar with classification_name data and store to the database
     nav = addClassificationData.classification_name;
-    res.render("./inventory/classification", {
+    // res.render("./account/login", {
+    res.render("./inventory/add-classification", {
+      nav,
       title,
       nav,
       errors: null,
@@ -127,6 +131,42 @@ invCont.AddClassification = async function (req, res, next) {
 };
 
 
+// Build page for add classification item to be delivered or render to the browser
+invCont.buildAddInventory = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    res.render("./inventory/add-new-inventory", {
+      nav,
+      title: "Add New Classifications",
+      // grid,
+      errors: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+// need to fix to match form data for the adding new inventory item 
+
+invCont.postAddInventory = async function (req, res, next) {
+  try {
+    // Access data from req.body
+    const addClassificationData = req.body.classification_name;
+    let nav = await utilities.getNav(); // use utilities to get navigation data
+    const title = "Add New Inventory";
+    
+    // Update nav bar with classification_name data and store to the database
+    nav = addClassificationData.classification_name;
+    res.render("./inventory/add-new-inventory", {
+      title,
+      nav,
+      errors: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 
 
