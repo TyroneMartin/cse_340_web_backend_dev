@@ -28,7 +28,7 @@
            name="account_firstname"
            value="<%= locals.account_firstname %>"
            required
-         /> <%# // For Last Name %>
+         > <%# // For Last Name %>
          <label for="accountLastname"><b>First name:</b></label>
  
          <input
@@ -38,7 +38,7 @@
            name="account_lastname"
            value="<%= locals.account_lastname %>"
            required
-         /> <%# // For Email %>
+         > <%# // For Email %>
          <label for="accountEmail"><b>Email address:</b></label>
  
          <input
@@ -48,7 +48,7 @@
            name="account_email"
            value="<%= locals.account_email %>"
            required
-         />
+         >
          <%# // --------- %> <%# // For password field %>
  
          <label for="account_password"><b>Password:</b></label>
@@ -59,12 +59,11 @@
              name="account_password"
              placeholder="Create password"
              pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
-             required
-         /></span>
+             required></span>
          <%# // --------- %> <%# // For Check box to show password() %>
  
          <span class="showPasswordContainer">
-           <input type="checkbox" id="checkbox" name="showPassword" />
+           <input type="checkbox" id="showPasswordCheck" name="showPassword">
            <label for="showPasswordCheck">Show password</label>
          </span>
          <%# // --------- %> <%# // For submit button %>
@@ -74,7 +73,7 @@
            class="loginButton"
            id="pswdBtn"
            value="Register"
-         />
+         >
  
          <%# // Password requirements listing section %>
  

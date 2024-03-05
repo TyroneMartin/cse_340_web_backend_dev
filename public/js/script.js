@@ -1,5 +1,5 @@
 let password = document.getElementById("account_password");
-let checkbox = document.getElementById("checkbox");
+let checkbox = document.getElementById("showPasswordCheck");
 
 checkbox.onclick = function(){
     if (checkbox.checked) {

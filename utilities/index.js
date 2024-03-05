@@ -121,43 +121,42 @@ Util.buildDetailGrid = async function (data, title) {
 
 Util.buildLogin = async function () {
   let grid = ''; // Initialize grid variable
-    grid += '<form id = "loginForm" action="/account/login" method="post">';
-    grid += '<fieldset>'
-    grid += '<legend>Login Information</legend>' // Add legend for fieldset
-    grid += '<div class="content">'
-    grid += '<div class="FormContainer">'
-     // ---------
-     // For email field
-    grid += '<label for="account_email"><b>Email:</b></label>'    
-    grid += '<input type="email" placeholder="Enter email" name="account_email" required>'
-      // ---------
-      // For password field
-    grid += '<label for="account_password"><b>Password:</b></label>'
-    grid +='<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></span>'
-      // ---------
-      // For Check box to show password()
-    grid += '<span class="showPasswordContainer">'
-    grid += '<input type="checkbox" id="checkbox" name="showPassword">'
-    grid += '<label for="showPasswordCheck">Show password</label>'
-    grid += '</span>'
-    // ---------
-    // For submit button section
-    grid += '<input type="submit" class ="loginButton" id = "showPasswordFunction">'
-    grid += '<p>No account? <a href="../account/register">Sign-up</a></p>'
-    grid += '</fieldset>'
-    grid += '</form>'
-    grid += '</div>'
-    grid += '</div>'
+  grid += '<form id="loginForm" action="/account/login" method="post">';
+  grid += '<fieldset>';
+  grid += '<legend>Login Information</legend>'; // Add legend for fieldset
+  grid += '<div class="content">';
+  grid += '<div class="FormContainer">';
+  // For email field
+  grid += '<label for="account_email"><b>Email:</b></label>';
+  grid += '<input type="email" placeholder="Enter email" id="account_email" name="account_email" required>';
+  // For password field
+  grid += '<label for="account_password"><b>Password:</b></label>';
+  grid += '<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" pattern="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$" required></span>';
+  // For Check box to show password()
+  grid += '<span class="showPasswordContainer">';
+  grid += '<input type="checkbox" id="showPasswordCheck" name="showPassword">';
+  grid += '<label for="showPasswordCheck">Show password</label>';
+  grid += '</span>';
+  // For submit button section
+  grid += '<input type="submit" class="loginButton" id="showPasswordFunction">';
+  grid += '<p>No account? <a href="../account/register">Sign-up</a></p>';
+  grid += "<br>";
+  grid += "<p>If you already have an account, use the strong password you had created to sign in.</p>"
+  grid += "<p>The the password requirements maybe found below.</p>"
+  grid += '<div class="passwordRequirements">'
+  grid += '<ul>'
+  grid += '<li>12 characters in length, minimum</li>'
+  grid += '<li>Contain at least 1 capital letter</li>'
+  grid += '<li>Contain at least 1 number</li>'
+  grid += '<li>Contain at least 1 special character</li>'
+  grid += '</ul>'
+  grid += '</div>'
 
-    grid += '<p class="passwordRequirement">*The password should meet the following criteria:</p>'
-    grid += '<div class="passwordRequirements">'
-    grid += '<ul>'
-    grid += '<li>12 characters in length, minimum</li>'
-    grid += '<li>Contain at least 1 capital letter</li>'
-    grid += '<li>Contain at least 1 number</li>'
-    grid += '<li>Contain at least 1 special character</li>'
-    grid += '</ul>'
-    grid += '</div>'
+  grid += '</div>'; // Close FormContainer
+  grid += '</div>'; // Close content
+  grid += '</fieldset>';
+  grid += '</form>';
+
 
   return grid;
 };
