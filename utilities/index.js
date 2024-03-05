@@ -147,6 +147,17 @@ Util.buildLogin = async function () {
     grid += '</fieldset>'
     grid += '</form>'
     grid += '</div>'
+    grid += '</div>'
+
+    grid += '<p class="passwordRequirement">*The password should meet the following criteria:</p>'
+    grid += '<div class="passwordRequirements">'
+    grid += '<ul>'
+    grid += '<li>12 characters in length, minimum</li>'
+    grid += '<li>Contain at least 1 capital letter</li>'
+    grid += '<li>Contain at least 1 number</li>'
+    grid += '<li>Contain at least 1 special character</li>'
+    grid += '</ul>'
+    grid += '</div>'
 
   return grid;
 };
