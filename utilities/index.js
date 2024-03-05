@@ -26,35 +26,6 @@ Util.getNav = async function (req, res, next) {
 };
 
 
-// Util.getNav = async function (classification_id = null) {
-// let data = await invModel.getClassifications();
-// let classifications = '<select name="">'  
-//   let list = "<ul>";
-//   list += '<li><a href="/" title="Home page">Home</a></li>';
-//   data.rows.forEach((row) => {
-//     list += "<li>";
-//     list +=
-//       '<a href="/inv/type/' +
-//       row.classification_id +
-//       '" title="See our inventory of ' +
-//       row.classification_name +
-//       ' vehicles">' +
-//       row.classification_name +
-//       "</a>";
-//     list += "</li>";
-//   });
-//   list += "</ul>";
-//   return list;
-// };
-
-
-
-
-
-
-
-
-
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
@@ -162,7 +133,7 @@ Util.buildLogin = async function () {
       // ---------
       // For password field
     grid += '<label for="account_password"><b>Password:</b></label>'
-    grid +='<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" required></span>'
+    grid +='<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required></span>'
       // ---------
       // For Check box to show password()
     grid += '<span class="showPasswordContainer">'
@@ -173,17 +144,13 @@ Util.buildLogin = async function () {
     // For submit button section
     grid += '<input type="submit" class ="loginButton" id = "showPasswordFunction">'
     grid += '<p>No account? <a href="../account/register">Sign-up</a></p>'
-    grid += '</div>'
     grid += '</fieldset>'
     grid += '</form>'
+    grid += '</div>'
+
   return grid;
 };
 
-// Util.buildVerifiedView = async function () {
-//   let grid = ''; // Initialize grid variable
-//     grid += '<h2>Welcome to the login page</h2>'
-//   return grid;
-// };
 
 /* **************************************
  * Build the Register view HTML
