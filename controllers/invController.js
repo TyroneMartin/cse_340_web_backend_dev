@@ -107,32 +107,8 @@ invCont.buildAddClassification = async function (req, res, next) {
   }
 };
 
-
-   // Access data from req.body, which pulls the data from the form... used for post method
-invCont.postAddClassification   = async function (req, res, next) {
-  try {
- 
-    const addClassificationData = req.body.classification_name;
-    let nav = await utilities.getNav(); // use utilities to get navigation data
-    const title = "Add New Classification";
-    
-    // Update nav bar with classification_name data and store to the database
-    nav = addClassificationData.classification_name;
-    // res.render("./account/login", {
-    res.render("./inventory/add-classification", {
-      nav,
-      title,
-      nav,
-      errors: null,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-
-// Build page for add classification item to be delivered or render to the browser
-invCont.buildAddInventory = async function (req, res, next) {
+// Build page for add inventory item to be delivered or render to the browser
+invCont.buildAddInventory = async function (req, res, next) {  
   try {
     let nav = await utilities.getNav();
     res.render("./inventory/add-new-inventory", {
@@ -147,54 +123,82 @@ invCont.buildAddInventory = async function (req, res, next) {
 };
 
 
-// need to fix to match form data for the adding new inventory item 
-
-invCont.postAddInventory = async function (req, res, next) {
+/* ****************************************
+* Access data from req.body, which pulls the data from the form... used for post method
+* *************************************** */
+invCont.postAddClassification = async function (req, res, next) {
   try {
-    // Access data from req.body
-    const addClassificationData = req.body.classification_name;
-    let nav = await utilities.getNav(); // use utilities to get navigation data
-    const title = "Add New Inventory";
     
-    // Update nav bar with classification_name data and store to the database
-    nav = addClassificationData.classification_name;
+    const title = "Add New Classification"
+    const classification_name = req.body.classification_name
+    const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
+    let nav = await utilities.getNav();
+    console.log("Responsen db", response)
+    if(response) {
+    req.flash("notice", 'Sucess! New classification was added.');
+    req.flash("notice", 'You may now add a new inventor');
     res.render("./inventory/add-new-inventory", {
       title,
       nav,
       errors: null,
     });
+  } else {
+      req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
+      res.render("./inventory/add-classification", {
+        title,
+        nav,
+        errors: null,
+      });
+    }
   } catch (err) {
     next(err);
   }
-};
+}
+
+/* ****************************************
+* Access data from req.body, which pulls the data from the form... used for post method
+* *************************************** */
+
+invCont.postAddInventory = async function (req, res, next) {
+  try {
+    const title = "Add New Inventory"
+    const bodyInventoryData = [
+      req.body.inv_make,
+      req.body.inv_model,
+      req.body.inv_description,
+      req.body.inv_image,
+      req.body.inv_thumbnail,
+      req.body.inv_price,
+      req.body.inv_year,
+      req.body.inv_miles,
+      req.body.inv_color
+    ]
+    const response   = await  invModel.AddInventoryIntoDatabase(bodyInventoryData)
+    let nav = await utilities.getNav()
+    console.log("Responsen db", response)
+    if(response) {
+    req.flash("notice", 'Sucess! data was successfully updatedn to our website.');
+    res.render("./inventory/add-new-inventory", {
+      title,
+      nav,
+      errors: null,
+    });
+  } else {
+      req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
+      res.render("./inventory/add-new-inventory", {
+        title,
+        nav,
+        errors: null,
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+}
 
 
 
 
 
-
-
-
-
-
-
-
-
-// invCont.addNewVehicleClassification = async function (req, res, next) {
-//   try {
-
-//     const grid = await utilities.(data)
-//     let nav = await utilities.getNav()  // use utilities to the get navigation data
-//     const title = "Add New Vehicle Classification"
-//     res.render("./inventory/classification", {
-//       title,
-//       nav,
-//       grid,
-//       errors: null,
-//     })
-//   } catch (err) {
-//     next(err);
-//   }
-// }
 
 module.exports = invCont;

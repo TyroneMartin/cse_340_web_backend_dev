@@ -17,23 +17,4 @@ invValidate.addClassificationRules = async (req, res, next) => {
 
 
 
-// validate.addClassificationValidate = async (req, res, next) => {
-//       const classification_name  = req.body
-//       let errors = []
-//       errors = validationResult(req)
-//       if (!errors.isEmpty()) {
-//         let nav = await utilities.getNav()
-//         res.render("account/register", {
-//           errors,
-//           title: "Registration",
-//           nav,
-//           classification_name,
-//         })
-//         return 
-//       }
-//       next()
-//     }
-  
-
-
 module.exports = invValidate

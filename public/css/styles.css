@@ -847,7 +847,7 @@ input:required:valid {
 
 
 
-/* add classification data section */
+/* add classification page */
 form#managementForm {
   margin: 20px;
   padding: 20px;
@@ -912,63 +912,92 @@ fieldset.managementPageForm {
 
 
 /* For add inventory page */
-p {
+
+#addInventoryForm {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Style for the form */
+form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Style for the fieldset */
+fieldset {
+  border: 1px solid #ccc;
+  padding: 20px;
   margin-bottom: 20px;
+}
+
+/* Style for the legend */
+legend {
+  font-size: 18px;
   font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-/* Style for the form container */
-.addinventoryFormContainer {
-  max-width: 400px; /* Adjust the width as needed */
-  margin: 0 auto; /* Center the form horizontally */
+/* Style for the container div */
+.containerAddInventory {
+  margin-bottom: 20px;
 }
 
-/* Style for form labels */
+/* Style for labels */
 label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-/* Style for form inputs and select */
+/* Style for inputs and textarea */
 input[type="text"],
-input[type="textarea"],
+textarea,
 select {
-  width: calc(100% - 16px); /* Adjust the width of the input fields */
+  width: 100%;
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
 }
 
 /* Style for submit button */
-.Add_to_classification_list_Button {
+input[type="submit"] {
   background-color: #007bff;
-  color: white;
+  color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  display: block;
-  width: 100%;
 }
 
-.Add_to_classification_list_Button:hover {
+/* Style for submit button on hover */
+input[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-/* Style for form fieldset */
-.addInvFieldset {
+/* Style for inputs */
+input[type="number"],
+input[type="text"] {
+  width: 100%; 
+  padding: 8px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-
+  border-radius: 4px;
 }
 
-/* Style for form legend */
-.legendAddIninven {
-  font-weight: bold;
-  margin-bottom: 10px;
+/* Style for required fields */
+input:required,
+textarea:required,
+select:required {
+  border-color: #dc3545; /* Red border color for required fields */
+}
+
+/* Style for error messages */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
 }
