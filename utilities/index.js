@@ -25,6 +25,36 @@ Util.getNav = async function (req, res, next) {
   return list;
 };
 
+
+// Util.getNav = async function (classification_id = null) {
+// let data = await invModel.getClassifications();
+// let classifications = '<select name="">'  
+//   let list = "<ul>";
+//   list += '<li><a href="/" title="Home page">Home</a></li>';
+//   data.rows.forEach((row) => {
+//     list += "<li>";
+//     list +=
+//       '<a href="/inv/type/' +
+//       row.classification_id +
+//       '" title="See our inventory of ' +
+//       row.classification_name +
+//       ' vehicles">' +
+//       row.classification_name +
+//       "</a>";
+//     list += "</li>";
+//   });
+//   list += "</ul>";
+//   return list;
+// };
+
+
+
+
+
+
+
+
+
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
