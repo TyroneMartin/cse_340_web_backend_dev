@@ -50,26 +50,6 @@ accountController.buildRegister = async function (req, res, next) {
   }
 
 /* ****************************************
-*  Deliver veried login view
-* *************************************** */
-  // accountController.verifiedView = async function (req, res, next) {
-  //   try {
-  //       let nav = await utilities.getNav()
-  //       const grid = await utilities.buildVerifiedView()  // Generate for registration form HTML
-  //       res.render("account/login", {
-  //         title: `Welcome to the ${req.body.account_firstname} ${req.body.account_lastname}`,
-  //         nav,
-  //         grid,
-  //        errors: null,
-  //       })
-  //     } catch (err) {
-  //       next(err);
-  //     }
-  //   }
-
-
-
-/* ****************************************
 *  Process Registration data to the database
 * *************************************** */
   accountController.registerAccount = async function (req, res) {
@@ -79,7 +59,7 @@ accountController.buildRegister = async function (req, res, next) {
 // Hash the password before storing
 let hashedPassword
 try {
-  // regular password and cost (salt is generated automatically)
+
   hashedPassword = await bcrypt.hashSync(account_password, 10)
 } catch (error) {
   // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
@@ -102,7 +82,7 @@ try {
     req.flash(
       "notice",
       // `Congratulations, you\'re registered ${account_firstname}. Please log in.`
-      `Congratulations, you're registered ${account_firstname}. Please log in.`
+      `Congratulations, you're registered ${account_firstname} ${ account_lastname}. Please log in.`
 
     )
     // console.log("Flash notice", req.flash("notice"));

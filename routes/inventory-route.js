@@ -3,6 +3,8 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const accountController = require("../controllers/accountController") 
+const invAddToFormValidate = require("../utilities/inv-validation")
+
 const utilities = require("../utilities/") 
 
 
@@ -27,15 +29,14 @@ router.get("/", invController.buildManagement)
 
 router.post(
   '/add-classification',
-  // invController.postAddClassification, // Middleware for checking
+  // invAddToFormValidate.addinventoryRules, // Middleware for checking
   utilities.handleErrors(invController.postAddClassification) // Middleware for handling errors
 )
 
 router.post(
   '/add-new-inventory',
-  // invController.postAddClassification, // Middleware for checking
+  // invAddToFormValidate.addClassificationRules, // Middleware for checking
   utilities.handleErrors(invController.postAddInventory) // Middleware for handling errors
-
 )
 
 module.exports = router
