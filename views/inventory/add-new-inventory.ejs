@@ -1,11 +1,13 @@
 <% if (title) { %>
-  <h1 class="login_page_title"><%= title %></h1>
-  <div class="flash-notice">
-      <%= messages.notice %>
-  </div>
-  <% } else {
-      res.redirect('/')
-  } %>
+  <h1 class="addClassification_title"><%= title %></h1>
+  <div class="flash-notice"><%= messages.notice %></div>
+  <% } else { res.redirect("/") } %> <%- messages() %> <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
       
   <%- messages() %>
   
@@ -52,7 +54,7 @@
            <label for="inv_color"><b>Color</b></label>
            <input name="inv_color" id="inv_color" type="text" pattern="[A-Za-z]+" title="Please enter letters only" required>
   
-           <input type="submit" class="Add_to_classification_list_Button" value="Click to add Car">
+           <input type="submit" class="Add_to_classification_list_Button" value="Add Vehicle">
         </div>
      </fieldset>
   </form>

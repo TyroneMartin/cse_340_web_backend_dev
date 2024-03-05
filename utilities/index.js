@@ -138,7 +138,7 @@ Util.buildLogin = async function () {
   grid += '<label for="showPasswordCheck">Show password</label>';
   grid += '</span>';
   // For submit button section
-  grid += '<input type="submit" class="loginButton" id="showPasswordFunction">';
+  grid += '<input type="submit" class="loginButton" id="showPasswordFunction" value="Log in">';
   grid += '<p>No account? <a href="../account/register">Sign-up</a></p>';
   grid += "<br>";
   grid += "<p>If you already have an account, use the strong password you had created to sign in.</p>"
