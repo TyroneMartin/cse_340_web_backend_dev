@@ -122,71 +122,23 @@ invCont.buildAddInventory = async function (req, res, next) {
 /* ****************************************
 * Access data from req.body, which pulls the data from the form... used for post method
 * *************************************** */
-invCont.postAddClassification = async function (req, res, next) {
-  try {
-    
-    const title = "Add New Classification"
-    const classification_name = req.body.classification_name
-    const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
-    let nav = await utilities.getNav();
-    console.log("Responsen db", response)
-    if(response) {
-    req.flash("notice", 'Sucess! New classification was added.');
-    req.flash("notice", 'You may now add a new inventor');
-    res.render("./inventory/add-new-inventory", {
-      title,
-      nav,
-      errors: null,
-    });
-  } else {
-      req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
-      res.render("./inventory/add-new-inventory", {
-        title,
-        nav,
-        errors: null,
-      });
-    }
-  } catch (err) {
-    next(err);
-  }
-}
-
-/* ****************************************
-* Access data from req.body, which pulls the data from the form... used for post method
-* *************************************** */
-
-// invCont.postAddInventory = async function (req, res, next) {
+// invCont.postAddClassification = async function (req, res, next) {
 //   try {
-//     const title = "Add New Inventory"
-//     const bodyInventoryData = [
-//       req.body.inv_make,
-//       req.body.inv_model,
-//       req.body.inv_description,
-//       req.body.inv_image,
-//       req.body.inv_thumbnail,
-//       req.body.inv_price,
-//       req.body.inv_year,
-//       req.body.inv_miles,
-//       req.body.inv_color
-//     ]
-//     const response = await invModel.AddInventoryIntoDatabase(...bodyInventoryData)
-//     const classification_id = req.params.classificationId;
-//     const data = await invModel.getInventoryByClassificationId(classification_id)
-//     if (!data || data.length === 0) {
-//       const error = new Error("No data found")
-//       error.status = 404;
-//       throw error
-//     }
+    
+//     const title = "Add New Classification"
+//     const classification_name = req.body.classification_name
+//     const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
 //     let nav = await utilities.getNav();
-//     console.log("Response from database:", response);
-//     if (response) {
-//       req.flash("notice", 'Success! Data was successfully updated to our website.');
-//       res.render("./inventory/add-new-inventory", {
-//         title,
-//         nav,
-//         errors: null,
-//       });
-//     } else {
+//     console.log("Responsen db", response)
+//     if(response) {
+//     req.flash("notice", 'Sucess! New classification was added.');
+//     req.flash("notice", 'You may now add a new inventor');
+//     res.render("./inventory/add-new-inventory", {
+//       title,
+//       nav,
+//       errors: null,
+//     });
+//   } else {
 //       req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
 //       res.render("./inventory/add-new-inventory", {
 //         title,
@@ -197,7 +149,55 @@ invCont.postAddClassification = async function (req, res, next) {
 //   } catch (err) {
 //     next(err);
 //   }
-// };
+// }
+
+/* ****************************************
+* Access data from req.body, which pulls the data from the form... used for post method
+* *************************************** */
+
+invCont.postAddInventory = async function (req, res, next) {
+  try {
+    const title = "Add New Inventory"
+    const bodyInventoryData = [
+      req.body.inv_make,
+      req.body.inv_model,
+      req.body.inv_description,
+      req.body.inv_image,
+      req.body.inv_thumbnail,
+      req.body.inv_price,
+      req.body.inv_year,
+      req.body.inv_miles,
+      req.body.inv_color
+    ]
+    const response = await invModel.AddInventoryIntoDatabase(bodyInventoryData)
+    const classification_id = req.params.classificationId;
+    const data = await invModel.getInventoryByClassificationId(classification_id)
+    if (!data) {
+      const error = new Error("No data found")
+      error.status = 404;
+      throw error
+    }
+    let nav = await utilities.getNav();
+    console.log("Response from database:", response);
+    if (response) {
+      req.flash("notice", 'Success! Data was successfully updated to our website.');
+      res.render("./inventory/add-new-inventory", {
+        title,
+        nav,
+        errors: null,
+      });
+    } else {
+      req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
+      res.render("./inventory/add-new-inventory", {
+        title,
+        nav,
+        errors: null,
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 invCont.postAddInventory = async function (req, res, next) {
   const {
