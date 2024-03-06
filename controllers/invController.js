@@ -173,10 +173,10 @@ invCont.postAddInventory = async function (req, res, next) {
       inv_price,
       inv_year,
       inv_miles,
-      inv_color,
+      inv_color
     } = req.body;
 
-    console.log("Data posted to Inv: ", req.body);
+    // console.log("Data posted to Inv: ", req.body);
 
     const invResult = await invModel.AddInventoryIntoDatabase(
       inv_classification,

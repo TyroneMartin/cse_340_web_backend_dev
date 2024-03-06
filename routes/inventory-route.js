@@ -29,15 +29,17 @@ router.get("/", invController.buildManagement)
 
 router.post(
   '/add-classification',
-  // invAddToFormValidate.addClassificationRules(), // Middleware for checking
-  // invAddToFormValidate.checkAddClassificationData,   // Custom middleware for checking adding inventory data
+  invAddToFormValidate.addClassificationRules(), // Middleware for checking
+  invAddToFormValidate.checkAddClassificationData,   // Custom middleware for checking adding inventory data
   utilities.handleErrors(invController.postAddClassification) // Middleware for handling errors
 );
+
 
 router.post(
   '/add-new-inventory',
   // invAddToFormValidate.addInventoryRules(), // Middleware for checking
-utilities.handleErrors(invController.postAddClassification )// Middleware for handling errors
+  // invAddToFormValidate.checkAddInventoryData,   // Custom middleware for checking adding inventory data
+utilities.handleErrors(invController.postAddInventory )// Middleware for handling errors
 )
 
 module.exports = router
