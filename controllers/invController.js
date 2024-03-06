@@ -192,14 +192,16 @@ invCont.postAddInventory = async function (req, res, next) {
     );
 
     let nav = await utilities.getNav();
+    let classifications = (await invModel.getClassifications()).rows
 
     if (invResult) {
       req.flash(
         "notice",
         `Congratulations, you\'ve successfully added ${inv_make} ${inv_model} to the inventory!`
       );
-      res.render("./inventory/add-inventory", {
-        title: "Vehicle Management",
+      res.render("./inventory/add-new-inventory", {
+        classifications,
+        title: "Added Vehicle",
         nav,
         errors: null,
       });
@@ -208,8 +210,9 @@ invCont.postAddInventory = async function (req, res, next) {
         "notice",
         "Sorry, there was an issue adding a new vehicle. Please try again."
       );
-      res.render("./inventory/add-inventory", {
-        title: "Add Inventory",
+      res.render("./inventory/add-new-inventory", {
+        classifications,
+        title: "Please try again to Insert valid data",
         nav,
         errors: null,
       });

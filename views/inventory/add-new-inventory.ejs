@@ -19,8 +19,8 @@
         <div class="containerAddInventory">
            <label for="inv_classification">Select the classification:</label>
            <select id="inv_classification" name="inv_classification" required>
-              <option value="" disabled selected>Choose a classification</option>
-              <% classifications.forEach((classification) => { %>
+              <option value="disabled" disabled selected>Choose a classification</option>
+              <%  classifications.forEach((classification) => { %>
                <option value="<%= classification.classification_id %>" > <%= classification.classification_name %>
             </option>
             <% }) %>
