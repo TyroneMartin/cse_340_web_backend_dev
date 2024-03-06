@@ -39,7 +39,6 @@ validate.registationRules = () => {
         }
     }),
 
-
     // password is required and must be strong password
     body("account_password")
       .trim()
@@ -120,9 +119,6 @@ validate.checkLoginData = async (req, res, next) => {
     }
     next()
   }
-
-
-
 
 
 

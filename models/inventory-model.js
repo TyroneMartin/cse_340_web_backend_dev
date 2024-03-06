@@ -4,7 +4,7 @@ const pool = require("../database/index.js")
  *  Get all classification data
  * ************************** */
 async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+  return await pool.query("SELECT * FROM public.classification")
 }
 
 /* ***************************
@@ -85,12 +85,10 @@ async function AddClassificationIntoDatabase(classification_name) {
 /* *****************************
 * Function to add /inv/add-new-inventory into the database
 * *************************** */
-async function AddInventoryIntoDatabase(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) { 
+async function AddInventoryIntoDatabase(inventoryData) { 
   try {
     const sql = "INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *";
-
-    const values = [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color];
-    return await pool.query(sql, values);
+    return await pool.query(sql, inventoryData);
   } catch (error) {
     console.error("Add new Inventory:", error.message);
     throw error;

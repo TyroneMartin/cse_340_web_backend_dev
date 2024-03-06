@@ -20,13 +20,12 @@
            <label for="inv_classification">Select the classification:</label>
            <select id="inv_classification" name="inv_classification" required>
               <option value="" disabled selected>Choose a classification</option>
-              <option value="Custom">Custom</option>
-              <option value="Sedan">Sedan</option>
-              <option value="Sport">Sport</option>
-              <option value="SUV">SUV</option>
-              <option value="Truck">Truck</option>
+              <% classifications.forEach((classification) => { %>
+               <option value="<%= classification.classification_id %>" > <%= classification.classification_name %>
+            </option>
+            <% }) %>
            </select>
-  
+           
            <label for="inv_make"><b>Make</b></label>
            <input name="inv_make" id="inv_make"  value="<%= locals.inv_make %>" type="text" pattern=".{3,}" title="Please enter at least 3 characters" placeholder="Min of 3 characters" required>
              
