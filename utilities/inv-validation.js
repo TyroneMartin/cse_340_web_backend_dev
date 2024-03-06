@@ -1,11 +1,19 @@
 const utilities = require(".")
-const { body } = require("express-validator")
+const body  = require("express-validator")
+// const utilities = require("../utilities/")  
+
+// const invModel = require("../models/inventory-model");
+
 
 const invAddToFormValidate = {}
 
-invAddToFormValidate.addClassificationRules = async (req, res, next) => {
+invAddToFormValidate.addInventoryRules = async (req, res, next) => {
     return [
         // Validation rules for adding classification
+        body("inv_classification")
+        .notEmpty()
+        .withMessage("Please aselelct from the list or add a new classification"),
+
         body("inv_make")
             .trim()
             .notEmpty()
@@ -54,18 +62,48 @@ invAddToFormValidate.addClassificationRules = async (req, res, next) => {
 };
 
 
-
-invAddToFormValidate.addinventoryRules = async (req, res, next) => {
+// Middleware function for adding classification rules
+invAddToFormValidate.addClassificationRules = async (req, res, next) => {
     return [
         // Validation rules for adding classification
-        body("inv_make")
+        body("classification_name")
             .trim()
             .notEmpty()
             .withMessage("Please provide a valid classification name")
             .isAlpha()
             .withMessage("Only alphabetic characters are allowed"),
     ];
-};
+};  
+
+
+
+
+/* ******************************
+ * Check data 
+ * ***************************** */
+invAddToFormValidate.checkAddClassificationData = async (req, res, next) => {
+    try {
+        const { classification_name } = req.body;
+        let errors = validationResult(req);
+        let classifications = (await invModel.getClassifications()).rows;
+
+        if (!errors.isEmpty()) {
+            let nav = await utilities.getNav();
+            res.render("inventory/add-classification", {
+                classifications,
+                errors,
+                title: "Add New Classification",
+                nav,
+                classification_name,
+            })
+        } else {
+            next(); // Proceed to the next middleware
+        }
+    } catch (error) {
+        next(error)  // Pass any caught errors to the error handling middleware
+    }
+}
+
 
 
 

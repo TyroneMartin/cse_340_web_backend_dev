@@ -119,7 +119,7 @@ Util.buildDetailGrid = async function (data, title) {
   if (data) {
     grid += '<div class="large-view-container">';
     grid += '<hr class="firstHr"></hr>';
-    grid += '<div class="content">';
+    grid += '<div class="singleViewClassificationContent">';
     grid += `<p class="bold top-margin"><span class="first-word">Price:</span> <span class="price">$ ${formatedPrice}</span></p>`;
     grid += `<p class="bold"><span class="first-word">Description:</span> ${Description}</p>`;
     grid += `<p class="bold"><span class="first-word">Model:</span> ${model}</p>`;
@@ -130,7 +130,7 @@ Util.buildDetailGrid = async function (data, title) {
     // Display thumbnail for small screens
     grid += `<img src="${thumbnail}" alt="${title}" class="thumbnail classificationDetail-Image">`;
     // Display full-size image for large screens
-    grid += `<img src="${image}" alt="${title}" class="thumbnail classificationDetail-Image">`;
+    grid += `<img src="${image}" alt="${title}" class="not_Thumbnail-LargerImage classificationDetail-Image">`;
   } else {
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>';
   }

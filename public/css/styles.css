@@ -278,8 +278,15 @@ margin: 11px -77px 0px -40px;
   margin-top: 30px  
 }
 
+
+@media screen and (max-width: 900px) {
+  img.not_Thumbnail-LargerImage.classificationDetail-Image{
+    display: none; /*hide the image for the smaller view  */
+
+  }
 }
 
+}
 
 @media screen and (min-width: 900px) {
 
@@ -289,22 +296,43 @@ margin: 11px -77px 0px -40px;
 
   .large-view-container {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Two columns, the first taking up 1 fraction and the second 2 fractions */
-  column-gap: 20px; /* Gap between columns */
+  grid-template-columns: 2fr 2fr; 
+  column-gap: 20px; 
+  }
+
+  img.thumbnail.classificationDetail-Image {
+  display: block;   
+    width: 100%;
+    height: auto !important;
+  }
+
+
 }
+
+
 
 .large-view-content {
   grid-column: 2/3; 
+  margin-top: -336px;
 }
 
 .classificationDetail-Image {
   max-width: 100%; 
   grid-column: 1/2; 
+  grid-row: 1/2;
   height: auto;
   place-self: center;
-  margin-top: -400px;
+  display: none;
+
 }
 
+img.thumbnail.classificationDetail-Image{
+  display: inline-block;
+}
+
+.singleViewClassificationContent{
+  grid-column: 2/3; 
+  grid-row: 1/2;
 }
 
 @media screen and (min-width: 652px) {
@@ -529,32 +557,10 @@ main h1 {
   /* font-size: 2rem; */
 }
 
-/* Style for both thumbnail and full-size image */
-.classificationDetail-Image {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Style for the thumbnail */
-.thumbnail {
-  display: block; /* Ensure the thumbnail is displayed */
-}
 
 /* Style for the full-size image */
 .full-size {
   display: none; /* Hide the full-size image by default */
-}
-
-/* Media query for large screens */
-@media screen and (min-width: 768px) {
-  /* Hide the thumbnail on large screens */
-  .thumbnail {
-    display: none;
-  }
-  /* Display the full-size image on large screens */
-  .full-size {
-    display: block;
-  }
 }
 
 /* Apply hover effect to the navigation bar links */
@@ -564,8 +570,8 @@ nav ul li a:hover {
 }
 
 /* Account login page */
-.content {
-  display: flex;
+.singleViewClassificationContent {
+  /* display: flex; */
   justify-content: center;
   align-items: center;
 }
