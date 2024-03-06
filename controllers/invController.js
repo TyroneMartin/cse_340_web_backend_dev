@@ -135,7 +135,7 @@ invCont.postAddClassification = async function (req, res, next) {
     const classification_name = req.body.classification_name
     const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
     let nav = await utilities.getNav();
-    console.log("Responsen db", response)
+    console.log("Response from db log", response)
     if(response) {
     req.flash("notice", 'Sucess! New classification was added.');
     req.flash("notice", 'You may now add a new inventor');
@@ -163,102 +163,62 @@ invCont.postAddClassification = async function (req, res, next) {
 
 invCont.postAddInventory = async function (req, res, next) {
   try {
-    const title = "Add New Inventory"
-    const bodyInventoryData = [
-      req.body.inv_make,
-      req.body.inv_model,
-      req.body.inv_description,
-      req.body.inv_image,
-      req.body.inv_thumbnail,
-      req.body.inv_price,
-      req.body.inv_year,
-      req.body.inv_miles,
-      req.body.inv_color,
-      req.body.classification_id
-    ]
-    console.log("Inventory form data" , bodyInventoryData)
-    const response = await invModel.AddInventoryIntoDatabase(bodyInventoryData)
-    // const data = await invModel.getInventoryByClassificationId(bodyInventoryData.classification_id)
-    // if (!data || data.length === 0) {
-    //   const error = new Error("No data found")
-    //   error.status = 404;
-    //   throw error
-    // }
+    const {
+      inv_classification,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+    } = req.body;
+
+    console.log("Data posted to Inv: ", req.body);
+
+    const invResult = await invModel.AddInventoryIntoDatabase(
+      inv_classification,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+    );
+
     let nav = await utilities.getNav();
-    console.log("Response from database:", response);
-    if (response) {
-      req.flash("notice", 'Success! Data was successfully updated to our website.');
-      res.render("./inventory/add-new-inventory", {
-        title,
+
+    if (invResult) {
+      req.flash(
+        "notice",
+        `Congratulations, you\'ve successfully added ${inv_make} ${inv_model} to the inventory!`
+      );
+      res.render("./inventory/add-inventory", {
+        title: "Vehicle Management",
         nav,
         errors: null,
       });
     } else {
-      req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
-      res.render("./inventory/add-new-inventory", {
-        title,
+      req.flash(
+        "notice",
+        "Sorry, there was an issue adding a new vehicle. Please try again."
+      );
+      res.render("./inventory/add-inventory", {
+        title: "Add Inventory",
         nav,
         errors: null,
       });
     }
   } catch (err) {
+    // Handle errors
     next(err);
   }
 };
-
-invCont.postAddInventory = async function (req, res, next) {
-  const {
-    inv_make,
-    inv_model,
-    inv_year,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_miles,
-    inv_color,
-    classification_id,
-  } = req.body
- 
-  let selectList = await utilities.buildClassificationGrid(classification_id)
- 
-  const invResult = await invModel.AddInventoryIntoDatabase(
-    
-    inv_make,
-    inv_model,
-    inv_year,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_miles,
-    inv_color,
-    classification_id
-    )
-
-  let nav = await utilities.getNav()
- 
-  if (invResult) {
-    req.flash(
-      "notice",
-      `Congratulations, you\'ve added ${inv_make} ${inv_model} to the inventory!`
-    )
-    res.status(201).render("./inventory/management", {
-      title: "Vehicle Management",
-      nav,
-      errors: null,
-      selectList,
-    })
-  } else {
-    req.flash("notice", "Sorry, there was an issue adding a new vehicle. Please try again.")
-    res.status(501).render("./inventory/add-inventory", {
-      title: "Add Inventory",
-      nav,
-      errors: null,
-      selectList,
-    })
-  }
-}
 
 
 

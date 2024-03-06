@@ -36,7 +36,7 @@ router.post(
 router.post(
   '/add-new-inventory',
   // invAddToFormValidate.addClassificationRules, // Middleware for checking
-  utilities.handleErrors(invController.postAddInventory) // Middleware for handling errors
+utilities.handleErrors(invController.postAddInventory )// Middleware for handling errors
 )
 
 module.exports = router
