@@ -29,11 +29,12 @@
            <label for="inv_make"><b>Make</b></label>
            <input name="inv_make" id="inv_make"  value="<%= locals.inv_make %>" type="text" pattern=".{3,}" title="Please enter at least 3 characters" placeholder="Min of 3 characters" required>
              
+            </script>
            <label for="inv_model"><b>Model</b></label>
            <input name="inv_model" id="inv_model" value="<%= locals.inv_model %>" type="text" pattern=".{3,}" title="Please enter at least 3 characters" placeholder="Min of 3 characters" required>
 
            <label for="inv_description"><b>Description</b></label> 
-           <textarea name="inv_description" value="<%= locals.inv_description %>" id="inv_description" rows="5" cols="100" placeholder="Enter accurate data to describe your car for it to be posted on the website, free of grammatical errors." required></textarea>
+           <textarea name="inv_description" value="<%= locals.inv_description %>" id="inv_description" rows="5" cols="100" placeholder="Enter accurate data to describe your car for it to be posted on the website, free of grammatical errors." pattern="[A-Za-z0-9\s\.,?!'-]+" title="Please enter a description containing alphanumeric characters, spaces, and punctuation." required></textarea>
   
            <label for="inv_image"><b>Image Path</b></label>
            <input name="inv_image" value="<%= locals.inv_image %>" id="inv_image" type="text" required>

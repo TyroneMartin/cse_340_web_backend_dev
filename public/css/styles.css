@@ -767,7 +767,14 @@ input:required:valid {
     background-repeat: no-repeat;
     background-position: calc(99% - 6px) center, right top; /* Combine both positions */
     background-size: auto 17px;
+    border: 1px solid black;
   }
+
+  textarea#inv_description:valid{ 
+    border: 1px solid black;
+  }
+
+
 
 .FormContainer_Register .loginButton {
   width: 100%;
@@ -996,10 +1003,17 @@ input[type="text"] {
   border-radius: 4px;
 }
 
+
+
+select:valid{ 
+  border: 3px solid black;
+}
+
 /* Style for required fields */
+/* select:required,  */
 input:required,
-textarea:required,
-select:required {
+textarea:required
+{
   border-color: #dc3545; /* Red border color for required fields */
 }
 

@@ -29,12 +29,13 @@ validate.registationRules = () => {
     .normalizeEmail() // Refer to validator.js docs
     .withMessage("A valid email is required.")
     .custom(async (account_email, { req }) => {
-        const accountEmail= req.body.account_email
-            const emailExists = await accountModel.checkExistingEmail(accountEmail, account_email) // Yes - throw error 
-            if (emailExists.count !== 0) { // I put zero, as it checks for the first index  
-                throw new Error("Email exists. Please use a different email");
-            }
-    }),
+      const accountEmail= req.body.account_email
+          const emailExists = await accountModel.checkExistingEmail(account_email) // Yes - throw error 
+          // if (emailExists.count !== 0) { // I put zero, as it checks for the first index  
+          if (emailExists) {
+          throw new Error("Email already exists. Please use a different email or sign in");
+          }
+  }),
     // password is required and must be strong password
     body("account_password")
       .trim()
@@ -69,16 +70,8 @@ validate.loginRules = () => {
         minSymbols: 1,
       })
       .withMessage("Password does not meet requirements.")
-      // .custom(async (account_password, { req }) => {
-      //   const accountEmail = req.body.account_email;
-      //   const emailExists = await accountModel.checkExistingEmail(account_password, accountEmail); 
-      //   if (emailExists.count !== 0) {  // return the first index value
-      //     throw new Error("Email exists. Please use a different email or use the password that was created with your account");
-      //   }
-      // })
   ]
 }
-
 
 /* ******************************
  * Check data and return errors or continue to registration
