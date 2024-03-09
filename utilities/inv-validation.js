@@ -7,7 +7,7 @@ const invModel = require("../models/inventory-model");
 
 const invAddToFormValidate = {}
 
-invAddToFormValidate.addInventoryRules = async (req, res, next) => {
+invAddToFormValidate.addInventoryRules =  () => {
     return [
         // Validation rules for adding classification
         body("inv_classification")
@@ -30,6 +30,7 @@ invAddToFormValidate.addInventoryRules = async (req, res, next) => {
         body("inv_description")
             .trim()
             .notEmpty()
+            .isString()
             .withMessage("Please enter a description of the vehicle."),
 
         body("inv_price")
@@ -82,14 +83,14 @@ invAddToFormValidate.addClassificationRules =  () => {
  * ***************************** */
 invAddToFormValidate.checkAddClassificationData = async (req, res, next) => {
     try {
-        console.log('CheckaddingClassificationData was called');
+        console.log('checkAddClassificationData was called');
         const { classification_name } = req.body;
         let errors = validationResult(req);
         
         if (!errors.isEmpty()) {
             let nav = await utilities.getNav();
             let classifications = (await invModel.getClassifications()).rows;
-            res.render("", {
+            res.render("", {  
                 classifications,
                 errors,
                 title: "Add New Classification",
@@ -104,10 +105,9 @@ invAddToFormValidate.checkAddClassificationData = async (req, res, next) => {
     }
 }
 
-
 invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
     try {
-        console.log('CheckaddingClassificationData was called');
+        console.log('checkAddInventoryData was called')
         const { 
             inv_classification,
             inv_make,
@@ -148,6 +148,5 @@ invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
        next(error)  // Pass any caught errors to the error handling middleware
     }
 }
-
 
 module.exports = invAddToFormValidate

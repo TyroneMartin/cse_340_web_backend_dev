@@ -37,9 +37,9 @@ router.post(
 
 router.post(
   '/add-new-inventory',
-  // invAddToFormValidate.addInventoryRules(), // Middleware for checking
-  // invAddToFormValidate.checkAddInventoryData,   // Custom middleware for checking adding inventory data
-utilities.handleErrors(invController.postAddInventory )// Middleware for handling errors
+  invAddToFormValidate.addInventoryRules(), // Middleware for checking
+  invAddToFormValidate.checkAddInventoryData,   // Custom middleware for checking adding inventory data
+utilities.handleErrors(invController.postAddInventory)// Middleware for handling errors
 )
 
 module.exports = router

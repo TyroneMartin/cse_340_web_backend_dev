@@ -69,8 +69,16 @@ validate.loginRules = () => {
         minSymbols: 1,
       })
       .withMessage("Password does not meet requirements.")
+      // .custom(async (account_password, { req }) => {
+      //   const accountEmail = req.body.account_email;
+      //   const emailExists = await accountModel.checkExistingEmail(account_password, accountEmail); 
+      //   if (emailExists.count !== 0) {  // return the first index value
+      //     throw new Error("Email exists. Please use a different email or use the password that was created with your account");
+      //   }
+      // })
   ]
 }
+
 
 /* ******************************
  * Check data and return errors or continue to registration
