@@ -17,7 +17,7 @@ validate.registationRules = () => {
       .isLength({ min: 1 })
       .withMessage("Please provide a first name."), // on error this message is sent.
 
-    // lastnacheckAddClassificationDatame is required and must be string
+    // last name checkAddClassificationDatame is required and must be string
     body("account_lastname")
       .trim()
       .isLength({ min: 2 })
@@ -29,16 +29,12 @@ validate.registationRules = () => {
     .normalizeEmail() // Refer to validator.js docs
     .withMessage("A valid email is required.")
     .custom(async (account_email, { req }) => {
-        const account_id = req.body.account_id
-        const account = await accountModel.getAccountById(account_id) // Check if submitted email is same as existing 
-        if (account_email !== account.account_email) { // No - Check if email exists in table 
-            const emailExists = await accountModel.checkExistingEmail(account_email) // Yes - throw error 
-            if (emailExists.count !== 0) {
+        const accountEmail= req.body.account_email
+            const emailExists = await accountModel.checkExistingEmail(accountEmail, account_email) // Yes - throw error 
+            if (emailExists.count !== 0) { // I put zero, as it checks for the first index  
                 throw new Error("Email exists. Please use a different email");
             }
-        }
     }),
-
     // password is required and must be strong password
     body("account_password")
       .trim()
@@ -49,7 +45,7 @@ validate.registationRules = () => {
         minNumbers: 1,
         minSymbols: 1,
       })
-      .withMessage("Password does not meet requirements."),
+      .withMessage("Password does not meet requirements.")
   ]
 }
 
@@ -86,7 +82,8 @@ validate.checkRegData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    res.render("inventory/add-classification", {
+    // res.render("inventory/add-classification", {
+    res.render("account/register", {
       errors,
       title: "Registration",
       nav,

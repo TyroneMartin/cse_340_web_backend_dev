@@ -92,10 +92,13 @@ invCont.buildManagement = async function (req, res) {
 invCont.buildAddClassification = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
+    let classifications = (await invModel.getClassifications()).rows
+
     res.render("./inventory/add-classification", {
       nav,
       title: "Add New Classifications",
       // grid,
+      classifications: classifications,
       errors: null,
     });
   } catch (err) {
@@ -108,7 +111,7 @@ invCont.buildAddInventory = async function (req, res, next) {
   try {
     let nav = await utilities.getNav()
     let classifications = (await invModel.getClassifications()).rows
-    console.log(classifications)
+    console.log("classification nav data", classifications)
     res.render("./inventory/add-new-inventory", {
       classifications,
       nav,
@@ -135,11 +138,13 @@ invCont.postAddClassification = async function (req, res, next) {
     const classification_name = req.body.classification_name
     const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
     let nav = await utilities.getNav();
+    let classifications = (await invModel.getClassifications()).rows
     console.log("Response from db log", response)
     if(response) {
     req.flash("notice", 'Sucess! New classification was added.');
     req.flash("notice", 'You may now add a new inventor');
     res.render("./inventory/add-new-inventory", {
+      classifications,
       title,
       nav,
       errors: null,
@@ -176,7 +181,7 @@ invCont.postAddInventory = async function (req, res, next) {
       inv_color
     } = req.body;
 
-    // console.log("Data posted to Inv: ", req.body);
+    console.log("Data posted to Inv: ", req.body);
 
     const invResult = await invModel.AddInventoryIntoDatabase(
       inv_classification,

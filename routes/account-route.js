@@ -8,6 +8,7 @@ const regValidate = require('../utilities/account-validation')
 const logValidate = require('../utilities/account-validation')
 
 
+
 /* ***************************
 * Route to build inventory by login view  * Unit 4 Activity 
  * ************************** */
@@ -38,7 +39,9 @@ router.post(
   "/login",
   logValidate.loginRules(), // Middleware for validating login data
   logValidate.checkLoginData, // Middleware for checking login data
-  utilities.handleErrors(baseController.buildHome) // Middleware for handling errors
+  // utilities.handleErrors(baseController.buildHome) // keeping temporary for testig purposes
+  utilities.handleErrors(accountController.accountLogin) // Middleware for handling errors
+
 )
 
 // Export router to be used elsewhere

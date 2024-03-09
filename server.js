@@ -7,20 +7,19 @@
  * Require Statements
  *************************/
 //  & --Require the Session package and DB connection
-const pool = require('./database/')
 const utilities = require("./utilities")
+const pool = require('./database/')
 const session = require("express-session")
 const env = require("dotenv").config()
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventory-route")
 // const inventoryRoute2 = require("./site-name/inv/")
-
 const accountRoute = require("./routes/account-route")
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const router = express.Router()
 const bodyParser = require("body-parser")
-// const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser")
 // const validator = require('validator')  // not able to push to render (Error: Cannot find module 'validator')
 
 const app = express();
@@ -51,6 +50,11 @@ app.use(function(req, res, next){
 // Express Messages Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
+
+
 /* ***********************
  * View Engine and Templates 
  *************************/

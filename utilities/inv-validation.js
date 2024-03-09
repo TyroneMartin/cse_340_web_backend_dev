@@ -74,11 +74,8 @@ invAddToFormValidate.addClassificationRules =  () => {
             .withMessage("Please provide a valid classification name")
             .isAlpha()
             .withMessage("Only alphabetic characters are allowed"),
-    ];
-};  
-
-
-
+    ]
+} 
 
 /* ******************************
  * Check data 
@@ -92,7 +89,7 @@ invAddToFormValidate.checkAddClassificationData = async (req, res, next) => {
         if (!errors.isEmpty()) {
             let nav = await utilities.getNav();
             let classifications = (await invModel.getClassifications()).rows;
-            res.render("inventory/add-classification", {
+            res.render("", {
                 classifications,
                 errors,
                 title: "Add New Classification",
@@ -151,10 +148,6 @@ invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
        next(error)  // Pass any caught errors to the error handling middleware
     }
 }
-
-
-
-
 
 
 module.exports = invAddToFormValidate
