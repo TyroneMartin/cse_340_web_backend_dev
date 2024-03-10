@@ -677,6 +677,13 @@ fieldset {
   margin: 0 auto; 
 }
 
+/* shortcut */
+.formThumbnail{
+  background-image: url('../images/vehicles/no-image-tn.png');
+}
+.formImage {
+  background-image: url('../images/vehicles/no-image.png');
+}
 
 .loginButton:hover {
   background-color: #4fa15374;

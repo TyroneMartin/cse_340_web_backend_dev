@@ -37,10 +37,10 @@
            <textarea name="inv_description" value="<%= locals.inv_description %>" id="inv_description" rows="5" cols="100" placeholder="Enter accurate data to describe your car for it to be posted on the website, free of grammatical errors." pattern="[A-Za-z0-9\s\.,?!'-]+" title="Please enter a description containing alphanumeric characters, spaces, and punctuation." required></textarea>
   
            <label for="inv_image"><b>Image Path</b></label>
-           <input name="inv_image" value="<%= locals.inv_image %>" id="inv_image" type="text" required>
+           <input name="inv_image" value="<%= locals.inv_image %>" class="formImage" id="inv_image" type="text" required>
   
            <label for="inv_thumbnail"><b>Thumbnail Path</b></label>
-           <input name="inv_thumbnail" value="<%= locals.inv_thumbnail %>" id="inv_thumbnail" type="text" required>
+           <input name="inv_thumbnail" value="<%= locals.inv_thumbnail %>" class="formThumbnail" id="inv_thumbnail" type="text" required>
   
            <label for="inv_price"><b>Price $</b></label>
            <input name="inv_price"  value="<%= locals.inv_price %>" id="inv_price" type="text" pattern="[0-9]+(\.[0-9]+)?" title="Please enter numbers only" placeholder="Decimal or integer" required>
