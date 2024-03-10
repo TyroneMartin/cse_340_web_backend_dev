@@ -52,6 +52,8 @@ nav {
   margin-top: .75rem
 }
 
+
+
 nav ul {
   display: flex;
   list-style: none;
@@ -60,14 +62,22 @@ nav ul {
   align-items: center;
 }
 
-/* .homeNav a {
-  text-decoration: none;
-  color: white;
-} */
+.navBarContainer {
+  width: 100%; /* Make the container take up full width */
+}
 
-/* #review li a {
-  text-decoration: none;
-} */
+.navBarContainer nav {
+  width: 100%; /* Make the nav element take up full width */
+}
+
+.navBarContainer nav ul {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+
+
 
 nav a {
   color: white;
@@ -82,6 +92,16 @@ nav ul li {
   padding: 10px;
   /* Add padding for better visibility and aesthetics */
 }
+
+/* Apply hover effect to the navigation bar links */
+nav ul li a:hover {
+  color: #ff0000; /* Change color on hover */
+  background-color: #f0f0f0;
+  border-radius: 5px; 
+  padding: 5px 10px;
+  /* text-decoration:none;  */
+}
+
 
 body {
   margin: 35px;
@@ -154,7 +174,7 @@ img.homepage_hero_image {
 
 @media screen and (min-width: 651px) {
   nav ul li {
-    font-size: 1.4rem;
+    font-size: 0.9rem;
   }
 
   body {
@@ -165,9 +185,9 @@ img.homepage_hero_image {
 
 
 @media screen and (max-width: 652px) {
-  #add-ons {
+  /* #add-ons {
     flex-wrap: nowrap;
-  }
+  } */
 
   body {
     margin: -29px 64px 0 1px;
@@ -185,6 +205,12 @@ img.homepage_hero_image {
   section#review {
     margin-top: 100px
   }
+
+  .navBarContainer nav ul li {
+    display: block;
+  }
+
+
 
   nav ul {
     margin: 0px -77px 0px -26px;
@@ -272,6 +298,10 @@ margin: 11px -77px 0px -40px;
   hr.firstHr {
     width: 70%; 
     height: 1px;
+  }
+
+  .navBarContainer nav ul {
+    margin: 0px -77px 0px -16px;
   }
 
   .top-margin {
@@ -563,11 +593,6 @@ main h1 {
   display: none; /* Hide the full-size image by default */
 }
 
-/* Apply hover effect to the navigation bar links */
-nav ul li a:hover {
-  color: #ff0000; /* Change color on hover */
-  text-decoration: underline; /* Add underline on hover */
-}
 
 /* Account login page */
 .singleViewClassificationContent {
