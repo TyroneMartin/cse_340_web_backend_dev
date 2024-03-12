@@ -856,7 +856,7 @@ input:required:valid {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh; /* Adjust height as needed */
+  /* height: 60vh;  */
   background-color: #f0f0f0; /* Set background color */
 }
 
@@ -866,7 +866,7 @@ input:required:valid {
 
 .addCategoryImage {
   max-width: 100%; /* Ensures the image resizes properly */
-  max-height: 200px; /* Adjust maximum height as needed */
+  max-height: 130px; /* Adjust maximum height as needed */
   margin-bottom: 20px; /* Add some space below the image */
 }
 

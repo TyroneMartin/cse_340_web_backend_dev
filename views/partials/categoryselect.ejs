@@ -1,5 +1,5 @@
 <select id="inv_classification" name="inv_classification" required>
-    <option value="disabled" disabled selected>Choose a classification</option>
+    <option value="" disabled selected>Choose a classification</option>
     <%  classifications.forEach((classification) => { %>
      <option value="<%= classification.classification_id %>" > <%= classification.classification_name %>
   </option>
