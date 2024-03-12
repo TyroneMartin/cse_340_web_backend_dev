@@ -5,30 +5,8 @@ require("dotenv").config()
 
 const Util = {};
 
-// Util.buildClassificationList = async function (classification_id = null) {
-//   let data = await invModel.getClassifications()
-//   let classificationList = 
-//     '<select id="classificationList" name="classification_id">'
-//    classificationList += <option>Choose a Classification</option>
-//   data.rows.forEach((row) => {
-//   classificationList += '<option value="' + row.classification_id + '" ' 
-//   if (
-//     classification_id != null &&
-//     now.classificat_id == classification_id
-//   ) {
-//     classificationList += " selected "
-//   }
-//   classificationList += ">" + row.classification_name + "</option>"
-//   })
-//   classificationList += "</select>"
-//   return classificationList
-
-// }
-
-
-
 /* ************************
- * Constructs the nav HTML unordered list
+ * Constructs the nav list
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
@@ -226,6 +204,20 @@ Util.checkJWTToken = (req, res, next) => {
     })
   } else {
    next()
+  }
+ }
+
+
+
+ /* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
   }
  }
 

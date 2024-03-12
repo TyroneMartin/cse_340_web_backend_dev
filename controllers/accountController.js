@@ -1,6 +1,8 @@
 const accountModel = require("../models/account-model")
+const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")  // Corrected the path to utilities
 const bcrypt = require("bcryptjs") // 21.6k (gizpped: 9.8k)
+const baseController = require("../controllers/baseController")  // added for testing
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
@@ -33,14 +35,18 @@ accountController.buildLogin = async function (req, res, next) {
   /* ****************************************
  *  Process login request
  * ************************************ */
-async function accountLogin(req, res) {
+  accountController.accountLogin = async function (req, res) {
   let nav = await utilities.getNav()
-  let classifications = (await invModel.getClassifications()).rows;
+  let classifications = (await invModel.getClassifications()).rows
   const { account_email, account_password } = req.body
+  console.log(" req.body for login was data email/Pw: ", req.body)
   const accountData = await accountModel.getAccountByEmail(account_email)
+  // const grid = await baseController.buildHome() //??
+  console.log("Account data login  Process to compare the data: ", accountData)
   if (!accountData) {
    req.flash("notice", "Please check your credentials and try again.")
-   res.status(400).render("account/login", {
+   res.status(400).render("account/login", { 
+    // grid,
     title: "Login",
     nav,
     classifications,
@@ -50,6 +56,7 @@ async function accountLogin(req, res) {
    })
   return
   }
+  
   try {
    if (await bcrypt.compare(account_password, accountData.account_password)) {
    delete accountData.account_password
@@ -126,6 +133,7 @@ try {
       title: "Login",
       nav,
       grid,
+      errors: null,
       
     })
   } else {
@@ -161,6 +169,20 @@ accountController.addNewVehicleClassification = async function (req, res, next) 
       next(err);
     }
   }
+
+
+  accountController.buildManagement = async function (req, res, next) {
+    try {
+        let nav = await utilities.getNav()  
+        res.render("account/management", {
+          title: "Account Management",
+          nav,
+          errors: null,
+        })
+      } catch (err) {
+        next(err);
+      }
+    }
 
 
   

@@ -16,6 +16,8 @@ router.get("/intentional_error", invController.intentionalError)
 router.get("/detail/:inv_id", invController.getInventoryById)
 router.get( "/add-classification", invController.buildAddClassification)
 router.get( "/add-new-inventory", invController.buildAddInventory)
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 
 // Deliver management View  for /inv under varible inventoryRoute
 router.get("/", invController.buildManagement)

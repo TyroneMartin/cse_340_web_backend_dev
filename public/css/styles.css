@@ -680,12 +680,12 @@ fieldset {
 }
 
 /* shortcut */
-.formThumbnail{
+/* .formThumbnail{
   background-image: url('../images/vehicles/no-image-tn.png');
 }
 .formImage {
   background-image: url('../images/vehicles/no-image.png');
-}
+} */
 
 .loginButton:hover {
   background-color: #4fa15374;
@@ -808,7 +808,6 @@ input:required:valid {
   textarea#inv_description:valid{ 
     border: 1px solid black;
   }
-
 
 
 .FormContainer_Register .loginButton {

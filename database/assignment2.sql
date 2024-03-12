@@ -56,5 +56,10 @@ SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
 
 
 
+-- lesson 5 account types:
+UPDATE public.account 
+SET account_type = 'Admin'
+WHERE account_email = 'manager@340.edu';
+
 
 

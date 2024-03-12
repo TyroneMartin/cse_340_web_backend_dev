@@ -10,9 +10,8 @@ invCont.buildByClassificationId = async function (req, res, next) {
   try {
     const classification_id = req.params.classificationId;
     const data = await invModel.getInventoryByClassificationId(classification_id)
-    if (!data || data.length === 0) {
-      // Handle the case when data is empty or undefined
-      const error = new Error("No data found");
+    if (!data || data.length === 0) { // Handle the case when data is empty or undefined
+      const error = new Error("No data found. Please report to system admin");
       error.status = 404;
       throw error;
     }
@@ -73,13 +72,15 @@ invCont.getInventoryById = async function (req, res, next) {
 };
 
 // For management page
-invCont.buildManagement = async function (req, res) {
+invCont.buildManagement = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
-    res.render("./inventory/management", {
+    let classifications = (await invModel.getClassifications()).rows;
+    // console.log("classificationSelect function for form: ",  )
+      res.render("./inventory/management", {
       title: "Vehicle Management",
       nav,
-      // grid,
+      classifications,
       errors: null,
     });
   } catch (err) {
@@ -222,7 +223,22 @@ invCont.postAddInventory = async function (req, res, next) {
     // Handle errors
     next(err);
   }
-};
+}
+
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
 
 
 

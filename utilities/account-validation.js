@@ -30,7 +30,7 @@ validate.registationRules = () => {
     .withMessage("A valid email is required.")
     .custom(async (account_email, { req }) => {
       const accountEmail= req.body.account_email
-          const emailExists = await accountModel.checkExistingEmail(account_email) // Yes - throw error 
+          const emailExists = await accountModel.checkExistingEmail(account_email, accountEmail) // Yes - throw error 
           // if (emailExists.count !== 0) { // I put zero, as it checks for the first index  
           if (emailExists) {
           throw new Error("Email already exists. Please use a different email or sign in");
@@ -51,7 +51,8 @@ validate.registationRules = () => {
 }
 
 validate.loginRules = () => {
-  return [   // Validation rules for account registration
+  return [
+    // Validation rules for account registration
     // firstname is required and must be string
     body("account_email")
       .trim()
@@ -69,9 +70,38 @@ validate.loginRules = () => {
         minNumbers: 1,
         minSymbols: 1,
       })
+      .withMessage("Password does not meet requirements."),
+
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
       .withMessage("Password does not meet requirements.")
-  ]
-}
+       .custom(async (account_password, { req }) => {
+        try {
+          const accountEmail = req.body.account_email;
+          const password = req.body.account_password;
+
+          // if (typeof getAccountByEmail !== "function") {
+          //   throw new Error("Validation function is not defined.");
+          // }
+
+          const emailExists = await accountModel.getAccountByEmail(accountEmail, password, account_password);
+          if (!emailExists) {
+            throw new Error("email doesn\'t exists. Please use a different email or create a new account");
+          }
+          return true; // No error, validation successful
+        } catch (error) {
+          throw new Error(error.message); // Propagate the error
+        }
+      })
+  ];
+};
 
 /* ******************************
  * Check data and return errors or continue to registration
@@ -83,7 +113,6 @@ validate.checkRegData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    // res.render("inventory/add-classification", {
     res.render("account/register", {
       errors,
       title: "Registration",
