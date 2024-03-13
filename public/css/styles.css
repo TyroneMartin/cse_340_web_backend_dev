@@ -8,6 +8,10 @@
 }
 
 
+textarea {
+  font-family: monospace;
+}
+
 h1,
 p {
   font-family: 'Roboto', sans-serif;
@@ -858,6 +862,7 @@ input:required:valid {
   align-items: center;
   /* height: 60vh;  */
   background-color: #f0f0f0; /* Set background color */
+  padding-bottom: 70px;
 }
 
 .managementpage {

@@ -242,5 +242,56 @@ invCont.getInventoryJSON = async (req, res, next) => {
 
 
 
+// edit inventory view for management/employees allow items to be edited from the rendered page
+// invCont.buildEditInventory = async function (req, res, next) {  
+//   try {
+//     let nav = await utilities.getNav()
+//     let classifications = (await invModel.getClassifications()).rows
+//     console.log("classification nav data", classifications)
+//     res.render("./inventory/add-new-inventory", {
+//       classifications,
+//       nav,
+//       title: "Add New Classifications",
+//       // grid,
+//       errors: null,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+/* ***************************
+ *  Build edit inventory view for management/employees allow items to be edited from the rendered page
+ * ************************** */
+invCont.editInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id)
+  console.log("inv_id #:", inv_id); // Log the value of inv_id
+  let nav = await utilities.getNav()
+  const itemData = await invModel.getInventoryById(inv_id)  // Retrieve item data first
+  let classifications = (await invModel.getClassifications()).rows    // Then get classifications  
+  console.log('description for inv_id:', itemData.inv_description)
+  console.log("itemData:", itemData)
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    itemData,
+    nav,
+    classifications,
+    errors: null,
+    inv_id: itemData.inv_id,
+    classification_id: itemData.classification_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+  }) 
+}
+
+
 
 module.exports = invCont;

@@ -17,10 +17,11 @@ router.get("/detail/:inv_id", invController.getInventoryById)
 router.get( "/add-classification", invController.buildAddClassification)
 router.get( "/add-new-inventory", invController.buildAddInventory)
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/edit/:inv_id", invController.editInventoryView)
 
 
 // Deliver management View  for /inv under varible inventoryRoute
-router.get("/", invController.buildManagement)
+router.get("/", invController.buildManagement) 
 
 // ------------------------------------------------------------
 
