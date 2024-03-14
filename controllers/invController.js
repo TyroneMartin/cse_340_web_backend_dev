@@ -265,33 +265,43 @@ invCont.getInventoryJSON = async (req, res, next) => {
  * ************************** */
 invCont.editInventoryView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
-  console.log("inv_id #:", inv_id); // Log the value of inv_id
   let nav = await utilities.getNav()
-  const itemData = await invModel.getInventoryById(inv_id)  // Retrieve item data first
-  let classifications = (await invModel.getClassifications()).rows    // Then get classifications  
-  console.log('description for inv_id:', itemData.inv_description)
-  console.log("itemData:", itemData)
-  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
-  res.render("./inventory/edit-inventory", {
-    title: "Edit " + itemName,
-    itemData,
-    nav,
-    classifications,
-    errors: null,
-    inv_id: itemData.inv_id,
-    classification_id: itemData.classification_id,
-    inv_make: itemData.inv_make,
-    inv_model: itemData.inv_model,
-    inv_year: itemData.inv_year,
-    inv_description: itemData.inv_description,
-    inv_image: itemData.inv_image,
-    inv_thumbnail: itemData.inv_thumbnail,
-    inv_price: itemData.inv_price,
-    inv_miles: itemData.inv_miles,
-    inv_color: itemData.inv_color,
-  }) 
-}
+  try {
+    const itemData = await invModel.getInventoryById(inv_id); // Retrieve item data first
+    const classifications = (await invModel.getClassifications()).rows; // Then get classifications
+    // const classification_name = invModel.getInventoryById(classification_name)  // added ????????
+    console.log("get classification log: ", classifications)
 
+    console.log('classification Id pk:= classification_name:', itemData.classification_name);
+    console.log("itemData:", itemData);
+    
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+    
+    res.render("./inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      itemData,
+      nav,
+      classifications,
+      classification_name: itemData.classification_name, /// added ????
+      errors: null,
+      inv_id: itemData.inv_id,
+      classification_id: itemData.classification_id, // Including classification_id here
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_description: itemData.inv_description,
+      inv_image: itemData.inv_image,
+      inv_thumbnail: itemData.inv_thumbnail,
+      inv_price: itemData.inv_price,
+      inv_miles: itemData.inv_miles,
+      inv_color: itemData.inv_color,
+    })
+  } catch (error) {
+    console.error("editInventoryView error: ", error)
+    // Handle error appropriately
+    next(error);
+  }
+}
 
 
 module.exports = invCont;

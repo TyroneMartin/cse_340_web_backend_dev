@@ -39,6 +39,43 @@ async function getInventoryByClassificationId(classification_id) {
 async function getInventoryById(inv_id) {
   try {
     const data = await pool.query(
+      // `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_year, inv_color, inv_miles, inv_image, inv_thumbnail, classification_id, classification_name
+      // FROM public.inventory 
+      // WHERE inv_id = $1`,
+`SELECT 
+i.inv_id, 
+i.inv_price, 
+i.inv_description, 
+i.inv_make, 
+i.inv_model, 
+i.inv_year, 
+i.inv_color, 
+i.inv_miles, 
+i.inv_image, 
+i.inv_thumbnail, 
+c.classification_name
+FROM 
+public.inventory AS i
+JOIN
+public.classification AS c
+ON 
+i.classification_id = c.classification_id
+WHERE 
+i.inv_id = $1;`
+     
+      [inv_id]
+    );
+    return data.rows[0]; //  index with reture the first ID from inv_id, so only one row is returned
+  } catch (error) {
+    console.error("getInventoryById error: ", error);
+    throw error;
+  }
+}
+
+
+async function getInventoryById(inv_id) {
+  try {
+    const data = await pool.query(
       `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_year, inv_color, inv_miles, inv_image, inv_thumbnail 
       FROM public.inventory 
       WHERE inv_id = $1`,
