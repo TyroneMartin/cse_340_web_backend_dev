@@ -7,65 +7,73 @@ const invModel = require("../models/inventory-model");
 
 const invAddToFormValidate = {}
 
-invAddToFormValidate.addInventoryRules = async (req, res, next) => {
+invAddToFormValidate.addInventoryRules =  () => {
+    console.log("Adding inventory rules was called for server validation");
+
     return [
         // Validation rules for adding classification
         body("inv_classification")
-        .trim()
-        .notEmpty()
-        .withMessage("Please aselelct from the list or add a new classification"),
-
+            .trim()
+            .notEmpty()
+            .withMessage("Please select from the list or add a new classification"),
+    
         body("inv_make")
             .trim()
             .notEmpty()
-            .withMessage("Please provide a valid classification name")
+            .withMessage("Please provide a valid make for your car")
             .isAlpha()
             .withMessage("Only alphabetic characters are allowed"),
-
+    
         body("inv_model")
             .trim()
             .isLength({ min: 3 })
             .withMessage("A minimum of three characters is required for the model."),
-
+    
         body("inv_description")
             .trim()
             .notEmpty()
+            .withMessage("Please provide descridption for your car")
+            .isString()
             .withMessage("Please enter a description of the vehicle."),
-
+    
         body("inv_price")
             .trim()
             .notEmpty()
+            .withMessage("Please enter a estimated value of your car.")
             .isNumeric()
-            .withMessage("Please enter the vehicle's price.")
+            .withMessage("Please enter the vehicle's price as digits.")
             .isFloat({ min: 0 })
             .withMessage("Price must be a positive number."),
-
+    
         body("inv_year")
             .trim()
             .notEmpty()
+            .withMessage("Please enter the year of your vehicle.")
             .isNumeric()
-            .withMessage("Please enter the vehicle's year.")
+            .withMessage("Please enter the vehicle's year as digits.")
             .isLength({ min: 4, max: 4 })
             .withMessage("Year must be a 4-digit number."),
-
+    
         body("inv_miles")
             .trim()
             .notEmpty()
+            .withMessage("Please enter the your vehicle's mileage.")
             .isNumeric()
-            .withMessage("Please enter the vehicle's miles, digits only."),
-
+            .withMessage("Please enter the vehicle's miles as digits."),
+    
         body("inv_color")
             .trim()
             .notEmpty()
+            .withMessage("Please enter the your vehicle's color.")
             .isAlpha()
-            .withMessage("Please enter the vehicle's color."),
-    ];
-};
+            .withMessage("Please enter the vehicle's color using alphabetic characters."),
+    ]
+}
 
 
 // Middleware function for adding classification rules
 invAddToFormValidate.addClassificationRules =  () => {
-    console.log("Adding classification rules was called");
+    console.log("Adding classification rules was called for server validation");
     return [
         // Validation rules for adding classification
         body("classification_name")
@@ -74,25 +82,22 @@ invAddToFormValidate.addClassificationRules =  () => {
             .withMessage("Please provide a valid classification name")
             .isAlpha()
             .withMessage("Only alphabetic characters are allowed"),
-    ];
-};  
-
-
-
+    ]
+} 
 
 /* ******************************
  * Check data 
  * ***************************** */
 invAddToFormValidate.checkAddClassificationData = async (req, res, next) => {
     try {
-        console.log('CheckaddingClassificationData was called');
+        console.log('checkAddClassificationData was called');
         const { classification_name } = req.body;
         let errors = validationResult(req);
         
         if (!errors.isEmpty()) {
             let nav = await utilities.getNav();
             let classifications = (await invModel.getClassifications()).rows;
-            res.render("inventory/add-classification", {
+            res.render("inventory/add-classification", {  
                 classifications,
                 errors,
                 title: "Add New Classification",
@@ -107,10 +112,9 @@ invAddToFormValidate.checkAddClassificationData = async (req, res, next) => {
     }
 }
 
-
 invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
     try {
-        console.log('CheckaddingClassificationData was called');
+        console.log('checkAddInventoryData was called')
         const { 
             inv_classification,
             inv_make,
@@ -128,10 +132,10 @@ invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
         if (!errors.isEmpty()) {
             let nav = await utilities.getNav();
             let classifications = (await invModel.getClassifications()).rows;
-            res.render("inventory/add-classification", {
+            res.render("inventory/add-new-inventory", {
                 classifications,
                 errors,
-                title: "Add New Classification",
+                title: "Add New Classifications",
                 nav,
                 inv_classification,
                 inv_make,
@@ -151,6 +155,62 @@ invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
        next(error)  // Pass any caught errors to the error handling middleware
     }
 }
+
+/* ******************************
+ * Check data for update/management View
+ * ***************************** */
+
+invAddToFormValidate.checkUpdateData = async (req, res, next) => {
+    const inv_id = parseInt(req.params.inv_id);
+    try {
+        const itemData = await invModel.getInventoryById(inv_id); // Retrieve item data first
+        const classifications = (await invModel.getClassifications()).rows; // Then get classifications
+        console.log('Utilities update/management View check was called');
+        const { 
+            inv_classification,
+            inv_make,
+            inv_model,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_year,
+            inv_miles,
+            inv_color
+        } = req.body;
+        let errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            let nav = await utilities.getNav();
+
+            const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+            res.render("./inventory/edit-inventory", {
+                title: "Edit " + itemName,
+                classifications,
+                inv_id,
+                nav,
+                inv_classification,
+                inv_make,
+                inv_model,
+                inv_description,
+                inv_image,
+                inv_thumbnail,
+                inv_price,
+                inv_year,
+                inv_miles,
+                inv_color,
+                errors: null,
+            });
+        } else {
+            next(); // Proceed to the next middleware
+        }
+    } catch (error) {
+        next(error); // Pass any caught errors to the error handling middleware
+    }
+};
+
+
+
 
 
 

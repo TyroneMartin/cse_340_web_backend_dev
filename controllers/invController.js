@@ -10,9 +10,8 @@ invCont.buildByClassificationId = async function (req, res, next) {
   try {
     const classification_id = req.params.classificationId;
     const data = await invModel.getInventoryByClassificationId(classification_id)
-    if (!data || data.length === 0) {
-      // Handle the case when data is empty or undefined
-      const error = new Error("No data found");
+    if (!data || data.length === 0) { // Handle the case when data is empty or undefined
+      const error = new Error("No data found. Please report to system admin");
       error.status = 404;
       throw error;
     }
@@ -73,13 +72,15 @@ invCont.getInventoryById = async function (req, res, next) {
 };
 
 // For management page
-invCont.buildManagement = async function (req, res) {
+invCont.buildManagement = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
-    res.render("./inventory/management", {
+    let classifications = (await invModel.getClassifications()).rows;
+    // console.log("classificationSelect function for form: ",  )
+      res.render("./inventory/management", {
       title: "Vehicle Management",
       nav,
-      // grid,
+      classifications,
       errors: null,
     });
   } catch (err) {
@@ -92,10 +93,13 @@ invCont.buildManagement = async function (req, res) {
 invCont.buildAddClassification = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
+    let classifications = (await invModel.getClassifications()).rows
+
     res.render("./inventory/add-classification", {
       nav,
       title: "Add New Classifications",
       // grid,
+      classifications: classifications,
       errors: null,
     });
   } catch (err) {
@@ -108,7 +112,7 @@ invCont.buildAddInventory = async function (req, res, next) {
   try {
     let nav = await utilities.getNav()
     let classifications = (await invModel.getClassifications()).rows
-    console.log(classifications)
+    console.log("classification nav data", classifications)
     res.render("./inventory/add-new-inventory", {
       classifications,
       nav,
@@ -121,32 +125,30 @@ invCont.buildAddInventory = async function (req, res, next) {
   }
 };
 
-
-
-
-
 /* ****************************************
 * Access data from req.body, which pulls the data from the form... used for post method
 * *************************************** */
 invCont.postAddClassification = async function (req, res, next) {
   try {
     
-    const title = "Add New Classification"
+    const title = "2Add New Classification"
     const classification_name = req.body.classification_name
     const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
     let nav = await utilities.getNav();
+    let classifications = (await invModel.getClassifications()).rows
     console.log("Response from db log", response)
     if(response) {
     req.flash("notice", 'Sucess! New classification was added.');
     req.flash("notice", 'You may now add a new inventor');
     res.render("./inventory/add-new-inventory", {
+      classifications,
       title,
       nav,
       errors: null,
     });
   } else {
       req.flash("notice", 'Please enter a valid character. The field cannot be left empty.');
-      res.render("./inventory/add-new-inventory", {
+      res.render("./inventory/add-classification", {
         title,
         nav,
         errors: null,
@@ -176,7 +178,7 @@ invCont.postAddInventory = async function (req, res, next) {
       inv_color
     } = req.body;
 
-    // console.log("Data posted to Inv: ", req.body);
+    console.log("Data posted to Inv: ", req.body);
 
     const invResult = await invModel.AddInventoryIntoDatabase(
       inv_classification,
@@ -201,7 +203,7 @@ invCont.postAddInventory = async function (req, res, next) {
       );
       res.render("./inventory/add-new-inventory", {
         classifications,
-        title: "Added Vehicle",
+        title: "Success! Vehicle Added.",
         nav,
         errors: null,
       });
@@ -221,7 +223,147 @@ invCont.postAddInventory = async function (req, res, next) {
     // Handle errors
     next(err);
   }
-};
+}
+
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
+
+/* ***************************
+ *  Build edit inventory view for management/employees allow items to be edited from the rendered page
+ * ************************** */
+invCont.editInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  try {
+    const itemData = await invModel.getInventoryById(inv_id); // Retrieve item data first
+    const classifications = (await invModel.getClassifications()).rows; // Then get classifications
+    // const classification_name = invModel.getInventoryById(classification_name)  // added ????????
+    console.log("get classification log: ", classifications)
+
+    console.log('classification Id pk:= classification_id:', itemData.classification_id);
+    console.log("itemData:", itemData);
+    
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+    
+    res.render("./inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      itemData,
+      nav,
+      classifications,
+      errors: null,
+      inv_id: itemData.inv_id,
+      selectedCategory: itemData.classification_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_description: itemData.inv_description,
+      inv_image: itemData.inv_image,
+      inv_thumbnail: itemData.inv_thumbnail,
+      inv_price: itemData.inv_price,
+      inv_miles: itemData.inv_miles,
+      inv_color: itemData.inv_color,
+    })
+  } catch (error) {
+    console.error("editInventoryView error: ", error)
+    // Handle error appropriately
+    next(error);
+  }
+}
+
+
+// Build page update was sucessful 
+// invCont.updateInventoryView = async function (req, res, next) {
+//   try {
+//     let nav = await utilities.getNav();
+//     let classifications = (await invModel.getClassifications()).rows
+
+//     res.render("./inventory/update", {
+//       nav,
+//       title: "Success!!",
+//       // grid,
+//       classifications: classifications,
+//       errors: null,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  console.log("updateInventory:", updateInventory)
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body
+  const updateResult = await invModel.updateInventory(
+    inv_id,  
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+  console.log("updateInventory:", updateInventory)
+
+
+  if (updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    res.redirect("/inv/")
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the insert failed.")
+    res.status(501).render("inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+    })
+  }
+}
 
 
 

@@ -1,6 +1,10 @@
 const accountModel = require("../models/account-model")
+const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")  // Corrected the path to utilities
 const bcrypt = require("bcryptjs") // 21.6k (gizpped: 9.8k)
+const baseController = require("../controllers/baseController")  // added for testing
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 
 const accountController = {} // Added accountController as an empty object
@@ -27,6 +31,43 @@ accountController.buildLogin = async function (req, res, next) {
       next(err);
     }
   }
+
+  /* ****************************************
+ *  Process login request
+ * ************************************ */
+  accountController.accountLogin = async function (req, res) {
+  let nav = await utilities.getNav()
+  let classifications = (await invModel.getClassifications()).rows
+  const { account_email, account_password } = req.body
+  console.log(" req.body for login was data email/Pw: ", req.body)
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  // const grid = await baseController.buildHome() //??
+  console.log("Account data login  Process to compare the data: ", accountData)
+  if (!accountData) {
+   req.flash("notice", "Please check your credentials and try again.")
+   res.status(400).render("account/login", { 
+    // grid,
+    title: "Login",
+    nav,
+    classifications,
+    errors: null,
+    account_email,
+
+   })
+  return
+  }
+  
+  try {
+   if (await bcrypt.compare(account_password, accountData.account_password)) {
+   delete accountData.account_password
+   const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+   res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+   return res.redirect("/account/")
+   }
+  } catch (error) {
+   return new Error('Access Forbidden')
+  }
+ }
 
 
 /* ****************************************
@@ -92,6 +133,7 @@ try {
       title: "Login",
       nav,
       grid,
+      errors: null,
       
     })
   } else {
@@ -127,6 +169,20 @@ accountController.addNewVehicleClassification = async function (req, res, next) 
       next(err);
     }
   }
+
+
+  accountController.buildManagement = async function (req, res, next) {
+    try {
+        let nav = await utilities.getNav()  
+        res.render("account/management", {
+          title: "Account Management",
+          nav,
+          errors: null,
+        })
+      } catch (err) {
+        next(err);
+      }
+    }
 
 
   

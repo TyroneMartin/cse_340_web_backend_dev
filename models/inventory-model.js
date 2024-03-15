@@ -39,9 +39,9 @@ async function getInventoryByClassificationId(classification_id) {
 async function getInventoryById(inv_id) {
   try {
     const data = await pool.query(
-      `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_color, inv_miles, inv_image, inv_thumbnail 
+      `SELECT inv_id, inv_price, inv_description, inv_make, inv_model, inv_year, inv_color, inv_miles, inv_image, inv_thumbnail, classification_id
       FROM public.inventory 
-      WHERE inv_id = $1`,
+      WHERE inv_id = $1`,  
       [inv_id]
     );
     return data.rows[0]; //  index with reture the first ID from inv_id, so only one row is returned
@@ -98,16 +98,46 @@ async function AddInventoryIntoDatabase(classification_id, inv_make, inv_model, 
 }
 
 
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+async function updateInventory(
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
+  try {
+    const sql =
+      "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+    const data = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
 
-// async function AddInventoryIntoDatabase(inventoryData) { 
-//   try {
-//     const sql = "INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *";
-//     return await pool.query(sql, inventoryData);
-//   } catch (error) {
-//     console.error("Add new Inventory:", error.message);
-//     throw error;
-//   }
-// }
 
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, addNewVehicleClassification, AddClassificationIntoDatabase, AddInventoryIntoDatabase }
+
+
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, addNewVehicleClassification, AddClassificationIntoDatabase, AddInventoryIntoDatabase, updateInventory }

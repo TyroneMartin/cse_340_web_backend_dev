@@ -16,9 +16,13 @@ router.get("/intentional_error", invController.intentionalError)
 router.get("/detail/:inv_id", invController.getInventoryById)
 router.get( "/add-classification", invController.buildAddClassification)
 router.get( "/add-new-inventory", invController.buildAddInventory)
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/edit/:inv_id", invController.editInventoryView)
+router.get("/update/inv_id", invController.updateInventory)
 
-// Deliver management View  for /inv under varible inventoryRoute
-router.get("/", invController.buildManagement)
+
+// Deliver main route for management View  for /inv under varible inventoryRoute
+router.get("/", invController.buildManagement) 
 
 // ------------------------------------------------------------
 
@@ -37,9 +41,17 @@ router.post(
 
 router.post(
   '/add-new-inventory',
-  // invAddToFormValidate.addInventoryRules(), // Middleware for checking
-  // invAddToFormValidate.checkAddInventoryData,   // Custom middleware for checking adding inventory data
-utilities.handleErrors(invController.postAddInventory )// Middleware for handling errors
+  invAddToFormValidate.addInventoryRules(), // Middleware for checking
+  invAddToFormValidate.checkAddInventoryData,   // Custom middleware for checking adding inventory data
+utilities.handleErrors(invController.postAddInventory)// Middleware for handling errors
+)
+
+
+router.post(
+"/update/:inv_id", 
+invAddToFormValidate.addInventoryRules(), // Middleware for checking
+invAddToFormValidate.checkUpdateData,   // Custom middleware for checking adding updated data
+utilities.handleErrors(invController.updateInventory)
 )
 
 module.exports = router

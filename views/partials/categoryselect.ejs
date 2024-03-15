@@ -1,0 +1,21 @@
+<select id="inv_classification" name="inv_classification" required>
+    <% if (typeof selectedCategory !== 'undefined' && selectedCategory !== 0) { %>
+        <option value="" disabled>Choose a classification</option>
+        <% classifications.forEach((classification) => { %>
+            <% const selected = (classification.classification_id == selectedCategory) ? "selected" : ""; %>
+            <option value="<%= classification.classification_id %>" <%= selected %>><%= classification.classification_name %></option>
+        <% }) %>
+    <% } else { %>
+        <option value="" selected disabled>Choose a classification</option>
+        <% classifications.forEach((classification) => { %>
+            <option value="<%= classification.classification_id %>"><%= classification.classification_name %></option>
+        <% }) %>
+    <% } %>
+</select>
+
+
+
+
+
+
+
