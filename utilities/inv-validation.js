@@ -22,7 +22,7 @@ invAddToFormValidate.addInventoryRules =  () => {
             .notEmpty()
             .withMessage("Please provide a valid make for your car")
             .isAlpha()
-            .withMessage("Only alphabetic characters are allowed"),
+            .withMessage("Only alphabetic characters are allowed on make"),
     
         body("inv_model")
             .trim()
@@ -161,9 +161,9 @@ invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
  * ***************************** */
 
 invAddToFormValidate.checkUpdateData = async (req, res, next) => {
-    const inv_id = parseInt(req.params.inv_id);
+    //const inv_id = parseInt(req.params.inv_id);
     try {
-        const itemData = await invModel.getInventoryById(inv_id); // Retrieve item data first
+        //const itemData = await invModel.getInventoryById(inv_id); // Retrieve item data first
         const classifications = (await invModel.getClassifications()).rows; // Then get classifications
         console.log('Utilities update/management View check was called');
         const { 
@@ -176,32 +176,39 @@ invAddToFormValidate.checkUpdateData = async (req, res, next) => {
             inv_price,
             inv_year,
             inv_miles,
-            inv_color
+            inv_color,
+            inv_id
         } = req.body;
+        console.log("req.body in validation: ", req.body)
         let errors = validationResult(req);
         
         if (!errors.isEmpty()) {
+            console.log("there are errors in validation")
             let nav = await utilities.getNav();
 
-            const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+            const itemName = `${inv_make} ${inv_model}`;
             res.render("./inventory/edit-inventory", {
+
                 title: "Edit " + itemName,
-                classifications,
-                inv_id,
                 nav,
-                inv_classification,
+                classifications,
+                selectedCategory: inv_classification,
+                // classificationSelect: classificationSelect,
+                errors,
+                inv_id,
                 inv_make,
                 inv_model,
+                inv_year,
                 inv_description,
                 inv_image,
                 inv_thumbnail,
                 inv_price,
-                inv_year,
                 inv_miles,
                 inv_color,
-                errors: null,
-            });
+                inv_classification
+              });
         } else {
+            console.log("all good with validation")
             next(); // Proceed to the next middleware
         }
     } catch (error) {

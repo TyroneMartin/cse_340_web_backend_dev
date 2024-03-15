@@ -282,88 +282,94 @@ invCont.editInventoryView = async function (req, res, next) {
   }
 }
 
-
 // Build get view for the updated view. once edits are made
-// invCont.updateInventoryView = async function (req, res, next) {
+// invCont.updateInventory = async function (req, res, next) {
 //   try {
-//     let nav = await utilities.getNav();
-//     let classifications = (await invModel.getClassifications()).rows
-
+//     let nav = await utilities.getNav()
 //     res.render("./inventory/update", {
 //       nav,
 //       title: "Success!!",
 //       // grid,
-//       classifications: classifications,
 //       errors: null,
-//     });
+//     })
 //   } catch (err) {
-//     next(err);
+//     next(err)
 //   }
-// };
+// }
 
 
 /* ***************************
  *  Update Inventory Data
  * ************************** */
 invCont.updateInventory = async function (req, res, next) {
-  console.log("updateInventory:", updateInventory)
-  let nav = await utilities.getNav()
-  const {
-    inv_id,
-    inv_make,
-    inv_model,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_year,
-    inv_miles,
-    inv_color,
-    classification_id,
-  } = req.body
-  const updateResult = await invModel.updateInventory(
-    inv_id,  
-    inv_make,
-    inv_model,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_year,
-    inv_miles,
-    inv_color,
-    classification_id
-  )
-  console.log("updateInventory:", updateInventory)
+  try {
+    //const itemData = await invModel.getInventoryById(inv_id);
+    let nav = await utilities.getNav()
+    let classifications = (await invModel.getClassifications()).rows
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      inv_classification,
+    } = req.body
+    console.log("req.body: ", req.body)
+    const updateResult = await invModel.updateInventory(
+      inv_id,  
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      inv_classification
+    )
+    console.log("updated-Inventory to database:", updateResult)
 
+    if (updateResult) {
+      const itemName = updateResult.inv_make + " " + updateResult.inv_model
+      req.flash("notice", `The ${itemName} was successfully updated.`)
+      res.redirect("/inv/")
+    } else {
+      // const classificationSelect = await utilities.buildClassificationList(classification_id)
+      const itemName = `${inv_make} ${inv_model}`
+      req.flash("notice", "Sorry, the insert failed.")
+      // res.status(501).render("inventory/edit-inventory", {
+      res.status(501).render("./inventory/edit-inventory", {
 
-  if (updateResult) {
-    const itemName = updateResult.inv_make + " " + updateResult.inv_model
-    req.flash("notice", `The ${itemName} was successfully updated.`)
-    res.redirect("/inv/")
-  } else {
-    const classificationSelect = await utilities.buildClassificationList(classification_id)
-    const itemName = `${inv_make} ${inv_model}`
-    req.flash("notice", "Sorry, the insert failed.")
-    res.status(501).render("inventory/edit-inventory", {
-    title: "Edit " + itemName,
-    nav,
-    classificationSelect: classificationSelect,
-    errors: null,
-    inv_id,
-    inv_make,
-    inv_model,
-    inv_year,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_miles,
-    inv_color,
-    classification_id
-    })
+        title: "Edit " + itemName,
+        nav,
+        classifications,
+        selectedCategory: classification_id,
+        // classificationSelect: classificationSelect,
+        errors: null,
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
+      })
+    }
+  } catch (err) {
+    next(err);
   }
 }
+
 
 
 
