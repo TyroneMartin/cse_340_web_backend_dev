@@ -240,26 +240,6 @@ invCont.getInventoryJSON = async (req, res, next) => {
 }
 
 
-
-
-// edit inventory view for management/employees allow items to be edited from the rendered page
-// invCont.buildEditInventory = async function (req, res, next) {  
-//   try {
-//     let nav = await utilities.getNav()
-//     let classifications = (await invModel.getClassifications()).rows
-//     console.log("classification nav data", classifications)
-//     res.render("./inventory/add-new-inventory", {
-//       classifications,
-//       nav,
-//       title: "Add New Classifications",
-//       // grid,
-//       errors: null,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 /* ***************************
  *  Build edit inventory view for management/employees allow items to be edited from the rendered page
  * ************************** */
@@ -272,7 +252,7 @@ invCont.editInventoryView = async function (req, res, next) {
     // const classification_name = invModel.getInventoryById(classification_name)  // added ????????
     console.log("get classification log: ", classifications)
 
-    console.log('classification Id pk:= classification_name:', itemData.classification_name);
+    console.log('classification Id pk:= classification_id:', itemData.classification_id);
     console.log("itemData:", itemData);
     
     const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
@@ -282,10 +262,9 @@ invCont.editInventoryView = async function (req, res, next) {
       itemData,
       nav,
       classifications,
-      classification_name: itemData.classification_name, /// added ????
       errors: null,
       inv_id: itemData.inv_id,
-      classification_id: itemData.classification_id, // Including classification_id here
+      selectedCategory: itemData.classification_id,
       inv_make: itemData.inv_make,
       inv_model: itemData.inv_model,
       inv_year: itemData.inv_year,
@@ -302,6 +281,91 @@ invCont.editInventoryView = async function (req, res, next) {
     next(error);
   }
 }
+
+
+// Build page update was sucessful 
+// invCont.updateInventoryView = async function (req, res, next) {
+//   try {
+//     let nav = await utilities.getNav();
+//     let classifications = (await invModel.getClassifications()).rows
+
+//     res.render("./inventory/update", {
+//       nav,
+//       title: "Success!!",
+//       // grid,
+//       classifications: classifications,
+//       errors: null,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  console.log("updateInventory:", updateInventory)
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body
+  const updateResult = await invModel.updateInventory(
+    inv_id,  
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+  console.log("updateInventory:", updateInventory)
+
+
+  if (updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    res.redirect("/inv/")
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the insert failed.")
+    res.status(501).render("inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+    })
+  }
+}
+
+
 
 
 module.exports = invCont;

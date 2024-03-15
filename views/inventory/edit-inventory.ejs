@@ -11,15 +11,13 @@
 
 <%- messages() %>
 
-
 <p>Be sure to ensure all data is accurate before updating it in the database.</p>
 <form id="editInventoryForm" action="/inv/update" method="post">
   <fieldset class="modifyingInventoryPageForm">
     <legend>Edit Vehicle's Information</legend>
     <div class="modifyingInventoryFormContainer">
       <label for="inv_classification">Select the classification:</label>
-      <%- include('../partials/categoryselect', {classifications}) %>
-
+      <%- include('../partials/categoryselect', {classifications, selectedCategory}) %>
 
       <label for="inv_make"><b>Make</b></label>
       <input name="inv_make" id="inv_make" value="<%= locals.inv_make %>" type="text" pattern=".{3,}" title="Please enter at least 3 characters" placeholder="Min of 3 characters" required>
@@ -28,11 +26,7 @@
       <input name="inv_model" id="inv_model" value="<%= locals.inv_model %>" type="text" pattern=".{3,}" title="Please enter at least 3 characters" placeholder="Min of 3 characters" required>
 
       <label for="inv_description"><b>Model</b></label>
-      <textarea name="inv_description" id="inv_description" rows="5" cols="100" placeholder="Enter accurate data to describe your car for it to be posted on the website, free of grammatical errors." title="Please enter a description containing alphanumeric characters, spaces, and punctuation." required>
-        <%#= itemData.inv_description %>
-        <%# pattern="[A-Za-z0-9\s\.,?!'-]+" %>
-        <%=locals.inv_description %>
-      </textarea>
+      <textarea name="inv_description" id="inv_description" rows="5" cols="100" placeholder="Enter accurate data to describe your car for it to be posted on the website, free of grammatical errors." title="Please enter a description containing alphanumeric characters, spaces, and punctuation." required><%=locals.inv_description %></textarea>
 
       <label for="inv_image"><b>Image Path</b></label>
       <input name="inv_image" value="<%= locals.inv_image ? locals.inv_image : '/images/vehicles/no-image.png' %>" class="formImage" id="inv_image" type="text" required>
@@ -52,12 +46,14 @@
       <label for="inv_color"><b>Color</b></label>
       <input name="inv_color" value="<%= locals.inv_color %>" id="inv_color" type="text" pattern="[A-Za-z]+" title="Please enter letters only" required>
 
-      <input disabled type="submit" class="edit_inventoryForm_Button" value="Update Vehicle">
-
       <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" 
       <% } %>>
 
+      <button disabled type="submit" class="edit_inventoryForm_Button">Update Vehicle</button> 
 
     </div>
   </fieldset>
 </form>
+
+<script src="/js/inv-update.js"></script>
+

@@ -156,4 +156,65 @@ invAddToFormValidate.checkAddInventoryData = async (req, res, next) => {
     }
 }
 
+/* ******************************
+ * Check data for update/management View
+ * ***************************** */
+
+invAddToFormValidate.checkUpdateData = async (req, res, next) => {
+    const inv_id = parseInt(req.params.inv_id);
+    try {
+        const itemData = await invModel.getInventoryById(inv_id); // Retrieve item data first
+        const classifications = (await invModel.getClassifications()).rows; // Then get classifications
+        console.log('Utilities update/management View check was called');
+        const { 
+            inv_classification,
+            inv_make,
+            inv_model,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_year,
+            inv_miles,
+            inv_color
+        } = req.body;
+        let errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            let nav = await utilities.getNav();
+
+            const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+            res.render("./inventory/edit-inventory", {
+                title: "Edit " + itemName,
+                classifications,
+                inv_id,
+                nav,
+                inv_classification,
+                inv_make,
+                inv_model,
+                inv_description,
+                inv_image,
+                inv_thumbnail,
+                inv_price,
+                inv_year,
+                inv_miles,
+                inv_color,
+                errors: null,
+            });
+        } else {
+            next(); // Proceed to the next middleware
+        }
+    } catch (error) {
+        next(error); // Pass any caught errors to the error handling middleware
+    }
+};
+
+
+
+
+
+
+
+
+
 module.exports = invAddToFormValidate

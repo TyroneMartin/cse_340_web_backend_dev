@@ -18,7 +18,7 @@
         <legend>Add a new Vehicle</legend>
         <div class="containerAddInventory">
            <label for="inv_classification">Select the classification:</label>
-           <%- include('../partials/categoryselect', {classifications}) %>
+           <%- include('../partials/categoryselect', {classifications, seletctedCategory}) %>
            
            <label for="inv_make"><b>Make</b></label>
            <input name="inv_make" id="inv_make"  value="<%= locals.inv_make %>" type="text" pattern=".{3,}" title="Please enter at least 3 characters" placeholder="Min of 3 characters" required>
