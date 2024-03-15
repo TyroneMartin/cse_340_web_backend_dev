@@ -7,7 +7,6 @@ const invAddToFormValidate = require("../utilities/inv-validation")
 
 const utilities = require("../utilities/") 
 
-
 /* ***************************
  * Get method to render pages
  * ************************** */
@@ -19,8 +18,10 @@ router.get( "/add-new-inventory", invController.buildAddInventory)
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 router.get("/edit/:inv_id", invController.editInventoryView)
 router.get("/update/", invController.updateInventory)
-
-
+// router.get(
+//   "/delete/:inv_id",
+//   utilities.handleErrors(invController.deleteView)
+// )
 
 
 // Deliver main route for management View  for /inv under varible inventoryRoute
@@ -55,5 +56,11 @@ invAddToFormValidate.addInventoryRules(), // Middleware for checking
 invAddToFormValidate.checkUpdateData,   // Custom middleware for checking adding updated data
 utilities.handleErrors(invController.updateInventory)
 )
+
+
+// router.post("/delete", 
+// utilities.handleErrors(invController.deleteItem)
+// )
+
 
 module.exports = router
