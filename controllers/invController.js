@@ -283,7 +283,7 @@ invCont.editInventoryView = async function (req, res, next) {
 }
 
 
-// Build page update was sucessful 
+// Build get view for the updated view. once edits are made
 // invCont.updateInventoryView = async function (req, res, next) {
 //   try {
 //     let nav = await utilities.getNav();
