@@ -282,25 +282,6 @@ invCont.editInventoryView = async function (req, res, next) {
   }
 }
 
-// Build get view for the updated view. once edits are made
-// invCont.updateInventory = async function (req, res, next) {
-//   try {
-//     let nav = await utilities.getNav()
-//     res.render("./inventory/update", {
-//       nav,
-//       title: "Success!!",
-//       // grid,
-//       errors: null,
-//     })
-//   } catch (err) {
-//     next(err)
-//   }
-// }
-
-
-/* ***************************
- *  Update Inventory Data
- * ************************** */
 invCont.updateInventory = async function (req, res, next) {
   try {
     //const itemData = await invModel.getInventoryById(inv_id);
@@ -369,6 +350,27 @@ invCont.updateInventory = async function (req, res, next) {
     next(err);
   }
 }
+
+/* ***************************
+ *  deleteView Inventory Data
+ * ************************** */
+
+invCont.deleteView = async function (req, res, next) {
+  try {
+    // const itemName = `${inv_make} ${inv_model}`
+    let nav = await utilities.getNav()
+    res.render("./inventory/delete-confirm", {
+      nav,
+      // title: "Delete" + itemName,
+      title: "Delete to fix with name of model", 
+      errors: null,
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+
 
 
 

@@ -8,6 +8,9 @@
 }
 
 
+
+
+
 textarea {
   font-family: monospace;
 }
@@ -1060,4 +1063,72 @@ textarea:required
 .error-message {
   color: #dc3545;
   font-size: 12px;
+}
+
+
+
+
+/* Delete view confirmation styling */
+
+/* Style for h1 */
+.deleteViewInventoryForm_Title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Style for flash notice */
+.flash-notice-for-confirmation-of-deletion {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+/* Style for error messages */
+.notices_for_confirmation_of_del {
+  color: red;
+}
+
+/* Style for form field labels */
+.deleteInventoryFormContainerlabel {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Style for form inputs */
+.deleteInventoryFormContainer input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style for delete vehicle button */
+.delete_inventoryForm_Button {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.delete_inventoryForm_Button:hover {
+  background-color: #ff6666;
+}
+
+/* Style for cancel button */
+.cancelButton {
+  background-color: #ddd;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #ccc;
 }
