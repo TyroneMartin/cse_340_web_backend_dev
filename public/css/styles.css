@@ -7,10 +7,6 @@
   box-sizing: border-box;
 }
 
-
-
-
-
 textarea {
   font-family: monospace;
 }
@@ -868,9 +864,9 @@ input:required:valid {
   padding-bottom: 70px;
 }
 
-.managementpage {
+/* .managementpage {
   text-align: center;
-}
+} */
 
 .addCategoryImage {
   max-width: 100%; /* Ensures the image resizes properly */
@@ -1046,7 +1042,6 @@ input[type="text"] {
 }
 
 
-
 select:valid{ 
   border: 3px solid black;
 }
@@ -1064,8 +1059,6 @@ textarea:required
   color: #dc3545;
   font-size: 12px;
 }
-
-
 
 
 /* Delete view confirmation styling */
@@ -1119,6 +1112,23 @@ textarea:required
   background-color: #ff6666;
 }
 
+
+/* Button for update inventory page */
+.edit_inventoryForm_Button{
+  background-color: #2b5320;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.dedit_inventoryForm_Button:hover {
+  background-color: #c88f8f;
+}
+
+
 /* Style for cancel button */
 .cancelButton {
   background-color: #ddd;
@@ -1132,3 +1142,49 @@ textarea:required
 .cancelButton:hover {
   background-color: #ccc;
 }
+
+
+/* Additional styling for the management view drop-down select list */
+/* Style for select list */
+#inv_classification {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  /* width: auto;  */
+}
+
+/* Style for table */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#inventoryDisplay th, #inventoryDisplay td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+#inventoryDisplay th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Style for noscript message */
+noscript {
+  display: block;
+  margin-top: 20px;
+  color: red;
+}
+
+/* Alternate row colors */
+#inventoryDisplay tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light gray background for even rows */
+}
+
+#inventoryDisplay tr:nth-child(odd) {
+  background-color: #ffffff; /* White background for odd rows */
+}
+

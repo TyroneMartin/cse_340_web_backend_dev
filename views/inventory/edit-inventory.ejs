@@ -48,9 +48,9 @@
 
       <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" 
       <% } %>>
-
+      <p><b>Update buttons is disabled until changes are made.</b></p>
       <button disabled type="submit" class="edit_inventoryForm_Button">Update Vehicle</button> 
-      <p>Buttons is disabled until changes are made.</p>
+      <button type="button" onclick="window.location.href='/inv/'" class="cancelButton">Cancel</button>          
     </div>
   </fieldset>
 </form>

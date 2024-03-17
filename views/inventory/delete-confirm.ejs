@@ -31,9 +31,11 @@
     
           <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" 
           <% } %>>
-    
+  
           <button type="submit" class="delete_inventoryForm_Button">Delete Vehicle</button>
-          <button type="button" onclick="window.location.href='/inv/'" class="cancelButton">Cancel</button>          <p>Confirm Deletion - Once the button is pushed, the deletion is permanent.</p>        </div>
+          <button type="button" onclick="window.location.href='/inv/'" class="cancelButton">Cancel</button>          
+          <p>Confirm Deletion - Once the button is pushed, the deletion is permanent.</p>        
+        </div>
       </fieldset>
     </form>
         
