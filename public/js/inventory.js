@@ -21,15 +21,16 @@
    console.log('There was a problem: ', error.message) 
   }) 
  })
-
-
+ 
  //AJAX DATA
   // Build inventory items into HTML table components and inject into DOM 
 function buildInventoryList(data) { 
     let inventoryDisplay = document.getElementById("inventoryDisplay"); 
     // Set up the table labels 
     let dataTable = '<thead>'; 
-    dataTable += '<tr><th>Vehicle Name3</th><td>&nbsp;</td><td>&nbsp;</td></tr>'; 
+    // dataTable += '<tr><th>Vehicle Name3</th><td>&nbsp;</td><td>&nbsp;</td></tr>'; 
+    dataTable += '<tr><th colspan="3">Vehicle Name3</th></tr>'; 
+
     dataTable += '</thead>'; 
     // Set up the table body 
     dataTable += '<tbody>'; 

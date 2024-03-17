@@ -371,60 +371,35 @@ invCont.deleteView = async function (req, res, next) {
 
 invCont.deleteItem = async function (req, res, next) {
   try {
-    const itemData = await invModel.getInventoryById(inv_id);
-    let nav = await utilities.getNav()
-    // let classifications = (await invModel.getClassifications()).rows
-    const {
-      inv_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_price
-
-    } = req.body
-    console.log("req.body for deleted items: ", req.body)
-    const updateResult = await invModel.deleteInventoryItem(
-      itemData,
-      inv_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_price
-    )
-    console.log("Items that is deleted from database:", updateResult)
-
+    const inv_id = parseInt(req.body.inv_id);
+    let nav = await utilities.getNav();
+    const { inv_make, inv_model, inv_year, inv_price } = req.body;
+    console.log("req.body for deleted items: ", req.body);
+    const updateResult = await invModel.deleteInventoryItem(inv_id);
+    console.log("delete item inv_id:", inv_id)
     if (updateResult) {
-      const itemName = updateResult.inv_make + " " + updateResult.inv_model
-      req.flash("notice", `The ${itemName} was successfully deleted from the database.`)
-      res.redirect("/inv/")
+      const itemName = inv_make + " " + inv_model;
+      req.flash("notice", `The ${itemName} was successfully deleted from the database.`);
+      res.redirect("/inv/");
     } else {
-      // const classificationSelect = await utilities.buildClassificationList(classification_id)
-      const itemName = `${inv_make} ${inv_model}`
-      req.flash("notice", "Sorry, the insert failed.")
-      res.status(501).render("./inventory/edit-inventory", {
-        title: "Edit " + itemName,
+      req.flash("notice", `Sorry, the deletion failed.`);
+      res.render("./inventory/delete-confirm", {
+        title: `Delete ${inv_make} ${inv_model}`,
         nav,
-        // classifications,
-        selectedCategory: classification_id,
-        // errors: null,
-        error,
-        inv_id,
-        inv_make,
-        inv_model,
-        inv_year,
-        inv_description,
-        inv_image,
-        inv_thumbnail,
+        errors: null,
+        inv_make, 
+        inv_model, 
+        inv_year, 
         inv_price,
-        inv_miles,
-        inv_color,
-        classification_id
-      })
+        inv_id
+      });
     }
   } catch (err) {
     next(err);
   }
 }
+
+
 
 
 

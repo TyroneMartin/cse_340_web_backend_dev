@@ -1159,7 +1159,17 @@ textarea:required
 /* Style for table */
 #inventoryDisplay {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  text-align: center;
+}
+
+td a {
+  color: rgb(0, 0, 0); 
+  text-decoration: underline; 
+}
+
+td a:hover {
+  color: darkblue; 
 }
 
 #inventoryDisplay th, #inventoryDisplay td {

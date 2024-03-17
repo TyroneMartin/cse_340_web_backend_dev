@@ -51,17 +51,17 @@ utilities.handleErrors(invController.postAddInventory)// Middleware for handling
 )
 
 
-router.post(
-"/update", 
+router.post(  // Edit View for post method
+"/update",  
 invAddToFormValidate.addInventoryRules(), // Middleware for checking
 invAddToFormValidate.checkUpdateData,   // Custom middleware for checking adding updated data
 utilities.handleErrors(invController.updateInventory)
 )
 
 
-// router.post("/delete", 
-// utilities.handleErrors(invController.deleteItem)
-// )
+router.post("/delete", 
+utilities.handleErrors(invController.deleteItem)
+)
 
 
 module.exports = router
