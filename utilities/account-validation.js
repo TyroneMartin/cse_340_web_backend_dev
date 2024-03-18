@@ -128,7 +128,6 @@ validate.checkRegData = async (req, res, next) => {
 }
 
 validate.checkLoginData = async (req, res, next) => {
-  // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
     const { account_email, account_password  } = req.body
     let errors = []
     errors = validationResult(req)
@@ -140,7 +139,6 @@ validate.checkLoginData = async (req, res, next) => {
         nav,
         account_email,
         account_password,
-        // grid,
       })
       return 
     }
