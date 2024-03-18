@@ -11,7 +11,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     const classification_id = req.params.classificationId;
     const data = await invModel.getInventoryByClassificationId(classification_id)
     if (!data || data.length === 0) { // Handle the case when data is empty or undefined
-      const error = new Error("No data found. Please report to system admin");
+      const error = new Error("No data found. You may report broken link to the system admin!");
       error.status = 404;
       throw error;
     }

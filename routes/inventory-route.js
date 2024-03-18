@@ -25,8 +25,8 @@ router.get(
 )
 
 
-// Deliver main route for management View  for /inv under varible inventoryRoute
-router.get("/", invController.buildManagement) 
+// Deliver main route for management View  for /inv/ under varible inventoryRoute
+router.get("/", utilities.checkLogin, invController.buildManagement) 
 
 // ------------------------------------------------------------
 
