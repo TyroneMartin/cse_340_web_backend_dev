@@ -21,10 +21,6 @@ router.get('/account', utilities.handleErrors(accountController.accountLogin))
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 
-
-// router.post('/login', utilities.handleErrors(accountController.buildVerifiedView))
-// replace 
-
 /* ***************************
 * Proccess Registration * Unit 4 Activity  middleware
  * ************************** */
@@ -33,7 +29,6 @@ router.post(
   regValidate.registationRules(),
   regValidate.checkRegData,   // custom middleware for checking registration data
   utilities.handleErrors(accountController.registerAccount)
-
 )
 
 router.post(

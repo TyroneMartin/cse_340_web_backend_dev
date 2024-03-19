@@ -54,6 +54,14 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 app.use(cookieParser())
 app.use(utilities.checkJWTToken)
 
+// Route to handle logout
+app.get('/account/logout', function(req, res) { // the "req" request the redirect page
+  res.clearCookie('jwt')
+  res.redirect('/account/login')
+})
+
+
+
 
 /* ***********************
  * View Engine and Templates 

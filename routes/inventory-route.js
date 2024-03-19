@@ -10,26 +10,29 @@ const utilities = require("../utilities/")
 /* ***************************
  * Get method to render pages
  * ************************** */
-router.get("/type/:classificationId", invController.buildByClassificationId)  // Route to build inventory by classification view
-router.get("/intentional_error", invController.intentionalError)
-router.get("/detail/:inv_id", invController.getInventoryById)
-router.get( "/add-classification", invController.buildAddClassification)
-router.get( "/add-new-inventory", invController.buildAddInventory)
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId))  // Route to build inventory by classification view
+router.get("/intentional_error", utilities.handleErrors(invController.intentionalError))
+router.get("/detail/:inv_id", utilities.handleErrors(invController.getInventoryById))
+router.get( "/add-classification", utilities.handleErrors(invController.buildAddClassification))
+router.get( "/add-new-inventory", utilities.handleErrors(invController.buildAddInventory))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-router.get("/edit/:inv_id", invController.editInventoryView)
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView))
+
 router.get("/update/", 
 utilities.handleErrors(invController.updateInventory))
+
 router.get(
   "/delete/:inv_id",
   utilities.handleErrors(invController.deleteView)
 )
 
 
+
+
 // Deliver main route for management View  for /inv/ under varible inventoryRoute
-router.get("/", utilities.checkLogin, invController.buildManagement) 
+router.get("/", utilities.checkJWTToken, utilities.checkLogin, utilities.handleErrors(invController.buildManagement))
 
 // ------------------------------------------------------------
-
 
 /* ***************************
  * Post to handle and process the data received

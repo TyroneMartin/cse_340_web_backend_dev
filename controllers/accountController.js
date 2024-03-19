@@ -37,19 +37,17 @@ accountController.buildLogin = async function (req, res, next) {
  * ************************************ */
   accountController.accountLogin = async function (req, res) {
   let nav = await utilities.getNav()
-  let classifications = (await invModel.getClassifications()).rows
+  // let classifications = (await invModel.getClassifications()).rows
   const { account_email, account_password } = req.body
   console.log(" req.body for login was data email/Pw: ", req.body)
   const accountData = await accountModel.getAccountByEmail(account_email)
-  // const grid = await baseController.buildHome() //??
   console.log("Account data login  Process to compare the data: ", accountData)
   if (!accountData) {
    req.flash("notice", "Please check your credentials and try again.")
    res.status(400).render("account/login", { 
-    // grid,
     title: "Login",
     nav,
-    classifications,
+    // classifications,
     errors: null,
     account_email,
 
