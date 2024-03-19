@@ -208,7 +208,6 @@ Util.checkJWTToken = (req, res, next) => {
  }
 
 
-
  /* ****************************************
  *  Check Login
  * ************************************ */
@@ -221,6 +220,24 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
-  
 
-module.exports = Util;
+ // Middleware function to check account type  accountData
+Util.checkAccountType = async function (req, res, next) {
+  // Check if token exists
+  console.log("checkAccountType()")
+    if (res.locals.loggedin) {
+      const account = res.locals.accountData
+      if (account.account_type === 'Employee' || account.account_type === 'Admin' ) {
+      // Allow access to administrative views
+      next()
+      } else {
+        req.flash("notice", "You do not have permission to access this resource.")
+        res.redirect("/account/login")
+      }
+    } else {
+      req.flash("notice","You do not have permission to access this resource, you may try logging?")
+      res.redirect("/account/login")
+    } 
+  }
+
+module.exports = Util

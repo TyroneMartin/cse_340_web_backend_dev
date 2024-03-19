@@ -13,16 +13,18 @@ const utilities = require("../utilities/")
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId))  // Route to build inventory by classification view
 router.get("/intentional_error", utilities.handleErrors(invController.intentionalError))
 router.get("/detail/:inv_id", utilities.handleErrors(invController.getInventoryById))
-router.get( "/add-classification", utilities.handleErrors(invController.buildAddClassification))
-router.get( "/add-new-inventory", utilities.handleErrors(invController.buildAddInventory))
+router.get( "/add-classification",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddClassification))
+router.get( "/add-new-inventory",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddInventory))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView))
+router.get("/edit/:inv_id",  utilities.checkAccountType, utilities.handleErrors(invController.editInventoryView))
 
 router.get("/update/", 
+utilities.checkAccountType,
 utilities.handleErrors(invController.updateInventory))
 
 router.get(
   "/delete/:inv_id",
+  utilities.checkAccountType,
   utilities.handleErrors(invController.deleteView)
 )
 
@@ -30,7 +32,7 @@ router.get(
 
 
 // Deliver main route for management View  for /inv/ under varible inventoryRoute
-router.get("/", utilities.checkJWTToken, utilities.checkLogin, utilities.handleErrors(invController.buildManagement))
+router.get("/", utilities.checkJWTToken, utilities.checkAccountType, utilities.checkLogin, utilities.handleErrors(invController.buildManagement))
 
 // ------------------------------------------------------------
 
@@ -41,6 +43,7 @@ router.get("/", utilities.checkJWTToken, utilities.checkLogin, utilities.handleE
 router.post(
   '/add-classification',
   invAddToFormValidate.addClassificationRules(), // Middleware for checking
+  utilities.checkAccountType, // check the account type
   invAddToFormValidate.checkAddClassificationData,   // Custom middleware for checking adding inventory data
   utilities.handleErrors(invController.postAddClassification) // Middleware for handling errors
 );
@@ -49,6 +52,7 @@ router.post(
 router.post(
   '/add-new-inventory',
   invAddToFormValidate.addInventoryRules(), // Middleware for checking
+  utilities.checkAccountType, // check the account type
   invAddToFormValidate.checkAddInventoryData,   // Custom middleware for checking adding inventory data
 utilities.handleErrors(invController.postAddInventory)// Middleware for handling errors
 )
@@ -63,6 +67,7 @@ utilities.handleErrors(invController.updateInventory)
 
 
 router.post("/delete", 
+utilities.checkAccountType, // check the account type
 utilities.handleErrors(invController.deleteItem)
 )
 
