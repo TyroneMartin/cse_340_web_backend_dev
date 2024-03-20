@@ -36,51 +36,45 @@ accountController.buildLogin = async function (req, res, next) {
  *  Process login request
  * ************************************ */
   accountController.accountLogin = async function (req, res) {
-  let nav = await utilities.getNav()
-  // let classifications = (await invModel.getClassifications()).rows
-  const { account_email, account_password } = req.body
-  console.log(" req.body for login was data email/Pw: ", req.body)
-  const accountData = await accountModel.getAccountByEmail(account_email)
-  console.log("Account data login  Process to compare the data:")
-  if (!accountData) {
-    console.log("There is no matching account data found: ", accountData)
-   req.flash("notice", "Please check your credentials and try again.")
-   res.status(400).render("account/login", { 
-    title: "Login",
-    nav,
-    // classifications,
-    errors: null,
-    account_email,
+    try {
+        let nav = await utilities.getNav();
+        const grid = await utilities.buildLogin(); // Generate login form HTML
+        const { account_email, account_password } = req.body;
+        console.log(" req.body for login was data email/Pw: ", req.body);
 
-   })
-  return
-  }
-  
-  try {
-   if (await bcrypt.compare(account_password, accountData.account_password)) {
-    console.log("password match")
-   delete accountData.account_password
-   const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
-   res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-   return res.redirect("/account/")
-   } else {
-    const grid = await utilities.buildLogin()
-    req.flash("notice", "Please check your credentials and try again.")
-   res.status(400).render("account/login", { 
-    title: "Login",
-    nav,
-    grid,
-    // classifications,
-    errors: null,
-    account_email,
+        // Check if the account exists
+        const accountData = await accountModel.getAccountByEmail(account_email);
+        if (!accountData) {
+            console.log("Email doesn not matach, redirect to account registration");
+            // Redirect to the registration page if the account doesn't exist
+            req.flash("notice", "Your email doesn\'t exsist, try registory for an accoun.");
+            req.flash("notice", "You may also try to log in with a different email");
+            return res.redirect("/account/register");
+        }
 
-   })
-  return
-   }
-  } catch (error) {
-   return new Error('Access Forbidden')
-  }
- }
+        // Compare passwords
+        const passwordMatch = await bcrypt.compare(account_password, accountData.account_password);
+        if (passwordMatch) {
+            console.log("password match")
+            delete accountData.account_password;
+            const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
+            res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+            return res.redirect("/account/");
+        } else {
+            req.flash("notice", "Please check your credentials and try again.");
+            return res.status(400).render("account/login", {
+                title: "Login",
+                nav,
+                grid,
+                errors: null,
+                account_email,
+            });
+        }
+    } catch (error) {
+        console.error("Error occurred:", error);
+        return res.status(500).send("Internal Server Error");
+    }
+};
 
 
 /* ****************************************
