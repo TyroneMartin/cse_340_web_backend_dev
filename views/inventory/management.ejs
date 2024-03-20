@@ -6,18 +6,18 @@
     } %>
         
     <%- messages() %>
-        
-    <%# grid %>
 
     <div id="managementPageContainer">
       <div class="managementpage">
           <img src="/images/site/category_add-512.webp" class="addCategoryImage" alt="Category image showing a plus to a database table">
           <div class="managementpage_button_contin">
+            <%# Buttons %>
               <a href="/inv/add-classification" class="button_for_link">Add New Classification</a>
               <a href="/inv/add-new-inventory" class="button_for_link">Add New Vehicle</a>
           </div>
           <h2>Manage Inventory</h2>
           <p>Choose a Classification to see those inventory items.</p>
+          <%# Drop down menu %>
           <%- include('../partials/categoryselect', {classifications}) %>     <%# Select list %>
           <table id="inventoryDisplay"></table>
           <noscript>JavaScript must be enabled to use this page.</noscript>

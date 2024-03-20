@@ -224,18 +224,17 @@ Util.checkJWTToken = (req, res, next) => {
  // Middleware function to check account type  accountData
 Util.checkAccountType = async function (req, res, next) {
   // Check if token exists
-  console.log("checkAccountType()")
+  console.log("checkAccountType() was called")
     if (res.locals.loggedin) {
       const account = res.locals.accountData
-      if (account.account_type === 'Employee' || account.account_type === 'Admin' ) {
-      // Allow access to administrative views
+      if (account.account_type === 'Employee' || account.account_type === 'Admin' ) { // Allow access to administrative views
       next()
       } else {
         req.flash("notice", "You do not have permission to access this resource.")
         res.redirect("/account/login")
       }
     } else {
-      req.flash("notice","You do not have permission to access this resource, you may try logging?")
+      req.flash("notice","You do not have permission to access this resource. You may try logging in.")
       res.redirect("/account/login")
     } 
   }
