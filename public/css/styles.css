@@ -1215,3 +1215,90 @@ noscript {
   background-color: #ffffff; /* White background for odd rows */
 }
 
+/* Account management Portal update    */
+
+/* Styles for h1 and flash notice */
+.accountMang_View_updatePage {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.accountMang_View_updatePage fieldset {
+border: 4px solid #919191;
+}
+
+.accountMang_View_updatePage .flash-notice {
+  background-color: #ffc107;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+/* Styles for error messages */
+.accountMang_View_updatePage .notice {
+  color: #dc3545;
+  list-style-type: none;
+  padding: 0;
+}
+
+.accountMang_View_updatePage .notice li {
+  margin-bottom: 5px;
+}
+
+/* Styles for form inputs and buttons */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.accountUpdate-btn,
+.changePw_update-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.accountUpdate-btn:hover,
+.changePw_update-btn:hover {
+  background-color: #0056b3;
+}
+.containerForAcctMagntForm{
+  width: 100%;
+}
+
+.accountInfoUpdateSection {
+  width: 100%;
+}
+
+/* Media query for larger screens */
+@media screen and (min-width: 768px) {
+  /* .containerForAcctMagntForm {
+    display: flex;
+    justify-content: space-between;
+  } */
+  .accountDetailsForm,
+  .passwordUpdateForm {
+    width: calc(50% - 10px); /* Subtracting margin */
+    margin: 0px 0px 0px 60px;
+  }
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 767px) {
+  /* Display forms in single column */
+  .accountDetailsForm,
+  .passwordUpdateForm {
+    width: 100%;
+  }
+}

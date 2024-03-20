@@ -70,37 +70,8 @@ validate.loginRules = () => {
         minNumbers: 1,
         minSymbols: 1,
       })
-      .withMessage("Password does not meet requirements."),
-
-    body("account_password")
-      .trim()
-      .isStrongPassword({
-        minLength: 12,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
       .withMessage("Password does not meet requirements.")
-       .custom(async (account_password, { req }) => {
-        try {
-          const accountEmail = req.body.account_email;
-          const password = req.body.account_password;
-
-          // if (typeof getAccountByEmail !== "function") {
-          //   throw new Error("Validation function is not defined.");
-          // }
-
-          const emailExists = await accountModel.getAccountByEmail(accountEmail, password, account_password);
-          if (!emailExists) {
-            throw new Error("email doesn\'t exists. Please use a different email or create a new account");
-          }
-          return true; // No error, validation successful
-        } catch (error) {
-          throw new Error(error.message); // Propagate the error
-        }
-      })
-  ];
+  ]
 };
 
 /* ******************************

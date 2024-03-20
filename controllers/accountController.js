@@ -2,7 +2,7 @@ const accountModel = require("../models/account-model")
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")  // Corrected the path to utilities
 const bcrypt = require("bcryptjs") // 21.6k (gizpped: 9.8k)
-const baseController = require("../controllers/baseController")  // added for testing
+const baseController = require("../controllers/baseController")  
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
@@ -28,7 +28,7 @@ accountController.buildLogin = async function (req, res, next) {
         errors: null,
       })
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
@@ -41,8 +41,9 @@ accountController.buildLogin = async function (req, res, next) {
   const { account_email, account_password } = req.body
   console.log(" req.body for login was data email/Pw: ", req.body)
   const accountData = await accountModel.getAccountByEmail(account_email)
-  console.log("Account data login  Process to compare the data: ", accountData)
+  console.log("Account data login  Process to compare the data:")
   if (!accountData) {
+    console.log("There is no matching account data found: ", accountData)
    req.flash("notice", "Please check your credentials and try again.")
    res.status(400).render("account/login", { 
     title: "Login",
@@ -57,10 +58,24 @@ accountController.buildLogin = async function (req, res, next) {
   
   try {
    if (await bcrypt.compare(account_password, accountData.account_password)) {
+    console.log("password match")
    delete accountData.account_password
    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
    return res.redirect("/account/")
+   } else {
+    const grid = await utilities.buildLogin()
+    req.flash("notice", "Please check your credentials and try again.")
+   res.status(400).render("account/login", { 
+    title: "Login",
+    nav,
+    grid,
+    // classifications,
+    errors: null,
+    account_email,
+
+   })
+  return
    }
   } catch (error) {
    return new Error('Access Forbidden')
@@ -84,7 +99,7 @@ accountController.buildRegister = async function (req, res, next) {
         errors: null,
       })
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
 
@@ -124,7 +139,7 @@ try {
       `Congratulations, you're registered ${account_firstname} ${ account_lastname}. Please log in.`
 
     )
-    // console.log("Flash notice", req.flash("notice"));
+    // console.log("Flash notice", req.flash("notice"))
 
     const grid = await utilities.buildLogin()
     res.status(201).render("account/login", {
@@ -164,10 +179,9 @@ accountController.addNewVehicleClassification = async function (req, res, next) 
         errors: null,
       })
     } catch (err) {
-      next(err);
+      next(err)
     }
   }
-
 
   accountController.buildManagement = async function (req, res, next) {
     try {
@@ -178,11 +192,31 @@ accountController.addNewVehicleClassification = async function (req, res, next) 
           errors: null,
         })
       } catch (err) {
-        next(err);
+        next(err)
       }
     }
 
 
+    accountController.accountUpdate = async function (req, res, next) {
+      console.log("accountUpdate() was called")
+      try {
+
+        // const account_id = parseInt(req.params.account_id)
+        const account_id = req.params.account_id // Retrieve account_id from request parameters
+        const accountData = await accountModel.updateAccountData(account_id)
+        let nav = await utilities.getNav() 
+        res.render("account/update", { 
+          title: "Account Management Portal",
+          nav,
+          accountData,
+          // account_id: accountData.account_id,
+          errors: null,
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
+    
   
   module.exports = accountController 
   

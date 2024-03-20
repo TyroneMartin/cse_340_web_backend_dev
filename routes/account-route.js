@@ -16,9 +16,14 @@ router.get('/login', utilities.handleErrors(accountController.buildLogin))
 // Deliver registration View 
 router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
-router.get('/account', utilities.handleErrors(accountController.accountLogin))
+router.get('/update/:account_id', utilities.handleErrors(accountController.accountUpdate))
 
+// router.get('/update', utilities.handleErrors(accountController.accountUpdate)) //test
+
+
+// router for management route 
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+
 
 
 /* ***************************
@@ -37,6 +42,19 @@ router.post(
   logValidate.checkLoginData, // Middleware for checking login data
   utilities.handleErrors(accountController.accountLogin) // Middleware for handling errors
 )
+
+
+
+
+
+
+// // Change password
+// router.post('/account/change-password', function(req, res) {
+//   // Logic to change password
+// });
+
+
+
 
 // Export router to be used elsewhere
 module.exports = router
