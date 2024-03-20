@@ -1302,3 +1302,45 @@ border: 4px solid #919191;
     width: 100%;
   }
 }
+
+
+/* Account Management */
+/* Styles for h1 and flash notice */
+.accountMang_View {
+  color: #333;
+  font-size: 24px;
+}
+
+
+/* Styles for account type specific content */
+/* Styles for buttons */
+.accountMangementbtn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.accountMangementbtn:hover {
+  background-color: #0056b3;
+}
+
+
+/* Styles for the button */
+.backToMgtbtn {
+  display: inline-block;
+  padding: 15px 30px; /* Increase padding to make the button bigger */
+  font-size: 22px; /* Increase font size */
+  background-color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backToMgtbtn:hover {
+  background-color: #0057b365;
+}
+

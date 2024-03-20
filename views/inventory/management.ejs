@@ -13,13 +13,15 @@
           <div class="managementpage_button_contin">
             <%# Buttons %>
               <a href="/inv/add-classification" class="button_for_link">Add New Classification</a>
-              <a href="/inv/add-new-inventory" class="button_for_link">Add New Vehicle</a>
+              <a href="/inv/add-new-inventory" class="button_for_link">Add New Vehicle</a>        
           </div>
           <h2>Manage Inventory</h2>
           <p>Choose a Classification to see those inventory items.</p>
           <%# Drop down menu %>
           <%- include('../partials/categoryselect', {classifications}) %>     <%# Select list %>
           <table id="inventoryDisplay"></table>
+          <p>Click button to go back to the management portal</p>
+          <button type="button" onclick="window.location.href='/account/'" class="backToMgtbtn">🔙</button>  
           <noscript>JavaScript must be enabled to use this page.</noscript>
           <script src="/js/inventory.js"></script>
         </div>
