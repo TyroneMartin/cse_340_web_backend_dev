@@ -13,24 +13,15 @@ const utilities = require("../utilities/")
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId))  // Route to build inventory by classification view
 router.get("/intentional_error", utilities.handleErrors(invController.intentionalError))
 router.get("/detail/:inv_id", utilities.handleErrors(invController.getInventoryById))
-router.get( "/add-classification",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddClassification))
-router.get( "/add-new-inventory",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddInventory))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// routes for managers and employees only
 router.get("/edit/:inv_id",  utilities.checkAccountType, utilities.handleErrors(invController.editInventoryView))
-
-router.get("/update/", 
-utilities.checkAccountType,
-utilities.handleErrors(invController.updateInventory))
-
-router.get(
-  "/delete/:inv_id",
-  utilities.checkAccountType,
-  utilities.handleErrors(invController.deleteView)
+router.get( "/add-new-inventory",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddInventory))
+router.get( "/add-classification",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddClassification))
+router.get("/update/", utilities.checkAccountType, utilities.handleErrors(invController.updateInventory))
+router.get("/delete/:inv_id", utilities.checkAccountType, utilities.handleErrors(invController.deleteView)
 )
-
-
-
-
 // Deliver main route for management View  for /inv/ under varible inventoryRoute
 router.get("/", utilities.checkJWTToken, utilities.checkAccountType, utilities.checkLogin, utilities.handleErrors(invController.buildManagement))
 

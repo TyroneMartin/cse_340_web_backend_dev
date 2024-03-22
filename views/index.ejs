@@ -1,5 +1,13 @@
+<div class="flash-notice"><%= messages.notice %></div>
+<%- messages() %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
 <div>
-  <%- messages() %>
   <h1>Welcome to CSE Motors!</h1>
   <div class="heroContainer">
     <section class="call_To_Action_section">

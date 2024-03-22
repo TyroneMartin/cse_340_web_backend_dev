@@ -18,8 +18,6 @@ router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
 router.get('/update/:account_id', utilities.handleErrors(accountController.accountUpdate))
 
-// router.get('/update', utilities.handleErrors(accountController.accountUpdate)) //test
-
 
 // router for management route 
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
@@ -44,16 +42,17 @@ router.post(
 )
 
 
+// Update user info post method
+router.post('/update', 
+// logValidate.checkLoginData, // Middleware for checking login data
+utilities.handleErrors(accountController.accountUpdatePost) 
+)
 
-
-
-
-// // Change password
-// router.post('/account/change-password', function(req, res) {
-//   // Logic to change password
-// });
-
-
+// Change password
+router.post('/update-password', 
+// logValidate.checkLoginData, // Middleware for checking login data
+utilities.handleErrors(accountController.accountUpdatePostPasswordChange) 
+)
 
 
 // Export router to be used elsewhere

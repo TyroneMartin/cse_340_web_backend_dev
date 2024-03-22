@@ -43,7 +43,7 @@ async function getAccountByEmail (account_email) {
 }
 
 
-async function updateAccountData(account_id) {
+async function getAccountUpdateData(account_id) {
   try {
     const result = await pool.query(
       'SELECT account_email, account_firstname, account_lastname, account_type, account_password FROM account WHERE account_id = $1',
@@ -56,6 +56,41 @@ async function updateAccountData(account_id) {
 }
 
 
+/* *****************************
+*   Update account Post method
+* *************************** */
+
+// async function updateAccountData(account_firstname, account_lastname, account_email, account_password, account_id) {
+//   try {
+//     const sql = "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3, account_password = $4 WHERE account_id = $5 RETURNING *";
+//     const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_password, account_id]);
+// [account_id]
+//     return result.rows; // Return the updated row(s)
+//   } catch (error) {
+//     return error.message;
+//   }
+// }
+
+async function updateAccountData(account_firstname, account_lastname, account_email, account_id) {
+  try {
+    const sql = "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *";
+    const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id]);
+    return result.rows; // Return the updated row(s)
+  } catch (error) {
+    return error.message;
+  }
+}
+
+async function updateAccountPassword(account_password, account_id) {
+  try {
+    const sql = "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *";
+    const result = await pool.query(sql, [account_password, account_id]);
+    return result.rows; // Return the updated row(s)
+  } catch (error) {
+    return error.message;
+  }
+}
 
 
-  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccountData}
+
+  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, getAccountUpdateData, updateAccountData, updateAccountPassword}
