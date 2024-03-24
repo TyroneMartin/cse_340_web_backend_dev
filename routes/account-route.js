@@ -44,13 +44,16 @@ router.post(
 
 // Update user info post method
 router.post('/update', 
-// logValidate.checkLoginData, // Middleware for checking login data
+regValidate.accountDataUpdateRules(),
+logValidate.accountDataCheck,
+
 utilities.handleErrors(accountController.accountUpdatePost) 
 )
 
 // Change password
 router.post('/update-password', 
-// logValidate.checkLoginData, // Middleware for checking login data
+regValidate.accountPasswordRules(),
+logValidate.accountPasswordCheck,
 utilities.handleErrors(accountController.accountUpdatePostPasswordChange) 
 )
 

@@ -191,7 +191,6 @@ accountController.buildManagement = async function (req, res, next) {
 accountController.accountUpdate = async function (req, res, next) {
   console.log("accountUpdate() was called")
   try {
-
     // const account_id = parseInt(req.params.account_id)
     const account_id = parseInt(req.params.account_id) // Retrieve account_id from request parameters
     const accountData = await accountModel.getAccountUpdateData(account_id)
@@ -202,7 +201,7 @@ accountController.accountUpdate = async function (req, res, next) {
       errors: null,
       account_firstname: accountData.account_firstname,
       account_lastname: accountData.account_lastname,
-      account_email:accountData.account_email,
+      account_email: accountData.account_email,
       account_id: account_id,
       // account_id: accountData.account_id,
     })
@@ -215,6 +214,70 @@ accountController.accountUpdate = async function (req, res, next) {
 /* ****************************************
 *  Process for update(Post Method) data to the database
 * *************************************** */
+// accountController.accountUpdatePost = async function (req, res) {
+//   console.log("Account update post was called")
+//   try {
+//     const nav = await utilities.getNav() // Await the getNav() function
+//     // const accountData= parseInt(req.body.account_id) // convert to int
+//     const { account_firstname, account_lastname, account_email, account_id } = req.body
+//     console.log("account update data", req.body)
+
+//     const account = await accountModel.getAccountById(account_id)
+//     // Check if submitted email is same as existing
+//     if (account_email != account.account_email) {
+//       console.log("There's a new email")
+//       // No - Check if email exists in table
+//       const emailExists = await accountModel.checkExistingEmail(account_email)
+//       if (!emailExists) {
+//         const AccountData = await accountModel.updateAccountData(
+//           account_firstname,
+//           account_lastname,
+//           account_email,
+//           account_id,
+//         )
+//         console.log("updateAccountData was called: ")
+
+//         if (AccountData) {
+//           req.flash(
+//             "notice",
+//             `Congratulations ${account_firstname}, your account information has been updated.`
+//           )
+//           res.redirect("/account/")
+//         } else if (account_email === account.account_email) {
+//           const AccountData = await accountModel.updateAccountData(
+//             account_firstname,
+//             account_lastname,
+//             account_email,
+//             account_id,
+//           )
+//           if (AccountData) {
+//             req.flash(
+//               "notice",
+//               `Congratulations ${account_firstname}, your account information has been updated.`
+//             )
+//             res.redirect("/account/")
+
+//           } else {
+//             req.flash("notice", "Sorry, the update failed.")
+//             res.render("account/update", {
+//               title: "Account Management",
+//               // accountData,
+//               nav,
+//               error: null,
+//               account_firstname,
+//               account_lastname,
+//               account_email,
+//               account_id,
+//             })
+//           }
+//         }
+//       } }  
+//     } catch (err) {
+//       console.error("error updating account info: ", err)
+//     }
+//   }
+
+
 accountController.accountUpdatePost = async function (req, res, next) {
   try {
     const nav = await utilities.getNav() // Await the getNav() function
@@ -258,38 +321,36 @@ accountController.accountUpdatePost = async function (req, res, next) {
 *  Process account password update Post method
 * *************************************** */
 accountController.accountUpdatePostPasswordChange = async function (req, res, next) {
-  try {
-    
-    const nav = await utilities.getNav() // Await the getNav() function
-    // const accountData= parseInt(req.body.account_id) // convert to int
-    const {account_firstname, account_password, account_id } = req.body
-    console.log("account password update request made", req.body)
-    const hashedPassword = await bcrypt.hashSync(account_password, 10)
-    const AccountData = await accountModel.updateAccountPassword(
-      hashedPassword,
-      account_id,
-      )
-    console.log("updateAccountPassword was called: ")
-
-    if (AccountData) {
-      req.flash(
-        "notice",
-        `Congratulations ${account_firstname}, your password was updated successfully.`
-      )
-      res.redirect("/account/")
-    } else {
-      req.flash("notice", "Sorry, the update failed.")
-      res.render("account/update", {
-        title: "Account Management",
-        nav,
-        error: null,
-        account_password,
+    try {
+      const nav = await utilities.getNav() 
+      const { account_firstname, account_password, account_id } = req.body
+      console.log("account password update request made", req.body)
+      const hashedPassword = await bcrypt.hashSync(account_password, 10)
+      const AccountData = await accountModel.updateAccountPassword(
+        hashedPassword,
         account_id,
-      })
-    }
-  } catch (err) {
-    next(err)
-  }
-}
+      )
+      console.log("updateAccountPassword was called: ")
 
-module.exports = accountController
+      if (AccountData) {
+        req.flash(
+          "notice",
+          `Congratulations ${account_firstname}, your password was updated successfully.`
+        )
+        res.redirect("/account/")
+      } else {
+        req.flash("notice", "Sorry, the update failed.")
+        res.render("account/update", {
+          title: "Account Management",
+          nav,
+          error: null,
+          account_password,
+          account_id,
+        })
+      }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  module.exports = accountController

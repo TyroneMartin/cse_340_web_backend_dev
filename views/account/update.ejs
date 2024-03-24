@@ -9,77 +9,91 @@
     </ul>
     <% } %>
 
-    <p>Welcome to the account portal. Here, you can update your account information on this page, or click the cancel button to return to the management page.</p>
+    <table>
+      <p>Welcome to the account portal. Here, you can update your account information on this page, or click the cancel button to return to the management page.</p>
 
-<div class="containerForAcctMagntForm">
-<section class="accountInfoUpdateSection">
-  <h2>Account Update</h2>
-  <fieldset class="accountDetailsForm">
-    <legend>Account details</legend>
-    <p>You may update your account information here</p>
-    <form action="/account/update" method="post">
-      <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="account_firstname" value="<%=  locals.account_firstname %>" required>
+      <div class="containerForAcctMagntForm">
+      <section class="accountInfoUpdateSection">
+        <h2>Account Update</h2>
+        <fieldset class="accountDetailsForm">
+          <legend>Account details</legend>
+          <p>You may update your account information here</p>
+          <form action="/account/update" method="post">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" name="account_firstname" value="<%=  locals.account_firstname %>" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="account_lastname" value="<%=  locals.account_lastname %>" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="account_email" value="<%=  locals.account_email %>" required>
+            </div>
+            <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+            <p><b>Update button is disabled until changes are made.</b></p>
+            <button type="submit" class="accountUpdate-btn">Update Account</button> 
+            <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>       
+          </form>
+        </fieldset>
+      </section>
+      
+      <section class="passwordUpdateSection">
+        <h2>Update Password</h2>
+        <p>If desired, you may change your password**** Password changes are permanent</p>
+        <fieldset class="passwordUpdateForm">
+          <legend>Password Update</legend>
+          <form action="/account/update-password" method="post">
+           <%#   <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" name="currentPassword"required placeholder="Enter Current Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"required>
+            </div>
+            %>
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter New Password"  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" name="account_password" placeholder="Renter Current Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+            </div>
+            <div id="alertmsg"></div>
+      
+            <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+            <input type="hidden" name="account_firstname" value="<%= locals.account_firstname %>">
+             <%# // Password requirements listing section %>
+       
+             <P class="passwordRequirement">*A strong password is recommended and should meet the follow:</P>
+             <div class="passwordRequirements">
+               <ul>
+                 <li>12 characters in length, minimum</li>
+                 <li>Contain at least 1 capital letter</li>
+                 <li>Contain at least 1 number</li>
+                 <li>Contain at least 1 special character</li>
+               </ul>
+             </div>
+            <p><b>Update button is disabled until changes are made.</b></p>
+             <button   type="submit" onclick="checkPassword()"  class="changePw_update-btn">Change Password</button> 
+            <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>   
+             <%# <i class="fa fa-eye" id="togglePassword"></i> %>
+       
+            
+          </form>
+        </fieldset>
+      
+      </section>
       </div>
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="account_lastname" value="<%=  locals.account_lastname %>" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="account_email" value="<%=  locals.account_email %>" required>
-      </div>
-      <input type="hidden" name="account_id" value="<%= locals.account_id %>">
-      <p><b>Update button is disabled until changes are made.</b></p>
-      <button disabled type="submit" class="accountUpdate-btn">Update Account</button> 
-      <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>       
-    </form>
-  </fieldset>
-</section>
+    </table>
+
+    <noscript>JavaScript is required to submit the buttons</noscript>
 
 
-<section class="passwordUpdateSection">
-  <h2>Update Password</h2>
-  <p>If desired, you may change your password</p>
-  <fieldset class="passwordUpdateForm">
-    <legend>Password Update</legend>
-    <form action="/account/update-password" method="post">
-      <div class="form-group">
-        <label for="currentPassword">Current Password</label>
-        <input type="password" class="form-control" id="currentPassword" name="currentPassword" required placeholder="Enter Current Password">
-      </div>
-      <div class="form-group">
-        <label for="newPassword">New Password</label>
-        <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter new Password" required>
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm New Password</label>
-        <input type="password" class="form-control" id="confirmPassword" name="account_password" placeholder="Renter current Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
-      </div>
-      <input type="hidden" name="account_id" value="<%= locals.account_id %>">
-      <input type="hidden" name="account_firstname" value="<%= locals.account_firstname %>">
-       <%# // Password requirements listing section %>
- 
-       <P class="passwordRequirement">*A strong password is recommended and should meet the follow:</P>
-       <div class="passwordRequirements">
-         <ul>
-           <li>12 characters in length, minimum</li>
-           <li>Contain at least 1 capital letter</li>
-           <li>Contain at least 1 number</li>
-           <li>Contain at least 1 special character</li>
-         </ul>
-       </div>
-      <p><b>Update button is disabled until changes are made.</b></p>
-       <button  type="submit" class="changePw_update-btn">Change Password</button> 
-      <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>          
-    </form>
-  </fieldset>
+<script src="/js/passwordmatch.js"></script>
+<script src="/js/showpassword2.js"></script>
 
-</section>
-</div>
-<noscript>JavaScript is required to submit the buttons</noscript>
-<script src="/js/inv-update.js"></script>
+
+<!-- <script src="/js/inv-update.js"></script> -->
 
 
 
