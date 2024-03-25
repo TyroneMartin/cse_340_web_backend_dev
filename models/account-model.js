@@ -49,17 +49,16 @@ async function getAccountByEmail (account_email) {
 async function getAccountById(account_id) {
   try {
     const result = await pool.query(
-      'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_id = $1',
+      'SELECT account_firstname, account_lastname, account_email, account_id FROM account WHERE account_id = $1',
       [account_id]
-    );
-    // console.log("resutl from db: ", result)
-    return result.rows[0];
+    )
+    console.log("resutl from db (getAccountById): ", result)
+    // return result.rows[0].account_id;
+    return result.rows[0]  // I want the entire object here
   } catch (error) {
-    throw new Error("No matching account_id found");
+    throw new Error("No matching account_id found error:", error);
   }
 }
-
-
 
 async function getAccountUpdateData(account_id) {
   try {
@@ -84,7 +83,7 @@ async function updateAccountData(account_firstname, account_lastname, account_em
     const sql = "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *";
     const result = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id]);
     console.log("BD result", result)
-    return result.rows[0]; // Return the updated row(s)
+    return result.rows[0]; // Return the updated row
   } catch (error) {
     return error.message;
   }

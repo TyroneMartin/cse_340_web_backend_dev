@@ -121,33 +121,23 @@ validate.checkLoginData = async (req, res, next) => {
       body("account_firstname")
         .trim()
         .isLength({ min: 1 })
-        .withMessage("Please provide a first name."), // on error this message is sent.
+        .withMessage("Please provide a first name.") // on error this message is sent.
+        .isAlpha()
+        .withMessage('First name must contain only letters'),
   
       // last name checkAddClassificationDatame is required and must be string
       body("account_lastname")
         .trim()
         .isLength({ min: 1 })
-        .withMessage("Please provide a last name."), // on error this message is sent.
-   
+        .withMessage("Please provide a last name.") // on error this message is sent.
+        .isAlpha()
+        .withMessage('First name must contain only letters'),
+        
       body("account_email")
       .trim()
       .isEmail()
       .normalizeEmail() // Refer to validator.js docs
       .withMessage("A valid email is required.")
-      .custom(async (account_email, {req}) => {
-        const account_id = req.body.account_id
-        const account = await accountModel.getAccountById(account_id)
-        // Check if submitted email is same as existing
-        if (account_email != account.account_email) {
-        // No - Check if email exists in table
-        const emailExists = await accountModel.checkExistingEmail(account_email)
-        console.log("account email exist was called", emailExists)
-        // Yes - throw error
-        if (emailExists.count != 0) {
-        throw new Error("Email exists. Please use a different email")
-        }
-        }
-        })
     ]
   }
 
