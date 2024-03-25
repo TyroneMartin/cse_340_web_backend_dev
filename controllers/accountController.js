@@ -107,19 +107,18 @@ accountController.registerAccount = async function (req, res) {
     hashedPassword = await bcrypt.hashSync(account_password, 10)
     console.log("hash password", hashedPassword)
   } catch (error) {
-    // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
     req.flash("notice", 'Sorry, there was an error processing the registration.')
     res.status(500).render("account/register", {
       title: "Registration",
       nav,
       errors: null,
-      // grid,
     })
   }
+  const emailExists = await accountModel.checkExistingEmail(account_email);
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
-    account_email,
+    emailExists,  // this varable replaces account_email to check if email exist 
     hashedPassword,
   )
   console.log("Registration Result", regResult)
@@ -139,12 +138,10 @@ accountController.registerAccount = async function (req, res) {
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
-    // const grid = await utilities.buildRegister() // was removed on 2/27/24 because the data form was built directly in the register view due to ejs codes bugs
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
       error: null,
-      // grid
     })
   }
 
@@ -218,18 +215,20 @@ accountController.accountUpdatePost = async function (req, res) {
 
     // Retrieve account data by ID
     const account = await accountModel.getAccountById(account_id);
-
+    
     if (!account) {
       req.flash("error", "Account not found.");
-      return res.redirect("/account");
+      return res.redirect("/account");  // redirect to account/login token may expire
     }
 
     if (account_email !== account.account_email) {
       console.log("There's a new email");
       // Check if the new email exists in the table
       const emailExists = await accountModel.checkExistingEmail(account_email);
-      // If email doesn't exist, update the account data
-      if (!emailExists) {
+      console.log("Object emailExists: ", emailExists);
+
+      // If email doesn't exist or belongs to the current user, update the account data
+      if (!emailExists || emailExists && account_id === account.account_id) {
         const updatedAccount = await accountModel.updateAccountData(
           account_firstname,
           account_lastname,
@@ -237,14 +236,14 @@ accountController.accountUpdatePost = async function (req, res) {
           account_id
         );
 
-        // if (updatedAccount) {
-        //   req.flash("notice", `Congratulations ${account_firstname}, your account information has been updated.`);
-        //   jwtRefresh(req, res, account_firstname, account_lastname, account_email, account_id);
-        //   return res.redirect(`/account`); // Redirect to update page with account_id
-        // } else {
-        //   req.flash("error", "Sorry, the update failed.");
-        //   return res.redirect(`/account/update/${account_id}`); // Redirect to update page with account_id
-        // }
+        if (updatedAccount) {
+          req.flash("notice", `Congratulations ${account_firstname}, your account information has been updated.`);
+          jwtRefresh(req, res, account_firstname, account_lastname, account_email, account_id);
+          return res.redirect(`/account`); // Redirect to update page with account_id
+        } else {
+          req.flash("error", "Sorry, the update failed.");
+          return res.redirect(`/account/update/${account_id}`); // Redirect to update page with account_id
+        }
       } else {
         req.flash("error", "Email exists. Please use a different email.");
         return res.render("account/update", {

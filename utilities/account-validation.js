@@ -30,10 +30,12 @@ validate.registationRules = () => {
     .withMessage("A valid email is required.")
     .custom(async (account_email, { req }) => {
       const accountEmail= req.body.account_email
-          const emailExists = await accountModel.checkExistingEmail(account_email, accountEmail) // Yes - throw error 
+          const emailExists = await accountModel.checkExistingEmailReg(account_email, accountEmail) // Yes - throw error 
           if (emailExists) {
+            console.log("emailExists  registration check", emailExists)
           throw new Error("Email already exists. Please use a different email or sign in")
           }
+          // For registration need
   }),
     // password is required and must be strong password
     body("account_password")
@@ -132,7 +134,7 @@ validate.checkLoginData = async (req, res, next) => {
         .withMessage("Please provide a last name.") // on error this message is sent.
         .isAlpha()
         .withMessage('First name must contain only letters'),
-        
+
       body("account_email")
       .trim()
       .isEmail()

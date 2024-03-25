@@ -35,13 +35,19 @@
             <p><b>Update button is disabled until changes are made.</b></p>
             <button type="submit" class="accountUpdate-btn">Update Account</button> 
             <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>       
-          </form>
+          </form>  
+            <ul>
+              <li>Input should contain only letters (both lowercase and uppercase)</li>
+              <li>Email format: A combination of alphanumeric characters</li>
+
+            </ul>
+          </div>
         </fieldset>
       </section>
       
       <section class="passwordUpdateSection">
         <h2>Update Password</h2>
-        <p>If desired, you may change your password**** Password changes are permanent</p>
+        <p>If desired, you may change your password. <u>Password changes are permanent</u></p>
         <fieldset class="passwordUpdateForm">
           <legend>Password Update</legend>
           <form action="/account/update-password" method="post">
@@ -74,7 +80,7 @@
                </ul>
              </div>
             <p><b>Update button is disabled until changes are made.</b></p>
-             <button   type="submit" onclick="checkPassword()"  class="changePw_update-btn">Change Password</button> 
+             <button   type="submit" class="changePw_update-btn">Change Password</button> 
             <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>   
              <%# <i class="fa fa-eye" id="togglePassword"></i> %>
        
