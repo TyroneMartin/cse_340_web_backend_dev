@@ -249,14 +249,16 @@ accountController.accountUpdatePost = async function (req, res) {
         return res.render("account/update", {
           title: "Account Management Portal",
           nav,
-          error: "Email exists. Please use a different email.",
+          errors,
+          // error: "Email exists. Please use a different email.",
           account_firstname,
           account_lastname,
           account_email,
           account_id
         });
       }
-    } else {
+    } 
+    else {
       // If email is not changed, update the account data (including firstname and lastname)
       const updatedAccount = await accountModel.updateAccountData(
         account_firstname,

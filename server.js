@@ -57,10 +57,9 @@ app.use(utilities.checkJWTToken)
 // Route to handle logout
 app.get('/account/logout', function(req, res) { // the "req" request the redirect page
   res.clearCookie('jwt')
-  res.redirect('/account/login')
+  req.flash('notice', 'You have been successfully logged out.')
+  res.redirect('/')
 })
-
-
 
 
 /* ***********************
