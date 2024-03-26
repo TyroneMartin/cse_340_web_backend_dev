@@ -77,8 +77,8 @@ nav ul li a {
 
 .navBarContainer nav ul {
   list-style-type: none; /* Remove default list styles */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
+  margin: 13px 0px 0px -11px;
+  font-size: 0.1em;
 }
 
 
@@ -124,6 +124,7 @@ body {
   text-decoration: none;
   color: #333;
     /* color: red;  */
+  font-size:1em;
 }
 
 .logoText {
@@ -311,8 +312,8 @@ hr.firstHr {
 @media screen and (max-width: 684px) {
 
   nav ul {
-font-size: 0.5rem;
-margin: 11px -77px 0px -40px;
+  font-size: 0.5rem;
+   margin: 2px -70px 0px -58px;
   }
 
   hr.firstHr {
@@ -321,7 +322,7 @@ margin: 11px -77px 0px -40px;
   }
 
   .navBarContainer nav ul {
-    margin: 0px -77px 0px -16px;
+    margin: 2px 0px 0px -11px;
   }
 
   .top-margin {
@@ -776,7 +777,7 @@ fieldset.fieldsetForRegistration {
 }
 
 .passwordRequirement {
-  color: #8d0c0c;
+  color: #240303;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -1260,7 +1261,7 @@ border: 4px solid #919191;
 
 .accountUpdate-btn,
 .changePw_update-btn {
-  background-color: #007bff;
+  background-color: #000000;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1281,6 +1282,11 @@ border: 4px solid #919191;
   width: 100%;
 }
 
+.passwordUpdateMessage u {
+  font-weight: bold;
+  color: #3c0202;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 /* Media query for larger screens */
 @media screen and (min-width: 768px) {
   /* .containerForAcctMagntForm {
@@ -1343,4 +1349,3 @@ border: 4px solid #919191;
 .backToMgtbtn:hover {
   background-color: #0057b365;
 }
-

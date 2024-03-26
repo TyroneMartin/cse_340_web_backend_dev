@@ -20,17 +20,17 @@
         <form action="/account/update" method="post">
           <div class="form-group">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="account_firstname" value="<%=  locals.account_firstname %>" pattern="^[a-zA-Z]+$" placeholder="Letters only" required>
+            <input type="text" class="form-control" id="firstName" name="account_firstname" value="<%=  account_firstname %>" pattern="^[a-zA-Z]+$" placeholder="Letters only" required>
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="account_lastname" value="<%=  locals.account_lastname %>" pattern="^[a-zA-Z]+$" placeholder="Letters only" required>
+            <input type="text" class="form-control" id="lastName" name="account_lastname" value="<%=  account_lastname %>" pattern="^[a-zA-Z]+$" placeholder="Letters only" required>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="account_email" value="<%=  locals.account_email %>" placeholder="Johndoe@domain.com" required>
+            <input type="email" class="form-control" id="email" name="account_email" value="<%=  account_email %>" placeholder="Johndoe@domain.com" required>
           </div>
-          <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+          <input type="hidden" name="account_id" value="<%= account_id %>">
           <p><b>Update button is disabled until changes are made.</b></p>
           <button type="submit" class="accountUpdate-btn">Update Account</button>
           <button type="button" onclick="window.location.href='/account/'" class="cancelButton">Cancel</button>
@@ -45,9 +45,9 @@
   <div class="containerForAcctMagntFormUpdate">
     <section class="passwordUpdateSection">
       <h2>Update Password</h2>
-      <p>If desired, you may change your password. <u>Password changes are permanent</u></p>
       <fieldset class="passwordUpdateForm">
         <legend>Password Update</legend>
+        <p class="passwordUpdateMessage">If desired, you may change your password. <u>Password changes are permanent</u></p>
         <form action="/account/update-password" method="post">
           <%#   <div class="form-group">
             <label for="currentPassword">Current Password</label>
@@ -64,8 +64,8 @@
           </div>
           <div id="alertmsg"></div>
 
-          <input type="hidden" name="account_id" value="<%= locals.account_id %>">
-          <input type="hidden" name="account_firstname" value="<%= locals.account_firstname %>">
+          <input type="hidden" name="account_id" value="<%= account_id %>">
+          <input type="hidden" name="account_firstname" value="<%= account_firstname %>">
           <%# // Password requirements listing section %>
 
           <P class="passwordRequirement">*A strong password is recommended and should meet the follow:</P>
