@@ -33,7 +33,12 @@ async function checkExistingEmail(account_email) {
     const sql = "SELECT COUNT(*) FROM account WHERE account_email = $1";
     const result = await pool.query(sql, [account_email]);
     console.log("result from email count", result)
-    return result
+    const count = parseInt(result.rows[0].count);
+    // return result
+    // return result.rows[0]
+    // Returning true if count is more than 0, false otherwise
+    return count > 0 ? true : false;
+
   } catch (error) {
     console.error("Error checking existing email:", error.message);
     return false; // Handle error gracefully and return false
@@ -51,9 +56,9 @@ async function getAccountByEmail(account_email) {
     );
     console.log("result from db (getAccountByEmail): ", result);
 
-    return result.rows[0];
+    return result.rows[0]
   } catch (error) {
-    return new Error("No matching email found");
+    return new Error("No matching data found for this email");
   }
 }
 
@@ -83,10 +88,10 @@ async function getAccountById(account_id) {
       [account_id]
     );
 
-    // console.log("result from db (getAccountById): ", result);
+    console.log("result from db (getAccountById): ", result);
 
     // return result.rows[0].account_id;
-    return result.rows[0]; // I want the entire object here
+    return result.rows[0]; 
   } catch (error) {
     throw new Error("No matching account_id found error:", error);
   }

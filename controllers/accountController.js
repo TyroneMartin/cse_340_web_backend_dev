@@ -148,6 +148,8 @@ accountController.registerAccount = async function (req, res) {
 }
 
 
+
+
 /* ****************************************
 *  User adding classification page
 * *************************************** */
@@ -205,98 +207,44 @@ accountController.accountUpdate = async function (req, res, next) {
 /* ****************************************
 *  Process for update(Post Method) data to the database
 * *************************************** */
-// Updated accountUpdatePost controller function
 accountController.accountUpdatePost = async function (req, res) {
-  console.log("Account update post(accountUpdatePost) was called");
-  try {
-    const nav = await utilities.getNav();
-    const { account_firstname, account_lastname, account_email, account_id } = req.body;
-    console.log("account updated data from body", req.body);
-
-    // Retrieve account data by ID
-    const account = await accountModel.getAccountById(account_id);
-    
-    if (!account) {
-      req.flash("error", "Account not found.");
-      return res.redirect("/account");  // redirect to account/login token may expire
-    }
-
-    if (account_email !== account.account_email) {
-      console.log("There's a new email");
-      // Check if the new email exists in the table
-      const emailExists = await accountModel.checkExistingEmail(account_email);
-      console.log("Object emailExists: ", emailExists);
-
-      // If email doesn't exist or belongs to the current user, update the account data
-      if (!emailExists || emailExists && account_id === account.account_id) {
-        const updatedAccount = await accountModel.updateAccountData(
-          account_firstname,
-          account_lastname,
-          account_email,
-          account_id
-        );
-
-        if (updatedAccount) {
-          req.flash("notice", `Congratulations ${account_firstname}, your account information has been updated.`);
-          jwtRefresh(req, res, account_firstname, account_lastname, account_email, account_id);
-          return res.redirect(`/account`); // Redirect to update page with account_id
-        } else {
-          req.flash("error", "Sorry, the update failed.");
-          return res.redirect(`/account/update/${account_id}`); // Redirect to update page with account_id
-        }
-      } else {
-        req.flash("error", "Email exists. Please use a different email.");
-        return res.render("account/update", {
-          title: "Account Management Portal",
-          nav,
-          errors,
-          // error: "Email exists. Please use a different email.",
-          account_firstname,
-          account_lastname,
-          account_email,
-          account_id
-        });
-      }
-    } 
-    else {
-      // If email is not changed, update the account data (including firstname and lastname)
-      const updatedAccount = await accountModel.updateAccountData(
-        account_firstname,
-        account_lastname,
-        account_email,
-        account_id,
-      );
-
-      if (updatedAccount) {
-        req.flash("notice", `Congratulations ${account_firstname}, your account information has been updated.`);
-        jwtRefresh(req, res, account_firstname, account_lastname, account_email, account_id);
-        return res.redirect('/account'); // redirects to management view
-      } else {
-        req.flash("error", "Sorry, the update failed.");
-        return res.redirect(`/account/update/${account_id}`); // Redirect to update page with account_id
-      }
-    }
-  } catch (err) {
-    console.error("Error updating account info: ", err);
-    // req.flash("error", "An error occurred while updating account information.");
-    // return res.redirect("/account/update");
-  }
-};
-
-// Function to refresh JWT token
-async function jwtRefresh(req, res, account_firstname, account_lastname, account_email, account_id) {
-  const updatedAccountData = {
+  let nav = await utilities.getNav()
+  const {
     account_firstname,
     account_lastname,
     account_email,
     account_id,
-
-  };
-  delete updatedAccountData.account_password;
-  const accessToken = jwt.sign(updatedAccountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
-  res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+  } = req.body
+ 
+  const updateResult = await accountModel.updateAccountData(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id,
+  )
+ 
+  const accountData = await accountModel.getAccountById(account_id)
+ 
+  if (updateResult) {
+    res.clearCookie("jwt")
+    delete accountData.account_password
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000})
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    req.flash("notice", `Congratulations ${account_firstname}, your account information has been updated.`);
+return res.redirect("/account/")
+ 
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/editAccount", {
+      title: "Edit your account:",
+      nav,
+      errors: null,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+  }
 }
-
 
 /* ****************************************
 *  Process account password update Post method

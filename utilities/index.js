@@ -99,7 +99,7 @@ Util.buildDetailGrid = async function (data, title) {
 
   if (data) {
     grid += '<div class="large-view-container">';
-    grid += '<hr class="firstHr"></hr>';
+    // grid += '<hr class="firstHr"></hr>';
     grid += '<div class="singleViewClassificationContent">';
     grid += `<p class="bold top-margin"><span class="first-word">Price:</span> <span class="price">$ ${formatedPrice}</span></p>`;
     grid += `<p class="bold"><span class="first-word">Description:</span> ${Description}</p>`;
@@ -107,7 +107,7 @@ Util.buildDetailGrid = async function (data, title) {
     grid += `<p class="bold"><span class="first-word">Color:</span> ${color}</p>`;
     grid += `<p class="bold"><span class="first-word">Mileage:</span> ${mileage}</p>`;
     grid += "</div>";
-    grid += '<hr class="lastHr">';
+    // grid += '<hr class="lastHr">';
     // Display thumbnail for small screens
     grid += `<img src="${thumbnail}" alt="${title}" class="thumbnail classificationDetail-Image">`;
     // Display full-size image for large screens
