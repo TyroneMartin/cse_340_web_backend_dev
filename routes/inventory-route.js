@@ -15,6 +15,7 @@ router.get("/intentional_error", utilities.handleErrors(invController.intentiona
 router.get("/detail/:inv_id", utilities.handleErrors(invController.getInventoryById))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
+
 // routes for managers and employees only
 router.get("/edit/:inv_id",  utilities.checkAccountType, utilities.handleErrors(invController.editInventoryView))
 router.get( "/add-new-inventory",  utilities.checkAccountType, utilities.handleErrors(invController.buildAddInventory))
@@ -24,6 +25,13 @@ router.get("/delete/:inv_id", utilities.checkAccountType, utilities.handleErrors
 )
 // Deliver main route for management View  for /inv/ under varible inventoryRoute
 router.get("/", utilities.checkJWTToken, utilities.checkAccountType, utilities.checkLogin, utilities.handleErrors(invController.buildManagement))
+
+// Management pending approval
+
+router.get("/pending_approval", utilities.handleErrors(invController.buildPendingApproval))
+// router.get("/", utilities.handleErrors(invController.buildPendingApproval))
+
+
 
 // ------------------------------------------------------------
 
@@ -62,5 +70,13 @@ utilities.checkAccountType, // check the account type
 utilities.handleErrors(invController.deleteItem)
 )
 
+
+/* ***************************
+ * Post to handle approval request
+ * ************************** */
+router.post("/approve/classification/:classification_id", 
+// utilities.checkAccountType, // check the account type
+utilities.handleErrors(invController.approvaRequestForClassification)
+)
 
 module.exports = router

@@ -151,8 +151,57 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+/* ***************************
+ *  inv/pending_approval Queries
+ * ************************** */
+
+async function getUnapprovedClassification(){
+  return await pool.query("SELECT * FROM public.classification WHERE classification_approved = false")
+}
+
+
+async function getInventory() {
+  try {
+    const data = await pool.query(
+      `SELECT inv_id, inv_make, inv_model, inv_year, classification_id
+      FROM public.inventory 
+   `,  
+    );
+    return data.rows  // returns all the rows for my foreach loop
+  } catch (error) {
+    console.error("getInventoryById error: ", error);
+    throw error;
+  }
+}
+
+
+async function approveClassification(classification_id) {
+  try {
+    const data = await pool.query(
+      `UPDATE public.classification 
+       SET classification_approved = true
+       WHERE classification_id = $1 
+       AND classification_approved = false`,
+      [classification_id]
+    );
+    return data.rows
+  } catch (error) {
+    console.error("approveClassification error: ", error);
+    throw error;
+  }
+}
 
 
 
 
-module.exports = { getClassifications, getInventoryByClassificationId, getInventoryById, buildLogin, addNewVehicleClassification, AddClassificationIntoDatabase, AddInventoryIntoDatabase, updateInventory, deleteInventoryItem }
+module.exports = { getClassifications, 
+  getInventoryByClassificationId, 
+  getInventoryById, buildLogin, 
+  addNewVehicleClassification, 
+  AddClassificationIntoDatabase, 
+  AddInventoryIntoDatabase, updateInventory, 
+  deleteInventoryItem, 
+  getUnapprovedClassification, 
+  approveClassification,  
+  getInventory
+}

@@ -232,6 +232,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
   const classification_id = parseInt(req.params.classification_id)
   const invData = await invModel.getInventoryByClassificationId(classification_id)
   if (invData[0].inv_id) {
+    // console.log("jason data", invData)
     return res.json(invData)
   } else {
     next(new Error("No data returned"))
@@ -399,7 +400,71 @@ invCont.deleteItem = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Get route for pending approval page
+ * ************************** */
 
+invCont.buildPendingApproval = async function (req, res, next) {  
+  try {
+    let nav = await utilities.getNav();
+    let classifications = (await invModel.getClassifications()).rows;
+    const itemData = await invModel.getInventory();
+    console.log("itemData for build Pending Approval", itemData);
+    let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()).rows; 
+    console.log("unapprovedClassificationItems listing: ", unapprovedClassificationItems)
+    res.render("./inventory/pending_approval", {
+      nav,
+      errors: null,
+      title: "Pending Approval Request",
+      classifications,
+      itemData, 
+      unapprovedClassificationItems,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      classification_name: unapprovedClassificationItems.classification_name,
+      classification_id: unapprovedClassificationItems.classification_id
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+
+invCont.approvaRequestForClassification = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id)  
+    let nav = await utilities.getNav()
+    const { classification_name, classification_id } = req.body
+    console.log("req.body classification_name name to be deleted: ", req.body)
+    const updateResult = await invModel.approveClassification(classification_id)
+ /// Im right here
+
+
+    if (updateResult) {
+      const itemName = inv_make + " " + inv_model
+      req.flash("notice", `The ${itemName} was successfully deleted from the database.`)
+      res.redirect("/inv/")
+    } else {
+      req.flash("notice", `Sorry, the deletion failed.`)
+      res.render("./inventory/delete-confirm", {
+        title: `Delete ${inv_make} ${inv_model}`,
+        nav,
+        errors: null,
+        inv_make, 
+        inv_model, 
+        inv_year, 
+        inv_price,
+        inv_id
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
+}
 
 
 

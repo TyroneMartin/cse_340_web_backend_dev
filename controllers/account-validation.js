@@ -24,4 +24,27 @@ validate.checkRegData = async (req, res, next) => {
     next()
   }
 
+
+
+/* ****************************************
+*  User adding classification page
+* *************************************** */
+accountController.addNewVehicleClassification = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+    res.render("inv/type", {
+      title: "New Vehicle",
+      nav,
+      errors: null,
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+
+
+
+
   module.exports = validate
