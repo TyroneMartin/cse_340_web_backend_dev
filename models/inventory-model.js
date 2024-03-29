@@ -160,6 +160,13 @@ async function getUnapprovedClassification(){
 }
 
 
+async function getUnapprovedInventory(){
+  return await pool.query("SELECT * FROM public.inventory WHERE inv_approved = false")
+}
+
+
+
+
 async function getInventory() {
   try {
     const data = await pool.query(
@@ -191,9 +198,6 @@ async function approveClassification(classification_id) {
   }
 }
 
-
-
-
 module.exports = { getClassifications, 
   getInventoryByClassificationId, 
   getInventoryById, buildLogin, 
@@ -203,5 +207,6 @@ module.exports = { getClassifications,
   deleteInventoryItem, 
   getUnapprovedClassification, 
   approveClassification,  
-  getInventory
+  getInventory,
+  getUnapprovedInventory
 }

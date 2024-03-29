@@ -81,4 +81,9 @@ router.post("/approve/classification",
 utilities.handleErrors(invController.approvaRequestForClassification)
 )
 
+router.post("/approve/Inventory", 
+// utilities.checkAccountType, // check the account type
+utilities.handleErrors(invController.approvaRequestForInventory)
+)
+
 module.exports = router

@@ -434,39 +434,34 @@ invCont.buildPendingApproval = async function (req, res, next) {
 
 
 
-
+// post request to approve classification
 invCont.approvaRequestForClassification = async function (req, res) {
   try {
+    const classification_id =  parseInt(req.body.classification_id)
+    // const { classification_name  } = req.body; 
     let nav = await utilities.getNav()
-    const classificationId =  parseInt(req.body.classification_id)
-    const { classification_name, classification_id  } = req.body; 
-    // const { classification_name, classification_id } = req.body;
-    const parsedClassificationId = parseInt(classification_id);
     let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()).rows; 
+    // console.log("unapproved  classifi List", unapprovedClassificationItems)
+    // console.log("classification_name was called", classification_name)
+    const approveResultSet = await invModel.approveClassification(classification_id)
+    let classifications = (await invModel.getClassifications()).rows
 
-    console.log("classification_name was called", req.body)
-    // console.log("req.body classification_id to be approved: ", classificationId)
-    // console.log("req.body classification_id to be approved: ", classificationId)
-
-    const approveResult = await invModel.approveClassification(classification_id)
-    console.log("approveResultfor classification to be approved: ", classificationId)
-    if (approveResult) {
-      const itemName = classification_name
-      req.flash("notice", `The classification request for ${itemName} has been approved.`)
+    // console.log("approveResultfor classification to be approved: ", approveResultSet)
+    if (approveResultSet) {
+      const updatedItem = unapprovedClassificationItems[0] 
+      const approvedClassification = updatedItem.classification_name
+      req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
       res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {
         title: "Pending Approval Request",
-        nav,
-        inv_id,
-        approveResult,
-        itemName,
         errors,
-        parsedClassificationId,
-        // classification_name,
+        nav,
+        unapprovedClassificationItems,
         classification_id,
-        classificationId,
+        approveResultSet,
+        classifications,
         // inv_id: itemData.inv_id,
         // inv_make: itemData.inv_make,
         // inv_model: itemData.inv_model,
@@ -479,6 +474,54 @@ invCont.approvaRequestForClassification = async function (req, res) {
     // next(err)
   }
 }
+
+
+// post request to approve classification
+invCont.approvaRequestForClassification = async function (req, res) {
+  try {
+    const inv =  parseInt(req.body.inv)
+    let nav = await utilities.getNav()
+    let unapprovedClassificationItems = (await invModel.getUnapprovedInventory()).rows; // renamed 
+    // console.log("unapproved  classifi List", unapprovedClassificationItems)
+    // console.log("classification_name was called", classification_name)
+    const approveResultSet = await invModel.approveClassification(inv)
+    let classifications = (await invModel.getClassifications()).rows
+
+    // console.log("approveResultfor classification to be approved: ", approveResultSet)
+    if (approveResultSet) {
+      const updatedItem = unapprovedClassificationItems[0] 
+      const approvedClassification = updatedItem.classification_name
+      req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
+      res.redirect("/account/")    
+    } else {
+      req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
+      res.render("./inventory/pending_approval", {
+        title: "Pending Approval Request",
+        errors,
+        nav,
+        unapprovedClassificationItems,
+        classification_id,
+        approveResultSet,
+        classifications,
+        // inv_id: itemData.inv_id,
+        // inv_make: itemData.inv_make,
+        // inv_model: itemData.inv_model,
+        // inv_year: itemData.inv_year,
+        classification_name: unapprovedClassificationItems.classification_name,
+        classification_id: unapprovedClassificationItems.classification_id
+      })
+    }
+  } catch (err) {
+    // next(err)
+  }
+}
+
+
+
+
+
+
+
 
 
 

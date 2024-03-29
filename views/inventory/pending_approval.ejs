@@ -45,17 +45,21 @@
     </tr>
     <td>
 
-    <% }) %>
+      <% }) %>
+      <%# additional if statement shows if there is no available data in list %>
+      <% if (unapprovedClassificationItems.length === 0) { %>
+      <tr>
+        <td colspan="3">No current pending classification available at this time</td>
+      </tr>
+      <%# -------------------------------------------------------- %>
+
+      <% } %>
+    </td>
+
     </form>
   </tbody>
 </table>
 
-<% if (unapprovedClassificationItems.length === 0) { %>
-  <tr>
-    <td colspan="3">No current pending classification</td>
-  </tr>
-<% } %>
-</td>
 
 
 
@@ -85,7 +89,7 @@
         <%= (Inventory.inv_make ? Inventory.inv_make : '') + ' ' + (Inventory.inv_model ? Inventory.inv_model : '') %>
       </td>
       <td>
-        <% unapprovedClassificationItems.forEach(classification => { %>
+        <% classifications.forEach(classification => { %>
         <% if (classification.classification_id === Inventory.classification_id) { %>
         <%= classification.classification_name %>
         <% } %>
@@ -93,7 +97,7 @@
       </td>
 
       <td>
-        <form id="<%= Inventory.inv_id %>" action="/inv/approve/Inventory/<%= Inventory.inv_id %>" method="post">
+        <form id="<%= Inventory.inv_id %>"  for="<%= Inventory.inv_id%>" action="/inv/approve/Inventory" method="post">
           <button name="<%= Inventory.inv_id %>"> Approve</button>
         </form>
       </td>
@@ -105,12 +109,13 @@
 
     </tr>
     <% }) %>
+    <%# additional if statement shows if there is no available data in list %>
+    <% if (itemData.length === 0) { %>
+    <tr>
+      <td colspan="4">No current data for inventory items at this time</td>
+    </tr>
+    <% } %>
+    <%# ------------------------------------------------------ %>
+
   </tbody>
 </table>
-
-<% if (unapprovedClassificationItems.length === 0) { %>
-  <tr>
-    <td colspan="4">No current data for inventory items</td>
-  </tr>
-<% } %>
-</td>
