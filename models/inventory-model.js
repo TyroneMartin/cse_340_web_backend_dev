@@ -198,6 +198,25 @@ async function approveClassification(classification_id) {
   }
 }
 
+
+async function approveInventory(inv_id) {
+  try {
+    const data = await pool.query(
+      `UPDATE public.inventory 
+       SET inv_approved = true
+       WHERE inv_id = $1 
+       AND inv_approved = false`,
+      [inv_id]
+    );
+    return data
+  } catch (error) {
+    console.error("approve Inventory BD error: ", error);
+    throw error;
+  }
+}
+
+
+
 module.exports = { getClassifications, 
   getInventoryByClassificationId, 
   getInventoryById, buildLogin, 
@@ -208,5 +227,6 @@ module.exports = { getClassifications,
   getUnapprovedClassification, 
   approveClassification,  
   getInventory,
-  getUnapprovedInventory
+  getUnapprovedInventory,
+  approveInventory
 }

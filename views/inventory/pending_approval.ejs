@@ -32,7 +32,7 @@
     <tr>
       <td value="<%= classification.classification_name %>"><%= classification.classification_name %></td>
       <td>
-        <form id="classificationFormApproval" for="<%= classification.classification_id%>" action="/inv/approve/classification" method="post">
+        <form id="classificationFormApprovalButton" for="<%= classification.classification_id%>" action="/inv/approve/classification" method="post">
           <button name="classification_id" value="<%= classification.classification_id %>"> Approve</button>
         </form>
       </td>
@@ -97,13 +97,13 @@
       </td>
 
       <td>
-        <form id="<%= Inventory.inv_id %>"  for="<%= Inventory.inv_id%>" action="/inv/approve/Inventory" method="post">
-          <button name="<%= Inventory.inv_id %>"> Approve</button>
+        <form id="InventoryFormB" for="inv_id" action="/inv/approve/Inventory" method="post">
+          <button   name="inv_id" value="<%= Inventory.inv_id %>" > Approve</button>
         </form>
       </td>
       <td>
         <form id="inventory" for="<%= Inventory.inv_id %>" action="/inv/deny/Inventory/<%= Inventory.inv_id %>" method="post">
-          <button name="<%= Inventory.inv_id %>"> Deny</button>
+          <button  name="<%= Inventory.inv_id %>"> Deny</button>
         </form>
       </td>
 
