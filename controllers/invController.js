@@ -432,8 +432,6 @@ invCont.buildPendingApproval = async function (req, res, next) {
   }
 };
 
-
-
 // post request to approve classification
 invCont.approvaRequestForClassification = async function (req, res) {
   try {
@@ -449,7 +447,7 @@ invCont.approvaRequestForClassification = async function (req, res) {
       const updatedItem = unapprovedClassificationItems[0] 
       const approvedClassification = updatedItem.classification_name
       req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
-      res.redirect("/account/")    
+      res.redirect("/inv/")    
     } else {
       req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {
@@ -483,7 +481,7 @@ invCont.approvaRequestForInventory = async function (req, res) {
       const updatedItem = unapprovedInventoryItems[0];
       const approvedClassification = updatedItem.inv_make + " " + updatedItem.inv_model;
       req.flash("notice", `The Inventory request for ${approvedClassification} has been approved.`);
-      res.redirect("/account/")    
+      res.redirect("/inv/")    
     } else {
       req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {

@@ -239,4 +239,28 @@ Util.checkAccountType = async function (req, res, next) {
     } 
   }
 
+
+
+
+  // Util.checkVerifiedClassification = async function (req, res, next) {
+  //   // Check if classification is verified
+  //   console.log("checkVerifiedClassification() was called")
+  //     if (!res.locals.classification_approved) {
+  //       const account = res.locals.accountData
+  //       if (account.account_type === 'Employee' || account.account_type === 'Admin' ) { // Allow access to administrative views
+  //       next()
+  //       } else {
+  //         req.flash("notice", "You do not have permission to access this resource.")
+  //         res.redirect("/account/login")
+  //       }
+  //     } else {
+  //       req.flash("notice","You do not have permission to access this resource. You may try logging in.")
+  //       res.redirect("/account/login")
+  //     } 
+  //   }
+
+
+
+
+
 module.exports = Util

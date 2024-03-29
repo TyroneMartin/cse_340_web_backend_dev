@@ -29,8 +29,6 @@ router.get("/", utilities.checkJWTToken, utilities.checkAccountType, utilities.c
 // Management pending approval
 
 router.get("/pending_approval", utilities.handleErrors(invController.buildPendingApproval))
-// router.get("/", utilities.handleErrors(invController.buildPendingApproval))
-
 
 
 // ------------------------------------------------------------

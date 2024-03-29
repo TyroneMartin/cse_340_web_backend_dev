@@ -4,7 +4,7 @@ const pool = require("../database/index.js")
  *  Get all classification data
  * ************************** */
 async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification")
+  return await pool.query("SELECT * FROM public.classification where classification_approved = true")
 }
 
 /* ***************************
@@ -166,9 +166,6 @@ async function getUnapprovedInventory() {
 
 
 
-
-
-
 async function getInventory() {
   try {
     const data = await pool.query(
@@ -216,7 +213,6 @@ async function approveInventory(inv_id) {
     throw error;
   }
 }
-
 
 
 module.exports = { getClassifications, 
