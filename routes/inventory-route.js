@@ -74,7 +74,9 @@ utilities.handleErrors(invController.deleteItem)
 /* ***************************
  * Post to handle approval request
  * ************************** */
-router.post("/approve/classification/:classification_id", 
+// /approve/classification/
+
+router.post("/approve/classification", 
 // utilities.checkAccountType, // check the account type
 utilities.handleErrors(invController.approvaRequestForClassification)
 )

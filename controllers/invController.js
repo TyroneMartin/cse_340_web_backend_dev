@@ -1,3 +1,4 @@
+// const fetch = require('node-fetch')
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
 
@@ -434,35 +435,48 @@ invCont.buildPendingApproval = async function (req, res, next) {
 
 
 
-invCont.approvaRequestForClassification = async function (req, res, next) {
+invCont.approvaRequestForClassification = async function (req, res) {
   try {
-    const inv_id = parseInt(req.params.inv_id)  
     let nav = await utilities.getNav()
-    const { classification_name, classification_id } = req.body
-    console.log("req.body classification_name name to be deleted: ", req.body)
-    const updateResult = await invModel.approveClassification(classification_id)
- /// Im right here
+    const classificationId =  parseInt(req.body.classification_id)
+    const { classification_name, classification_id  } = req.body; 
+    // const { classification_name, classification_id } = req.body;
+    const parsedClassificationId = parseInt(classification_id);
+    let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()).rows; 
 
+    console.log("classification_name was called", req.body)
+    // console.log("req.body classification_id to be approved: ", classificationId)
+    // console.log("req.body classification_id to be approved: ", classificationId)
 
-    if (updateResult) {
-      const itemName = inv_make + " " + inv_model
-      req.flash("notice", `The ${itemName} was successfully deleted from the database.`)
-      res.redirect("/inv/")
+    const approveResult = await invModel.approveClassification(classification_id)
+    console.log("approveResultfor classification to be approved: ", classificationId)
+    if (approveResult) {
+      const itemName = classification_name
+      req.flash("notice", `The classification request for ${itemName} has been approved.`)
+      res.redirect("/account/")    
     } else {
-      req.flash("notice", `Sorry, the deletion failed.`)
-      res.render("./inventory/delete-confirm", {
-        title: `Delete ${inv_make} ${inv_model}`,
+      req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
+      res.render("./inventory/pending_approval", {
+        title: "Pending Approval Request",
         nav,
-        errors: null,
-        inv_make, 
-        inv_model, 
-        inv_year, 
-        inv_price,
-        inv_id
+        inv_id,
+        approveResult,
+        itemName,
+        errors,
+        parsedClassificationId,
+        // classification_name,
+        classification_id,
+        classificationId,
+        // inv_id: itemData.inv_id,
+        // inv_make: itemData.inv_make,
+        // inv_model: itemData.inv_model,
+        // inv_year: itemData.inv_year,
+        classification_name: unapprovedClassificationItems.classification_name,
+        classification_id: unapprovedClassificationItems.classification_id
       })
     }
   } catch (err) {
-    next(err)
+    // next(err)
   }
 }
 

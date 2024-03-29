@@ -184,7 +184,7 @@ async function approveClassification(classification_id) {
        AND classification_approved = false`,
       [classification_id]
     );
-    return data.rows
+    return data
   } catch (error) {
     console.error("approveClassification error: ", error);
     throw error;

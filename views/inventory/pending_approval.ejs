@@ -1,85 +1,116 @@
 <% if (title) { %>
-    <h1 class="pendingApprovalPage"><%= title %></h1>
-    <div class="flash-notice"><%= messages.notice %></div>
-    <% } else { res.redirect("/") } %> <%- messages() %> <% if (errors) { %>
-    <ul class="notice">
-      <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-    <% } %>
-        
-    <%- messages() %>
-    <h2>Welcome to Pending approval</h2>
+<h1 class="pendingApprovalPage"><%= title %></h1>
+<div class="flash-notice"><%= messages.notice %></div>
+<% } else { res.redirect("/") } %> <%- messages() %> <% if (errors) { %>
+<ul class="notice">
+  <% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
 
-    <%# Classification Table %>
+<%- messages() %>
+<h2>Welcome to Pending approval</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th colspan="3">Pending Classification</th>
-        </tr>
-        <tr>
-          <th colspan="1">Classification</th>
-          <th colspan="1">Approve</th>
-          <th colspan="1">Deny</th>
-        </tr>
-      </thead>
-      <tbody>
+<%# Classification Table %>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">Pending Classification</th>
+    </tr>
+    <tr>
+      <th colspan="1">Classification</th>
+      <th colspan="1">Approve</th>
+      <th colspan="1">Deny</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <% unapprovedClassificationItems.forEach(classification => { %>
+    <tr>
+      <td value="<%= classification.classification_name %>"><%= classification.classification_name %></td>
+      <td>
+        <form id="classificationFormApproval" for="<%= classification.classification_id%>" action="/inv/approve/classification" method="post">
+          <button name="classification_id" value="<%= classification.classification_id %>"> Approve</button>
+        </form>
+      </td>
+      <td>
+        <form id="classification" for="<%= classification.classification_id%>" action="/inv/deny/classification/<%= classification.classification_id%>" method="post">
+          <button name="classification_id"> Deny</button>
+        </form>
+      </td>
+
+    </tr>
+    <td>
+
+    <% }) %>
+    </form>
+  </tbody>
+</table>
+
+<% if (unapprovedClassificationItems.length === 0) { %>
+  <tr>
+    <td colspan="3">No current pending classification</td>
+  </tr>
+<% } %>
+</td>
+
+
+
+<%# Inventory Table %>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">Pending Inventory</th>
+    </tr>
+    <tr>
+      <th colspan="1">Year</th>
+      <th colspan="1">Inventory Item</th>
+      <th colspan="1">Classification</th>
+      <th colspan="1">Approve</th>
+      <th colspan="1">Deny</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <% itemData.forEach(Inventory => { %>
+    <tr>
+
+      <td colspan="1"><%= Inventory.inv_year %></td>
+      <td colspan="1">
+        <%= (Inventory.inv_make ? Inventory.inv_make : '') + ' ' + (Inventory.inv_model ? Inventory.inv_model : '') %>
+      </td>
+      <td>
         <% unapprovedClassificationItems.forEach(classification => { %>
-          <tr>
-            <td colspan="1">
-              <%= classification.classification_name %>
-              <input type="hidden" name="classification_id" value="<%= classification.classification_id %>">
-            </td>            
-            <td colspan="1">
-              <a href="/inv/approve/classification/<%= classification.classification_id %>" title="Approve">Approve</a>
-            </td>
-            <td colspan="1">
-              <a href="/inv/deny/classification/<%= classification.classification_id %>" title="Reject">Deny</a>
-            </td>
-          </tr>
+        <% if (classification.classification_id === Inventory.classification_id) { %>
+        <%= classification.classification_name %>
+        <% } %>
         <% }) %>
-      </tbody>
-    </table>
+      </td>
 
-     <%# Inventory Table %>
+      <td>
+        <form id="<%= Inventory.inv_id %>" action="/inv/approve/Inventory/<%= Inventory.inv_id %>" method="post">
+          <button name="<%= Inventory.inv_id %>"> Approve</button>
+        </form>
+      </td>
+      <td>
+        <form id="inventory" for="<%= Inventory.inv_id %>" action="/inv/deny/Inventory/<%= Inventory.inv_id %>" method="post">
+          <button name="<%= Inventory.inv_id %>"> Deny</button>
+        </form>
+      </td>
 
-     <table>
-      <thead>
-        <tr>
-          <th colspan="3">Pending Inventory</th>
-        </tr>
-        <tr>
-          <th colspan="1">Year</th>
-          <th colspan="1">Inventory Item</th>
-          <th colspan="1">Classification</th>
-          <th colspan="1">Approve</th>
-          <th colspan="1">Deny</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% itemData.forEach(Inventory => { %>
-          <tr>
-            <td colspan="1"><%= Inventory.inv_year %></td>
-            <td colspan="1">
-              <%= (Inventory.inv_make ? Inventory.inv_make : '') + ' ' + (Inventory.inv_model ? Inventory.inv_model : '') %>
-            </td>
-            <td colspan="1">
-              <% unapprovedClassificationItems.forEach(classification => { %>
-                <% if (classification.classification_id === Inventory.classification_id) { %>
-                  <%= classification.classification_name %>
-                <% } %>
-              <% }) %>
-            </td>
-            <td colspan="1">
-              <a href="/inv/approve/Inventory/<%= Inventory.inv_id %>" title="Approve">Approve</a>
-            </td>
-            <td colspan="1">
-              <a href="/inv/deny/Inventory/<%= Inventory.inv_id %>" title="Reject">Deny</a>
-            </td>
-          </tr>
-        <% }) %>
-        </tbody>
-        </table>
-        
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<% if (unapprovedClassificationItems.length === 0) { %>
+  <tr>
+    <td colspan="4">No current data for inventory items</td>
+  </tr>
+<% } %>
+</td>
