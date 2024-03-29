@@ -10,11 +10,27 @@
     <div id="managementPageContainer">
       <div class="managementpage">
           <img src="/images/site/category_add-512.webp" class="addCategoryImage" alt="Category image showing a plus to a database table">
-          <div class="managementpage_button_contin">
+          <!-- <div class="managementpage_button_contin">
             <%# Buttons %>
               <a href="/inv/add-classification" class="button_for_link">Add New Classification</a>
               <a href="/inv/add-new-inventory" class="button_for_link">Add New Vehicle</a>        
-          </div>
+          </div> -->
+
+          <% if (accountData.account_type === 'Admin') { %>
+            <p>Dear Managers, do remember to review any pendig updates from your employees</p>
+            <div class="managementpage_button_contin">
+            <%# Buttons %>
+                <a href="/inv/pending_approval" class="button_for_link">Pending approval</a>
+                <a href="/inv/add-classification" class="button_for_link">Add New Classification</a>
+                <a href="/inv/add-new-inventory" class="button_for_link">Add New Vehicle</a>  
+            </div>
+
+            <% } else if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
+              <h2>Welcome <%= accountData.account_firstname %></h2>
+              <h3>Inventory Management</h3>
+             <p><a class="accountMangementbtn" href="/inv/">Access Inventory Management</a>fdgegegetert</p>
+            <% } %>
+            
           <h2>Manage Inventory</h2>
           <p>Choose a Classification to see those inventory items.</p>
           <%# Drop down menu %>
@@ -25,13 +41,13 @@
           <noscript>JavaScript must be enabled to use this page.</noscript>
           <script src="/js/inventory.js"></script>
         </div>
-      <!-- <div class="pendingAprovalSection"> -->
-        <%#- include('../inventory/pending_approval') %>
-      <!-- </div> -->
 
 
+    
 
-  </div>
+   
+
+
 
 
 

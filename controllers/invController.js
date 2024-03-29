@@ -478,13 +478,11 @@ invCont.approvaRequestForInventory = async function (req, res) {
     let unapprovedInventoryItems = (await invModel.getUnapprovedInventory()).rows
     console.log("unapprovedInventoryItems: ", unapprovedInventoryItems )
     const approveResultSet = await invModel.approveInventory(inv)
-    console.log("approveResultSet SEND TO BD: ", approveResultSet)
-
     let classifications = (await invModel.getClassifications()).rows
     if (approveResultSet) {
-      const updatedItem = unapprovedInventoryItems[0] 
-      const approvedClassification = updatedItem.classification_name
-      req.flash("notice", `The Inventory request for ${approvedClassification} has been approved.`)
+      const updatedItem = unapprovedInventoryItems[0];
+      const approvedClassification = updatedItem.inv_make + " " + updatedItem.inv_model;
+      req.flash("notice", `The Inventory request for ${approvedClassification} has been approved.`);
       res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the the approval had failed. Yon may try again")

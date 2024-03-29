@@ -160,9 +160,11 @@ async function getUnapprovedClassification(){
 }
 
 
-async function getUnapprovedInventory(){
-  return await pool.query("SELECT * FROM public.inventory WHERE inv_approved = false")
+async function getUnapprovedInventory() {
+  return await pool.query("SELECT inv_id, inv_year, inv_make, inv_model FROM public.inventory WHERE inv_approved = false")
 }
+
+
 
 
 
