@@ -81,7 +81,7 @@
   <tbody>
 
 
-    <% unapproved.forEach(Inventory => { %>
+    <% unapprovedInventory.forEach(Inventory => { %>
     <tr>
 
       <td colspan="1"><%= Inventory.inv_year %></td>
@@ -106,7 +106,7 @@
     </tr>
     <% }) %>
     <%# additional if statement shows if there is no available data in list %>
-    <% if (unapproved.length === 0) { %>
+    <% if (unapprovedInventory.length === 0) { %>
     <tr>
       <td colspan="4">No current data for inventory items at this time</td>
     </tr>

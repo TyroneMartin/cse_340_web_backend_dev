@@ -161,18 +161,51 @@ async function deleteInventoryItem(inv_id) {
  *  inv/pending_approval Queries
  * ************************** */
 
-async function getUnapprovedClassification(){
-  return (await pool.query(`SELECT * FROM public.classification WHERE classification_approved = false`)).rows
+// async function getUnapprovedClassification(){
+//   return await pool.query(`SELECT * FROM public.classification WHERE classification_approved = false`)
+// }
+
+
+async function getUnapprovedClassification() {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.classification WHERE classification_approved = false
+   `,
+    );
+    return data.rows  // returns all the rows for my foreach loop
+  } catch (error) {
+    console.error("getUnapprovedClassification error: ", error);
+    throw error;
+  }
 }
 
 
+
+
+// async function getUnapprovedInventory() {
+//   return (await pool.query(`SELECT inv_id, inv_year, inv_make, inv_model, classification_name FROM public.inventory as i INNER JOIN classification as c 
+//   ON c.classification_id = i.classification_id
+//   WHERE inv_approved = false`)).row
+// }
 
 
 async function getUnapprovedInventory() {
-  return (await pool.query(`SELECT inv_id, inv_year, inv_make, inv_model, classification_name FROM public.inventory as i INNER JOIN classification as c 
-  ON c.classification_id = i.classification_id
-  WHERE inv_approved = false`)).rows
-}
+    try {
+      const data = await pool.query(
+        `SELECT inv_id, inv_year, inv_make, inv_model, inv_approved, classification_name 
+        FROM public.inventory AS i 
+        INNER JOIN classification AS c ON c.classification_id = i.classification_id
+        WHERE i.inv_approved = false`,  
+      )      
+      return data.rows
+    } catch (error) {
+      console.error("getUnapprovedInventory error: ", error);
+      throw error;
+    }
+  }
+  
+
+
 
 
 
@@ -196,12 +229,13 @@ async function approveClassification(classification_id) {
   try {
     const data = await pool.query(
       `UPDATE public.classification 
-       SET classification_approved = true
-       WHERE classification_id = $1 
-       AND classification_approved = false`,
+      SET classification_approved = true
+      WHERE classification_id = $1 
+      AND classification_approved = false
+     `,
       [classification_id]
     );
-    return data
+    return data.rowCount
   } catch (error) {
     console.error("approveClassification error: ", error);
     throw error;
@@ -218,7 +252,7 @@ async function approveInventory(inv_id) {
        AND inv_approved = false`,
       [inv_id]
     );
-    return data
+    return data.rowCount
   } catch (error) {
     console.error("approve Inventory BD error: ", error);
     throw error;

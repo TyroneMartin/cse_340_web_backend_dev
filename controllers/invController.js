@@ -404,23 +404,17 @@ invCont.deleteItem = async function (req, res, next) {
 /* ***************************
  *  Get route for pending approval page
  * ************************** */
-
 invCont.buildPendingApproval = async function (req, res, next) {  
   try {
-    let nav = await utilities.getNav();
-    // let classifications = (await invModel.getClassificationsList()).rows;
-    const unapproved = await invModel.getUnapprovedInventory();
-    console.log("unapproved for build Pending Approval",  unapproved);
-    let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()); 
-    // console.log("unapprovedClassificationItems listing: ", unapprovedClassificationItems)
+    let nav = await utilities.getNav()
+    let unapprovedClassificationItems = await invModel.getUnapprovedClassification() 
+    const unapprovedInventory = await invModel.getUnapprovedInventory();
     res.render("./inventory/pending_approval", {
       nav,
       errors: null,
       title: "Pending Approval Request",
-      // classifications,
-      unapproved,
+      unapprovedInventory,
       unapprovedClassificationItems
-
     });
   } catch (err) {
     next(err);
@@ -428,16 +422,15 @@ invCont.buildPendingApproval = async function (req, res, next) {
 };
 
 // post request to approve classification
-invCont.approvaRequestForClassification = async function (req, res) {
+invCont.approvaRequestForClassification = async function (req, res, next) {
   try {
     const classification_id =  parseInt(req.body.classification_id)
-    // const { classification_name  } = req.body; 
-    let nav = await utilities.getNav()
-    let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()).rows; 
-    // console.log("unapproved  classifi List", unapprovedClassificationItems)
-    // console.log("classification_name was called", classification_name)
+    let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
+    const unapprovedInventory = await invModel.getUnapprovedInventory();
     const approveResultSet = await invModel.approveClassification(classification_id)
-    // console.log("approveResultfor classification to be approved: ", approveResultSet)
+    console.log("unapprovedInventory listing DB :", unapprovedInventory)
+    console.log("Approve the result set from DB for Classification row: ", approveResultSet)
+    let nav = await utilities.getNav()
     if (approveResultSet) {
       const updatedItem = unapprovedClassificationItems[0] 
       const approvedClassification = updatedItem.classification_name
@@ -450,28 +443,23 @@ invCont.approvaRequestForClassification = async function (req, res) {
         errors,
         nav,
         unapprovedClassificationItems,
-        classification_id,
-        approveResultSet,
-        classification_name: unapprovedClassificationItems.classification_name,
-        classification_id: unapprovedClassificationItems.classification_id
+        unapprovedInventory,
       })
     }
   } catch (err) {
-    // next(err)
+    next(err)
   }
 }
 
 
 // post request to approve classification
-invCont.approvaRequestForInventory = async function (req, res) {
+invCont.approvaRequestForInventory = async function (req, res, next) {
   try {
     const inv = parseInt(req.body.inv_id)
-    console.log("approvaRequestForInventory ID", req.body)
-    let nav = await utilities.getNav()
-    let unapprovedInventoryItems = (await invModel.getUnapprovedInventory())
-    console.log("unapprovedInventoryItems: ", unapprovedInventoryItems )
+    let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
+    let unapprovedInventoryItems = await invModel.getUnapprovedInventory()
     const approveResultSet = await invModel.approveInventory(inv)
-    let classifications = (await invModel.getClassifications()).rows
+    let nav = await utilities.getNav()
     if (approveResultSet) {
       const updatedItem = unapprovedInventoryItems[0];
       const approvedClassification = updatedItem.inv_make + " " + updatedItem.inv_model;
@@ -483,17 +471,12 @@ invCont.approvaRequestForInventory = async function (req, res) {
         title: "Pending Approval Request",
         errors,
         nav,
+        unapprovedClassificationItems,
         unapprovedInventoryItems,
-        approveResultSet,
-        inv_id: itemData.inv_id,
-        inv_year: itemData.inv_year,
-        inv_make: itemData.inv_make,
-        inv_model: itemData.inv_model,
-        classifications,
       })
     }
   } catch (err) {
-    // next(err)
+    next(err)
   }
 }
 
