@@ -30,7 +30,7 @@
 
     <% unapprovedClassificationItems.forEach(classification => { %>
     <tr>
-      <td value="<%= classification.classification_name %>"><%= classification.classification_name %></td>
+      <td ><%= classification.classification_name %></td>
       <td>
         <form id="classificationFormApprovalButton" for="<%= classification.classification_id%>" action="/inv/approve/classification" method="post">
           <button name="classification_id" value="<%= classification.classification_id %>"> Approve</button>
@@ -81,7 +81,7 @@
   <tbody>
 
 
-    <% itemData.forEach(Inventory => { %>
+    <% unapproved.forEach(Inventory => { %>
     <tr>
 
       <td colspan="1"><%= Inventory.inv_year %></td>
@@ -89,11 +89,7 @@
         <%= (Inventory.inv_make ? Inventory.inv_make : '') + ' ' + (Inventory.inv_model ? Inventory.inv_model : '') %>
       </td>
       <td>
-        <% classifications.forEach(classification => { %>
-        <% if (classification.classification_id === Inventory.classification_id) { %>
-        <%= classification.classification_name %>
-        <% } %>
-        <% }) %>
+        <%= Inventory.classification_name %>
       </td>
 
       <td>
@@ -110,7 +106,7 @@
     </tr>
     <% }) %>
     <%# additional if statement shows if there is no available data in list %>
-    <% if (itemData.length === 0) { %>
+    <% if (unapproved.length === 0) { %>
     <tr>
       <td colspan="4">No current data for inventory items at this time</td>
     </tr>

@@ -408,24 +408,19 @@ invCont.deleteItem = async function (req, res, next) {
 invCont.buildPendingApproval = async function (req, res, next) {  
   try {
     let nav = await utilities.getNav();
-    let classifications = (await invModel.getClassifications()).rows;
-    const itemData = await invModel.getInventory();
-    // console.log("itemData for build Pending Approval", itemData);
-    let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()).rows; 
+    // let classifications = (await invModel.getClassificationsList()).rows;
+    const unapproved = await invModel.getUnapprovedInventory();
+    console.log("unapproved for build Pending Approval",  unapproved);
+    let unapprovedClassificationItems = (await invModel.getUnapprovedClassification()); 
     // console.log("unapprovedClassificationItems listing: ", unapprovedClassificationItems)
     res.render("./inventory/pending_approval", {
       nav,
       errors: null,
       title: "Pending Approval Request",
-      classifications,
-      itemData, 
-      unapprovedClassificationItems,
-      classification_name: unapprovedClassificationItems.classification_name,
-      classification_id: unapprovedClassificationItems.classification_id,
-      inv_id: itemData.inv_id,
-      inv_make: itemData.inv_make,
-      inv_model: itemData.inv_model,
-      inv_year: itemData.inv_year
+      // classifications,
+      unapproved,
+      unapprovedClassificationItems
+
     });
   } catch (err) {
     next(err);
@@ -473,7 +468,7 @@ invCont.approvaRequestForInventory = async function (req, res) {
     const inv = parseInt(req.body.inv_id)
     console.log("approvaRequestForInventory ID", req.body)
     let nav = await utilities.getNav()
-    let unapprovedInventoryItems = (await invModel.getUnapprovedInventory()).rows
+    let unapprovedInventoryItems = (await invModel.getUnapprovedInventory())
     console.log("unapprovedInventoryItems: ", unapprovedInventoryItems )
     const approveResultSet = await invModel.approveInventory(inv)
     let classifications = (await invModel.getClassifications()).rows

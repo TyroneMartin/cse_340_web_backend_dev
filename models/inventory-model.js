@@ -7,6 +7,10 @@ async function getClassifications(){
   return await pool.query("SELECT * FROM public.classification where classification_approved = true")
 }
 
+async function getClassificationsList(){
+  return await pool.query("SELECT * FROM public.classification")
+}
+
 /* ***************************
  *  Get all account data
  * ************************** */
@@ -24,7 +28,7 @@ async function getInventoryByClassificationId(classification_id) {
       `SELECT * FROM public.inventory AS i 
       JOIN public.classification AS c 
       ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
+      WHERE i.classification_id = $1 AND i.inv_approved = true`,
       [classification_id]
     )
     return data.rows
@@ -44,7 +48,9 @@ async function getInventoryById(inv_id) {
       WHERE inv_id = $1`,  
       [inv_id]
     );
-    return data.rows[0]; //  index with reture the first ID from inv_id, so only one row is returned
+    console.log("data from getInventoryById: ",data )
+
+    return data.rows[0] //  index with reture the first ID from inv_id, so only one row is returned
   } catch (error) {
     console.error("getInventoryById error: ", error);
     throw error;
@@ -156,29 +162,34 @@ async function deleteInventoryItem(inv_id) {
  * ************************** */
 
 async function getUnapprovedClassification(){
-  return await pool.query("SELECT * FROM public.classification WHERE classification_approved = false")
+  return (await pool.query(`SELECT * FROM public.classification WHERE classification_approved = false`)).rows
 }
+
+
 
 
 async function getUnapprovedInventory() {
-  return await pool.query("SELECT inv_id, inv_year, inv_make, inv_model FROM public.inventory WHERE inv_approved = false")
+  return (await pool.query(`SELECT inv_id, inv_year, inv_make, inv_model, classification_name FROM public.inventory as i INNER JOIN classification as c 
+  ON c.classification_id = i.classification_id
+  WHERE inv_approved = false`)).rows
 }
 
 
 
-async function getInventory() {
-  try {
-    const data = await pool.query(
-      `SELECT inv_id, inv_make, inv_model, inv_year, classification_id
-      FROM public.inventory 
-   `,  
-    );
-    return data.rows  // returns all the rows for my foreach loop
-  } catch (error) {
-    console.error("getInventoryById error: ", error);
-    throw error;
-  }
-}
+// async function getInventory() {
+//   try {
+//     const data = await pool.query(
+//       `SELECT inv_id, inv_make, inv_model, inv_year, classification_id
+//       FROM public.inventory  
+
+//    `,  
+//     );
+//     return data.rows  // returns all the rows for my foreach loop
+//   } catch (error) {
+//     console.error("getInventoryById error: ", error);
+//     throw error;
+//   }
+// }
 
 
 async function approveClassification(classification_id) {
@@ -224,7 +235,9 @@ module.exports = { getClassifications,
   deleteInventoryItem, 
   getUnapprovedClassification, 
   approveClassification,  
-  getInventory,
+  // getInventory,
   getUnapprovedInventory,
-  approveInventory
+  approveInventory,
+  getClassificationsList,
+
 }
