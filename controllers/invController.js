@@ -139,8 +139,8 @@ invCont.postAddClassification = async function (req, res, next) {
     let classifications = (await invModel.getClassifications()).rows
     console.log("Response from db log", response)
     if(response) {
-    req.flash("notice", 'Sucess! New classification was added.')
-    req.flash("notice", 'You may now add a new inventor')
+    req.flash("notice", 'New classification was added, however, your request needs to be approved by a manager.')
+    req.flash("notice", 'You may also had a new inventory item')
     res.render("./inventory/add-new-inventory", {
       classifications,
       title,
@@ -199,10 +199,10 @@ invCont.postAddInventory = async function (req, res, next) {
     if (invResult) {
       req.flash(
         "notice",
-        `Congratulations, you\'ve successfully added ${inv_make} ${inv_model} to the inventory!`
+        `Congratulations, you\'ve  added ${inv_make} ${inv_model} to the inventory, and need management approval!`
       )
       res.render("./inventory/add-new-inventory", {
-        classifications,  //neded here
+        classifications, 
         title: "Success! Vehicle Added.",
         nav,
         errors: null,
@@ -224,7 +224,6 @@ invCont.postAddInventory = async function (req, res, next) {
     next(err)
   }
 }
-
 
 /* ***************************
  *  Return Inventory by Classification As JSON

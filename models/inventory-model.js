@@ -4,7 +4,9 @@ const pool = require("../database/index.js")
  *  Get all classification data
  * ************************** */
 async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification where classification_approved = true")
+  return await pool.query(`SELECT * FROM public.classification 
+  where classification_approved = true 
+  ORDER BY classification_id`)
 }
 
 async function getClassificationsList(){
@@ -161,11 +163,6 @@ async function deleteInventoryItem(inv_id) {
  *  inv/pending_approval Queries
  * ************************** */
 
-// async function getUnapprovedClassification(){
-//   return await pool.query(`SELECT * FROM public.classification WHERE classification_approved = false`)
-// }
-
-
 async function getUnapprovedClassification() {
   try {
     const data = await pool.query(
@@ -178,15 +175,6 @@ async function getUnapprovedClassification() {
     throw error;
   }
 }
-
-
-
-
-// async function getUnapprovedInventory() {
-//   return (await pool.query(`SELECT inv_id, inv_year, inv_make, inv_model, classification_name FROM public.inventory as i INNER JOIN classification as c 
-//   ON c.classification_id = i.classification_id
-//   WHERE inv_approved = false`)).row
-// }
 
 
 async function getUnapprovedInventory() {
@@ -205,35 +193,28 @@ async function getUnapprovedInventory() {
   }
   
 
-
-
-
-
-// async function getInventory() {
-//   try {
-//     const data = await pool.query(
-//       `SELECT inv_id, inv_make, inv_model, inv_year, classification_id
-//       FROM public.inventory  
-
-//    `,  
-//     );
-//     return data.rows  // returns all the rows for my foreach loop
-//   } catch (error) {
-//     console.error("getInventoryById error: ", error);
-//     throw error;
-//   }
-// }
-
-
 async function approveClassification(classification_id) {
   try {
     const data = await pool.query(
       `UPDATE public.classification 
-      SET classification_approved = true
-      WHERE classification_id = $1 
-      AND classification_approved = false
+      SET 
+          classification_approved = true,
+          account_id = $1,
+          classification_approval_date = CURRENT_DATE
+      FROM 
+          public.account
+      WHERE 
+          public.classification.classification_id = $1 
+          AND public.classification.classification_approved = false
+          AND public.account.account_id = $1;
      `,
       [classification_id]
+
+    //   `UPDATE public.classification 
+    //   SET classification_approved = true
+    //   WHERE classification_id = $1 
+    //   AND classification_approved = false
+    //  `
     );
     return data.rowCount
   } catch (error) {
