@@ -189,6 +189,7 @@ Util.handleErrors = (fn) => (req, res, next) =>
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
+    // console.log("Res.cookies : ", jwt)
    jwt.verify(
     req.cookies.jwt,
     process.env.ACCESS_TOKEN_SECRET,
@@ -199,6 +200,7 @@ Util.checkJWTToken = (req, res, next) => {
       return res.redirect("/account/login")
      }
      res.locals.accountData = accountData
+    //  console.log("res.locals.accountData ", accountData)
      res.locals.loggedin = 1
      next()
     })

@@ -213,7 +213,7 @@ invCont.postAddInventory = async function (req, res, next) {
         "Sorry, there was an issue adding a new vehicle. Please try again."
       )
       res.render("./inventory/add-new-inventory", {
-        classifications,  //neded here
+        classifications,  
         title: "Please try again to Insert valid data",
         nav,
         errors: null,
@@ -424,14 +424,19 @@ invCont.buildPendingApproval = async function (req, res, next) {
 invCont.approvaRequestForClassification = async function (req, res, next) {
   try {
     const classification_id =  parseInt(req.body.classification_id)
+    const account_id =  parseInt(req.body.account_id)
+    console.log("account_id data ", account_id)
+    // const account_firstname= req.body.account_firstname
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
+    console.log("unapprovedClassificationItems", unapprovedClassificationItems)
     const unapprovedInventory = await invModel.getUnapprovedInventory();
     const approveResultSet = await invModel.approveClassification(classification_id)
-    console.log("unapprovedInventory listing DB :", unapprovedInventory)
+    const currentAccountHolder = await invModel.getAccountHolderById(account_id, classification_id)
+    console.log("currentAccountHolder :", currentAccountHolder)
     console.log("Approve the result set from DB for Classification row: ", approveResultSet)
     let nav = await utilities.getNav()
     if (approveResultSet) {
-      const updatedItem = unapprovedClassificationItems[0] 
+      const updatedItem = unapprovedClassificationItems == classification_id[0]
       const approvedClassification = updatedItem.classification_name
       req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
       res.redirect("/inv/")    
@@ -442,6 +447,7 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
         errors,
         nav,
         unapprovedClassificationItems,
+        currentAccountHolder,
         unapprovedInventory,
       })
     }

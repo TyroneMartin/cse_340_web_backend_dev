@@ -191,38 +191,45 @@ async function getUnapprovedInventory() {
       throw error;
     }
   }
+
+
+  async function approveClassification(classification_id) {
+    try {
+      const data = await pool.query(
+        `UPDATE public.classification 
+        SET classification_approved = true
+        WHERE classification_id = $1`,
+        [classification_id]
+      );
   
-
-async function approveClassification(classification_id) {
-  try {
-    const data = await pool.query(
-      `UPDATE public.classification 
-      SET 
-          classification_approved = true,
-          account_id = $1,
-          classification_approval_date = CURRENT_DATE
-      FROM 
-          public.account
-      WHERE 
-          public.classification.classification_id = $1 
-          AND public.classification.classification_approved = false
-          AND public.account.account_id = $1;
-     `,
-      [classification_id]
-
-    //   `UPDATE public.classification 
-    //   SET classification_approved = true
-    //   WHERE classification_id = $1 
-    //   AND classification_approved = false
-    //  `
-    );
-    return data.rowCount
-  } catch (error) {
-    console.error("approveClassification error: ", error);
-    throw error;
+      // return data.rowCount
+      return data.rowCount
+    } catch (error) {
+      console.error("approveClassification error: ", error);
+      throw error;
+    }
   }
-}
 
+
+  async function getAccountHolderById(account_id, classification_id) {
+    try {
+      const data = await pool.query(
+        `UPDATE public.classification
+        SET 
+            account_id = $1,
+            classification_approval_date = CURRENT_DATE
+        WHERE (account_id IS NULL OR account_id = $1)
+        AND classification_id = $2`,
+        [account_id, classification_id]
+      );
+      return data.rowCount
+    } catch (error) {
+      console.error("Error occurred while updating account holder:", error)
+      throw error; 
+    }
+  }
+  
+  
 
 async function approveInventory(inv_id) {
   try {
@@ -254,5 +261,6 @@ module.exports = { getClassifications,
   getUnapprovedInventory,
   approveInventory,
   getClassificationsList,
+  getAccountHolderById
 
 }
