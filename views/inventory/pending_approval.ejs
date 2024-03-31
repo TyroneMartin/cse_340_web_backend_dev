@@ -36,12 +36,10 @@
           <button name="classification_id" value="<%= classification.classification_id %>"> Approve</button>
           <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>"></input>
           <input type="hidden" name="account_firstname" value="<%= locals.accountData.account_firstname %>"></input>
-
-
         </form>
       </td>
       <td>
-        <form id="classification" for="<%= classification.classification_id%>" action="/inv/deny/classification/<%= classification.classification_id%>" method="post">
+        <form id="classification" for="<%= classification.classification_id%>" action="/inv/deny/classification" method="post">
           <button name="classification_id"> Deny</button>
         </form>
       </td>

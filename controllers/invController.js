@@ -425,19 +425,16 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
   try {
     const classification_id =  parseInt(req.body.classification_id)
     const account_id =  parseInt(req.body.account_id)
-    console.log("account_id data ", account_id)
-    // const account_firstname= req.body.account_firstname
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
-    console.log("unapprovedClassificationItems", unapprovedClassificationItems)
     const unapprovedInventory = await invModel.getUnapprovedInventory();
     const approveResultSet = await invModel.approveClassification(classification_id)
     const currentAccountHolder = await invModel.getAccountHolderById(account_id, classification_id)
-    console.log("currentAccountHolder :", currentAccountHolder)
-    console.log("Approve the result set from DB for Classification row: ", approveResultSet)
     let nav = await utilities.getNav()
     if (approveResultSet) {
-      const updatedItem = unapprovedClassificationItems == classification_id[0]
-      const approvedClassification = updatedItem.classification_name
+      const updatedItem = unapprovedClassificationItems[0].classification_name
+      const approvedClassification = updatedItem
+      console.log("updatedItem :",updatedItem)
+      
       req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
       res.redirect("/inv/")    
     } else {
