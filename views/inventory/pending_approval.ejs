@@ -62,9 +62,6 @@
   </tbody>
 </table>
 
-
-
-
 <%# Inventory Table %>
 
 <table>
@@ -101,6 +98,7 @@
 
       <td>
         <form action="/inv/approve/Inventory" method="post">
+          <input name="account_id" value="<%= locals.accountData.account_id %>" type="hidden">
           <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
           <button class="approve-button" type="submit">Approve</button>
         </form>

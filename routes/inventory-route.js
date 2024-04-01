@@ -89,7 +89,7 @@ utilities.handleErrors(invController.approvaRequestForInventory)
 )
 
 
-router.post("/inv/deny/Inventory",
+router.post("/deny/Inventory",
 utilities.handleErrors(invController.denyInventoryRequest)
 )
 

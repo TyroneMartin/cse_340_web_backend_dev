@@ -166,7 +166,9 @@ async function deleteInventoryItem(inv_id) {
 async function getUnapprovedClassification() {
   try {
     const data = await pool.query(
-      `SELECT * FROM public.classification WHERE classification_approved = false
+      `SELECT * FROM public.classification 
+      WHERE classification_approved = false
+      ORDER BY classification_name
    `,
     )
     return data.rows  // returns all the rows for my foreach loop
@@ -183,7 +185,8 @@ async function getUnapprovedInventory() {
         `SELECT inv_id, inv_year, inv_make, inv_model, inv_approved, classification_name 
         FROM public.inventory AS i 
         INNER JOIN classification AS c ON c.classification_id = i.classification_id
-        WHERE i.inv_approved = false`,  
+        WHERE i.inv_approved = false
+        ORDER BY classification_name`,  
       )      
       return data.rows
     } catch (error) {
@@ -198,7 +201,8 @@ async function getUnapprovedInventory() {
       const data = await pool.query(
         `UPDATE public.classification 
         SET classification_approved = true
-        WHERE classification_id = $1`
+        WHERE classification_id = $1
+       `
         ,
         [classification_id]
       )
@@ -239,7 +243,7 @@ async function getUnapprovedInventory() {
       )
   
       // return data.rowCount
-      return data
+      return data.rowCount
     } catch (error) {
       console.error("Delete Classification by ID error: ", error)
       throw error
@@ -264,8 +268,25 @@ async function getUnapprovedInventory() {
       throw error 
     }
   }
-  
-  
+
+
+  async function getUserIdWhoApproveInV(account_id, inv_id) {
+    try {
+      const data = await pool.query(
+        `UPDATE public.inventory
+        SET 
+            account_id = $1,
+            inv_approved_date = CURRENT_DATE
+        WHERE (account_id IS NULL OR account_id = $1)
+        AND inv_id = $2`,
+        [account_id, inv_id]
+      )
+      return data.rowCount
+    } catch (error) {
+      console.error("Error occurred while updating account holder:", error)
+      throw error 
+    }
+  }
 
 async function approveInventory(inv_id) {
   try {
@@ -299,6 +320,7 @@ module.exports = { getClassifications,
   getClassificationsList,
   getAccountHolderById,
   deleteClassificationRequest,
-  deleteInventoryRequest
+  deleteInventoryRequest,
+  getUserIdWhoApproveInV,
 
 }

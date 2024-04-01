@@ -484,10 +484,12 @@ invCont.denyClassificationRequest = async function (req, res, next) {
 // post request to approve classification
 invCont.approvaRequestForInventory = async function (req, res, next) {
   try {
-    const inv = parseInt(req.body.inv_id)
+    const account_id =  parseInt(req.body.account_id)
+    const inv_id = parseInt(req.body.inv_id)
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
     let unapprovedInventoryItems = await invModel.getUnapprovedInventory()
-    const approveResultSet = await invModel.approveInventory(inv)
+    const approveResultSet = await invModel.approveInventory(inv_id)
+    const currentAccountHolder = await invModel.getUserIdWhoApproveInV(account_id, inv_id)
     let nav = await utilities.getNav()
     if (approveResultSet) {
       const updatedItem = unapprovedInventoryItems[0];
@@ -502,6 +504,7 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
         nav,
         unapprovedClassificationItems,
         unapprovedInventoryItems,
+        currentAccountHolder
       })
     }
   } catch (err) {
