@@ -30,35 +30,35 @@
 
     <% unapprovedClassificationItems.forEach(classification => { %>
     <tr>
-      <td ><%= classification.classification_name %></td>
+      <td><%= classification.classification_name %></td>
       <td>
-        <form id="classificationFormApprovalButton" for="<%= classification.classification_id%>" action="/inv/approve/classification" method="post">
-          <button name="classification_id" value="<%= classification.classification_id %>"> Approve</button>
-          <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>"></input>
-          <input type="hidden" name="account_firstname" value="<%= locals.accountData.account_firstname %>"></input>
+        <form action="/inv/approve/classification" method="post">
+          <input name="classification_id" value="<%= classification.classification_id %>" type="hidden">
+          <button class="approve-button" type="submit">Approve</button>
+          <!-- Additional value for the account info -->
+          <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>">
+          <input type="hidden" name="account_firstname" value="<%= locals.accountData.account_firstname %>">
         </form>
       </td>
       <td>
-        <form id="classification" for="<%= classification.classification_id%>" action="/inv/deny/classification" method="post">
+        <form action="/inv/deny/classification" method="post">
           <button name="classification_id" value="<%= classification.classification_id %>"> Deny</button>
         </form>
       </td>
 
     </tr>
-    <td>
+    <!-- <td> -->
 
-      <% }) %>
-      <%# additional if statement shows if there is no available data in list %>
-      <% if (unapprovedClassificationItems.length === 0) { %>
-      <tr>
-        <td colspan="3">No current pending classification available at this time</td>
-      </tr>
-      <%# -------------------------------------------------------- %>
+    <% }) %>
+    <%# additional if statement shows if there is no available data in list %>
+    <% if (unapprovedClassificationItems.length === 0) { %>
+    <tr>
+      <td colspan="3">No current pending classification available at this time</td>
+    </tr>
+    <%# -------------------------------------------------------- %>
 
-      <% } %>
-    </td>
-
-    </form>
+    <% } %>
+    <!-- </td> -->
   </tbody>
 </table>
 
@@ -70,7 +70,7 @@
 <table>
   <thead>
     <tr>
-      <th colspan="3">Pending Inventory</th>
+      <th colspan="6">Pending Inventory</th>
     </tr>
     <tr>
       <th colspan="1">Preview</th>
@@ -82,12 +82,14 @@
     </tr>
   </thead>
   <tbody>
- 
+
     <% unapprovedInventory.forEach(Inventory => { %>
     <tr>
       <!-- <td colspan="1"><a href="../../inv/detail/<%#= Inventory.inv_id %>" target="_blank"><p>Icon</p></a></td> -->
       <!-- Link to trigger the popup -->
-    <td colspan="1"><a href="#" class="preview-link" data-preview-url="../../inv/detail/<%= Inventory.inv_id %>"><p>Icon</p></a></td>
+      <td colspan="1"><a href="#" class="preview-link" data-preview-url="../../inv/detail/<%= Inventory.inv_id %>">
+          <p>Icon</p>
+        </a></td>
 
       <td colspan="1"><%= Inventory.inv_year %></td>
       <td colspan="1">
@@ -98,13 +100,15 @@
       </td>
 
       <td>
-        <form id="InventoryFormB" for="inv_id" action="/inv/approve/Inventory" method="post">
-          <button   name="inv_id" value="<%= Inventory.inv_id %>" > Approve</button>
+        <form action="/inv/approve/Inventory" method="post">
+          <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
+          <button class="approve-button" type="submit">Approve</button>
         </form>
       </td>
       <td>
-        <form id="inventory" for="<%= Inventory.inv_id %>" action="/inv/deny/Inventory" method="post">
-          <button name="denial" value="<%= Inventory.inv_id %>"> Deny</button>
+        <form action="/inv/deny/Inventory" method="post">
+          <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
+          <button class="deny-button" type="submit">Deny</button>
         </form>
       </td>
 
@@ -125,7 +129,7 @@
 <div id="previewModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <iframe id="previewFrame" src="" frameborder="0"></iframe>
+    <iframe id="previewFrame" src="#"></iframe>
   </div>
 </div>
 
