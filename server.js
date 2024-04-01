@@ -65,14 +65,15 @@ app.get('/account/logout', function(req, res) { // the "req" request the redirec
 // is not found in the view for pending_approval
 app.get("/inv/pending_approval", (req, res, next) => {
   // Check if the user is logged in by verifying if certain cookies are set
-  if (!req.cookies) {
+  // if (!req.cookies == !req.cookies.account_id) {
+  if (!req.cookies && req.cookies.account_id == undefined) {
+
     req.flash('notice', 'Your login has expired, you may sign in to resume your session.')
     return res.redirect("/");
   }
   // if yours is login in and cookies is found, then skip this process
   next();
 });
-
 
 /* ***********************
  * View Engine and Templates 

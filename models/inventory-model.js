@@ -49,13 +49,13 @@ async function getInventoryById(inv_id) {
       FROM public.inventory 
       WHERE inv_id = $1`,  
       [inv_id]
-    );
-    console.log("data from getInventoryById: ",data )
+    )
+    // console.log("data from getInventoryById: ",data )
 
     return data.rows[0] //  index with reture the first ID from inv_id, so only one row is returned
   } catch (error) {
-    console.error("getInventoryById error: ", error);
-    throw error;
+    console.error("getInventoryById error: ", error)
+    throw error
   }
 }
 
@@ -65,12 +65,12 @@ async function getInventoryById(inv_id) {
 * *************************** */
 async function addNewVehicleClassification(inv_classification, inv_make, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) { 
   try {
-    const sql = "INSERT INTO vehicle_table (classification, make, description, image, thumbnail, price, year, miles, color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *";
-    const values = [inv_classification, inv_make, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color];
-    return await pool.query(sql, values);
+    const sql = "INSERT INTO vehicle_table (classification, make, description, image, thumbnail, price, year, miles, color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *"
+    const values = [inv_classification, inv_make, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color]
+    return await pool.query(sql, values)
   } catch (error) {
-    console.error("addNewVehicleClassification error:", error.message);
-    throw error;
+    console.error("addNewVehicleClassification error:", error.message)
+    throw error
   }
 }
 
@@ -79,13 +79,13 @@ async function addNewVehicleClassification(inv_classification, inv_make, inv_des
 * *************************** */
 async function AddClassificationIntoDatabase(classification_name) { 
   try {
-    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *";
+    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *"
 
-    const values = [classification_name];
-    return await pool.query(sql, values);
+    const values = [classification_name]
+    return await pool.query(sql, values)
   } catch (error) {
-    console.error("Add new classification:", error.message);
-    throw error;
+    console.error("Add new classification:", error.message)
+    throw error
   }
 }
 
@@ -96,12 +96,12 @@ async function AddClassificationIntoDatabase(classification_name) {
 
 async function AddInventoryIntoDatabase(classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) { 
   try {
-    const sql = "INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *";
-    const values = [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color];
-    return await pool.query(sql, values);
+    const sql = "INSERT INTO inventory (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"
+    const values = [classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color]
+    return await pool.query(sql, values)
   } catch (error) {
-    console.error("addNewVehicleClassification error:", error.message);
-    throw error;
+    console.error("addNewVehicleClassification error:", error.message)
+    throw error
   }
 }
 
@@ -168,11 +168,11 @@ async function getUnapprovedClassification() {
     const data = await pool.query(
       `SELECT * FROM public.classification WHERE classification_approved = false
    `,
-    );
+    )
     return data.rows  // returns all the rows for my foreach loop
   } catch (error) {
-    console.error("getUnapprovedClassification error: ", error);
-    throw error;
+    console.error("getUnapprovedClassification error: ", error)
+    throw error
   }
 }
 
@@ -187,8 +187,8 @@ async function getUnapprovedInventory() {
       )      
       return data.rows
     } catch (error) {
-      console.error("getUnapprovedInventory error: ", error);
-      throw error;
+      console.error("getUnapprovedInventory error: ", error)
+      throw error
     }
   }
 
@@ -198,15 +198,51 @@ async function getUnapprovedInventory() {
       const data = await pool.query(
         `UPDATE public.classification 
         SET classification_approved = true
-        WHERE classification_id = $1`,
+        WHERE classification_id = $1`
+        ,
         [classification_id]
-      );
+      )
   
       // return data.rowCount
       return data.rowCount
     } catch (error) {
-      console.error("approveClassification error: ", error);
-      throw error;
+      console.error("approveClassification error: ", error)
+      throw error
+    }
+  }
+
+
+  async function deleteClassificationRequest(classification_id) {
+    try {
+      const data = await pool.query(
+        `DELETE FROM public.classification 
+        WHERE classification_id = $1
+        ` ,
+        [classification_id]
+      )
+  
+      // return data.rowCount
+      return data.rowCount
+    } catch (error) {
+      console.error("Delete Classification by ID error: ", error)
+      throw error
+    }
+  }
+
+  async function deleteInventoryRequest(inv_id) {
+    try {
+      const data = await pool.query(
+        `DELETE FROM public.inventory
+        WHERE inv_id = $1
+        ` ,
+        [inv_id]
+      )
+  
+      // return data.rowCount
+      return data
+    } catch (error) {
+      console.error("Delete Classification by ID error: ", error)
+      throw error
     }
   }
 
@@ -221,11 +257,11 @@ async function getUnapprovedInventory() {
         WHERE (account_id IS NULL OR account_id = $1)
         AND classification_id = $2`,
         [account_id, classification_id]
-      );
+      )
       return data.rowCount
     } catch (error) {
       console.error("Error occurred while updating account holder:", error)
-      throw error; 
+      throw error 
     }
   }
   
@@ -239,11 +275,11 @@ async function approveInventory(inv_id) {
        WHERE inv_id = $1 
        AND inv_approved = false`,
       [inv_id]
-    );
+    )
     return data.rowCount
   } catch (error) {
-    console.error("approve Inventory BD error: ", error);
-    throw error;
+    console.error("approve Inventory BD error: ", error)
+    throw error
   }
 }
 
@@ -261,6 +297,8 @@ module.exports = { getClassifications,
   getUnapprovedInventory,
   approveInventory,
   getClassificationsList,
-  getAccountHolderById
+  getAccountHolderById,
+  deleteClassificationRequest,
+  deleteInventoryRequest
 
 }

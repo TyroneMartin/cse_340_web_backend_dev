@@ -137,7 +137,7 @@ invCont.postAddClassification = async function (req, res, next) {
     const response   = await  invModel.AddClassificationIntoDatabase(classification_name)
     let nav = await utilities.getNav()
     let classifications = (await invModel.getClassifications()).rows
-    console.log("Response from db log", response)
+    // console.log("Response from db log", response)
     if(response) {
     req.flash("notice", 'New classification was added, however, your request needs to be approved by a manager.')
     req.flash("notice", 'You may also had a new inventory item')
@@ -438,7 +438,7 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
       req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
       res.redirect("/inv/")    
     } else {
-      req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
+      req.flash("notice", "Sorry, the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {
         title: "Pending Approval Request",
         errors,
@@ -454,6 +454,33 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
 }
 
 
+// post request to delete the unapproved classification
+invCont.denyClassificationRequest = async function (req, res, next) {
+  try {
+    const classification_id =  parseInt(req.body.classification_id)
+    let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
+    const unapprovedInventory = await invModel.getUnapprovedInventory();
+    let nav = await utilities.getNav()
+    const deleteResultSet = await invModel.deleteClassificationRequest(classification_id)
+    if (deleteResultSet) {
+      req.flash("notice", `Your rejection request was successful, and has been deleted from the database.`)
+      res.redirect("/inv/")    
+    } else {
+      req.flash("notice", "Sorry, the rejection failed. Yon may try again")
+      res.render("./inventory/pending_approval", {
+        title: "Pending Approval Request",
+        errors,
+        nav,
+        unapprovedClassificationItems,
+        currentAccountHolder,
+        unapprovedInventory,
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
 // post request to approve classification
 invCont.approvaRequestForInventory = async function (req, res, next) {
   try {
@@ -468,7 +495,7 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
       req.flash("notice", `The Inventory request for ${approvedClassification} has been approved.`);
       res.redirect("/inv/")    
     } else {
-      req.flash("notice", "Sorry, the the approval had failed. Yon may try again")
+      req.flash("notice", "Sorry, the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {
         title: "Pending Approval Request",
         errors,
@@ -481,6 +508,40 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
     next(err)
   }
 }
+
+
+// post request to delete the unapproved classification
+invCont.denyInventoryRequest = async function (req, res, next) {
+  try {
+    const inv_id =  parseInt(req.body.inv_id)
+    console.log("inv_id :",inv_id)
+    let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
+    const unapprovedInventory = await invModel.getUnapprovedInventory();
+    let nav = await utilities.getNav()
+    const deleteResultSet = await invModel.deleteInventoryRequest(inv_id)
+   console.log("deleteResultSet",deleteResultSet)
+    if (deleteResultSet) {
+      req.flash("notice", `Your rejection request was successful, and has been deleted from the database.`)
+      res.redirect("/inv/")    
+    } else {
+      req.flash("notice", "Sorry, the rejection failed. Yon may try again")
+      res.render("./inventory/pending_approval", {
+        title: "Pending Approval Request",
+        errors,
+        nav,
+        unapprovedClassificationItems,
+        currentAccountHolder,
+        unapprovedInventory,
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+
+
 
 
 module.exports = invCont

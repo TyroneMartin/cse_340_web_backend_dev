@@ -40,7 +40,7 @@
       </td>
       <td>
         <form id="classification" for="<%= classification.classification_id%>" action="/inv/deny/classification" method="post">
-          <button name="classification_id"> Deny</button>
+          <button name="classification_id" value="<%= classification.classification_id %>"> Deny</button>
         </form>
       </td>
 
@@ -73,6 +73,7 @@
       <th colspan="3">Pending Inventory</th>
     </tr>
     <tr>
+      <th colspan="1">Preview</th>
       <th colspan="1">Year</th>
       <th colspan="1">Inventory Item</th>
       <th colspan="1">Classification</th>
@@ -81,10 +82,12 @@
     </tr>
   </thead>
   <tbody>
-
-
+ 
     <% unapprovedInventory.forEach(Inventory => { %>
     <tr>
+      <!-- <td colspan="1"><a href="../../inv/detail/<%#= Inventory.inv_id %>" target="_blank"><p>Icon</p></a></td> -->
+      <!-- Link to trigger the popup -->
+    <td colspan="1"><a href="#" class="preview-link" data-preview-url="../../inv/detail/<%= Inventory.inv_id %>"><p>Icon</p></a></td>
 
       <td colspan="1"><%= Inventory.inv_year %></td>
       <td colspan="1">
@@ -100,8 +103,8 @@
         </form>
       </td>
       <td>
-        <form id="inventory" for="<%= Inventory.inv_id %>" action="/inv/deny/Inventory/<%= Inventory.inv_id %>" method="post">
-          <button  name="<%= Inventory.inv_id %>"> Deny</button>
+        <form id="inventory" for="<%= Inventory.inv_id %>" action="/inv/deny/Inventory" method="post">
+          <button name="denial" value="<%= Inventory.inv_id %>"> Deny</button>
         </form>
       </td>
 
@@ -117,3 +120,14 @@
 
   </tbody>
 </table>
+
+<!-- Popup modal -->
+<div id="previewModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <iframe id="previewFrame" src="" frameborder="0"></iframe>
+  </div>
+</div>
+
+<noscript>JavaScript is required for Preview link</noscript>
+<script src="/js/previewModal.js"></script>

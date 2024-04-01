@@ -30,7 +30,6 @@ router.get("/", utilities.checkJWTToken, utilities.checkAccountType, utilities.c
 
 router.get("/pending_approval", utilities.handleErrors(invController.buildPendingApproval))
 
-
 // ------------------------------------------------------------
 
 /* ***************************
@@ -79,9 +78,20 @@ router.post("/approve/classification",
 utilities.handleErrors(invController.approvaRequestForClassification)
 )
 
+router.post("/deny/classification", 
+utilities.handleErrors(invController.denyClassificationRequest)
+)
+
+
 router.post("/approve/Inventory", 
 // utilities.checkAccountType, // check the account type
 utilities.handleErrors(invController.approvaRequestForInventory)
 )
+
+
+router.post("/inv/deny/Inventory",
+utilities.handleErrors(invController.denyInventoryRequest)
+)
+
 
 module.exports = router
