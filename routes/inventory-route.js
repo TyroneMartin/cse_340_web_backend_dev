@@ -74,22 +74,24 @@ utilities.handleErrors(invController.deleteItem)
 // /approve/classification/
 
 router.post("/approve/classification", 
-// utilities.checkAccountType, // check the account type
+utilities.checkAccountType,
 utilities.handleErrors(invController.approvaRequestForClassification)
 )
 
 router.post("/deny/classification", 
+utilities.checkAccountType,
 utilities.handleErrors(invController.denyClassificationRequest)
 )
 
 
 router.post("/approve/Inventory", 
-// utilities.checkAccountType, // check the account type
+utilities.checkAccountType,
 utilities.handleErrors(invController.approvaRequestForInventory)
 )
 
 
 router.post("/deny/Inventory",
+utilities.checkAccountType,
 utilities.handleErrors(invController.denyInventoryRequest)
 )
 
