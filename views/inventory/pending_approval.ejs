@@ -38,10 +38,13 @@
           <!-- Additional value for the account info -->
           <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>">
           <input type="hidden" name="account_firstname" value="<%= locals.accountData.account_firstname %>">
+          <input type="hidden" name="classification_name" value="<%= classification.classification_name %>">
+
         </form>
       </td>
       <td>
         <form action="/inv/deny/classification" method="post">
+          <input type="hidden" name="classification_name" value="<%= classification.classification_name %>">
           <button name="classification_id" value="<%= classification.classification_id %>"> Deny</button>
         </form>
       </td>
@@ -100,12 +103,16 @@
         <form action="/inv/approve/Inventory" method="post">
           <input name="account_id" value="<%= locals.accountData.account_id %>" type="hidden">
           <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
+          <input name="inv_make" value="<%= Inventory.inv_make %>" type="hidden">
+          <input name="inv_model" value="<%= Inventory.inv_model %>" type="hidden">
           <button class="approve-button" type="submit">Approve</button>
         </form>
       </td>
       <td>
         <form action="/inv/deny/Inventory" method="post">
           <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
+          <input name="inv_make" value="<%= Inventory.inv_make %>" type="hidden">
+          <input name="inv_model" value="<%= Inventory.inv_model %>" type="hidden">
           <button class="deny-button" type="submit">Deny</button>
         </form>
       </td>

@@ -425,17 +425,14 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
   try {
     const classification_id =  parseInt(req.body.classification_id)
     const account_id =  parseInt(req.body.account_id)
+    const classification_name = req.body.classification_name
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
     const unapprovedInventory = await invModel.getUnapprovedInventory();
     const approveResultSet = await invModel.approveClassification(classification_id)
     const currentAccountHolder = await invModel.getAccountHolderById(account_id, classification_id)
     let nav = await utilities.getNav()
-    if (approveResultSet) {
-      const updatedItem = unapprovedClassificationItems[0].classification_name
-      const approvedClassification = updatedItem
-      console.log("updatedItem :",updatedItem)
-      
-      req.flash("notice", `The classification request for ${approvedClassification} has been approved.`)
+    if (approveResultSet) { 
+      req.flash("notice", `The classification request for ${classification_name} has been approved.`)
       res.redirect("/inv/")    
     } else {
       req.flash("notice", "Sorry, the approval had failed. Yon may try again")
@@ -458,12 +455,13 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
 invCont.denyClassificationRequest = async function (req, res, next) {
   try {
     const classification_id =  parseInt(req.body.classification_id)
+    const classification_name = req.body.classification_name
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
     const unapprovedInventory = await invModel.getUnapprovedInventory();
     let nav = await utilities.getNav()
     const deleteResultSet = await invModel.deleteClassificationRequest(classification_id)
     if (deleteResultSet) {
-      req.flash("notice", `Your rejection request was successful, and has been deleted from the database.`)
+      req.flash("notice", `Your rejection request for ${classification_name} was successful.`)
       res.redirect("/inv/")    
     } else {
       req.flash("notice", "Sorry, the rejection failed. Yon may try again")
@@ -484,6 +482,7 @@ invCont.denyClassificationRequest = async function (req, res, next) {
 // post request to approve classification
 invCont.approvaRequestForInventory = async function (req, res, next) {
   try {
+    const { inv_make, inv_model } = req.body
     const account_id =  parseInt(req.body.account_id)
     const inv_id = parseInt(req.body.inv_id)
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
@@ -492,9 +491,7 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
     const currentAccountHolder = await invModel.getUserIdWhoApproveInV(account_id, inv_id)
     let nav = await utilities.getNav()
     if (approveResultSet) {
-      const updatedItem = unapprovedInventoryItems[0];
-      const approvedClassification = updatedItem.inv_make + " " + updatedItem.inv_model;
-      req.flash("notice", `The Inventory request for ${approvedClassification} has been approved.`);
+      req.flash("notice", `The Inventory request for ${inv_make} ${inv_model}  has been approved.`);
       res.redirect("/inv/")    
     } else {
       req.flash("notice", "Sorry, the approval had failed. Yon may try again")
@@ -516,6 +513,8 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
 // post request to delete the unapproved classification
 invCont.denyInventoryRequest = async function (req, res, next) {
   try {
+    const { inv_make, inv_model } = req.body
+
     const inv_id =  parseInt(req.body.inv_id)
     console.log("inv_id :",inv_id)
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
@@ -524,7 +523,7 @@ invCont.denyInventoryRequest = async function (req, res, next) {
     const deleteResultSet = await invModel.deleteInventoryRequest(inv_id)
    console.log("deleteResultSet",deleteResultSet)
     if (deleteResultSet) {
-      req.flash("notice", `Your rejection request was successful, and has been deleted from the database.`)
+      req.flash("notice", `Your rejection request for ${inv_make} ${inv_model} was successful.`)
       res.redirect("/inv/")    
     } else {
       req.flash("notice", "Sorry, the rejection failed. Yon may try again")
