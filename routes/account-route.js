@@ -20,7 +20,7 @@ router.get('/update/:account_id', utilities.handleErrors(accountController.accou
 
 
 // router for management route 
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get("/", utilities.handleErrors(accountController.buildManagement))
 
 
 
