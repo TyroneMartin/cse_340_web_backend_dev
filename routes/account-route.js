@@ -12,15 +12,15 @@ const logValidate = require('../utilities/account-validation')
  * ************************** */
 
 // Deliver Login View 
-router.get('/login', (accountController.buildLogin))
+router.get('/login', utilities.handleErrors(accountController.buildLogin))
 // Deliver registration View 
-router.get('/register', (accountController.buildRegister))
+router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
-router.get('/update/:account_id', (accountController.accountUpdate))
+router.get('/update/:account_id', utilities.handleErrors(accountController.accountUpdate))
 
 
 // router for management route 
-router.get("/", (accountController.buildManagement))
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 
 
@@ -29,23 +29,31 @@ router.get("/", (accountController.buildManagement))
  * ************************** */
 router.post(
   "/register",
-  (accountController.registerAccount)
+  regValidate.registationRules(),
+  regValidate.checkRegData,   // custom middleware for checking registration data
+  utilities.handleErrors(accountController.registerAccount)
 )
 
 router.post(
   "/login",
-  (accountController.accountLogin) // Middleware for handling errors
+  logValidate.loginRules(), // Middleware for validating login data
+  logValidate.checkLoginData, // Middleware for checking login data
+  utilities.handleErrors(accountController.accountLogin) // Middleware for handling errors
 )
-
 
 // Update user info post method
 router.post('/update', 
-(accountController.accountUpdatePost) 
+regValidate.accountDataUpdateRules(),
+logValidate.accountDataCheck,
+
+utilities.handleErrors(accountController.accountUpdatePost) 
 )
 
 // Change password
 router.post('/update-password', 
-(accountController.accountUpdatePostPasswordChange) 
+regValidate.accountPasswordRules(),
+logValidate.accountPasswordCheck,
+utilities.handleErrors(accountController.accountUpdatePostPasswordChange) 
 )
 
 
