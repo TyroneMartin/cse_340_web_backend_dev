@@ -10,25 +10,25 @@ const utilities = require("../utilities/")
 /* ***************************
  * Get method to render pages
  * ************************** */
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId))  // Route to build inventory by classification view
-router.get("/intentional_error", utilities.handleErrors(invController.intentionalError))
-router.get("/detail/:inv_id", utilities.handleErrors(invController.getInventoryById))
-router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/type/:classificationId", (invController.buildByClassificationId))  // Route to build inventory by classification view
+router.get("/intentional_error", (invController.intentionalError))
+router.get("/detail/:inv_id", (invController.getInventoryById))
+router.get("/getInventory/:classification_id", (invController.getInventoryJSON))
 
 
 // routes for managers and employees only
-router.get("/edit/:inv_id",  utilities.handleErrors(invController.editInventoryView))
-router.get( "/add-new-inventory",  utilities.handleErrors(invController.buildAddInventory))
-router.get( "/add-classification",  utilities.handleErrors(invController.buildAddClassification))
-router.get("/update/", utilities.handleErrors(invController.updateInventory))
-router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteView)
+router.get("/edit/:inv_id",  (invController.editInventoryView))
+router.get( "/add-new-inventory",  (invController.buildAddInventory))
+router.get( "/add-classification",  (invController.buildAddClassification))
+router.get("/update/", (invController.updateInventory))
+router.get("/delete/:inv_id", (invController.deleteView)
 )
 // Deliver main route for management View  for /inv/ under varible inventoryRoute
-router.get("/", utilities.handleErrors(invController.buildManagement))
+router.get("/", (invController.buildManagement))
 
 // Management pending approval
 
-router.get("/pending_approval", utilities.handleErrors(invController.buildPendingApproval))
+router.get("/pending_approval", (invController.buildPendingApproval))
 
 // ------------------------------------------------------------
 
@@ -38,29 +38,25 @@ router.get("/pending_approval", utilities.handleErrors(invController.buildPendin
 
 router.post(
   '/add-classification',
-  invAddToFormValidate.addClassificationRules(), // Middleware for checking
   // check the account type
-  invAddToFormValidate.checkAddClassificationData,   // Custom middleware for checking adding inventory data
-  utilities.handleErrors(invController.postAddClassification) // Middleware for handling errors
+  (invController.postAddClassification) // Middleware for handling errors
 );
 
 
 router.post(
   '/add-new-inventory',
-  invAddToFormValidate.addInventoryRules(), // Middleware for checking
-utilities.handleErrors(invController.postAddInventory)// Middleware for handling errors
+(invController.postAddInventory)// Middleware for handling errors
 )
 
 
 router.post(  // Edit View for post method
 "/update",  
-invAddToFormValidate.addInventoryRules(), // Middleware for checking
-utilities.handleErrors(invController.updateInventory)
+(invController.updateInventory)
 )
 
 
 router.post("/delete", 
-utilities.handleErrors(invController.deleteItem)
+(invController.deleteItem)
 )
 
 
@@ -70,21 +66,21 @@ utilities.handleErrors(invController.deleteItem)
 // /approve/classification/
 
 router.post("/approve/classification", 
-utilities.handleErrors(invController.approvaRequestForClassification)
+(invController.approvaRequestForClassification)
 )
 
 router.post("/deny/classification", 
-utilities.handleErrors(invController.denyClassificationRequest)
+(invController.denyClassificationRequest)
 )
 
 
 router.post("/approve/Inventory", 
-utilities.handleErrors(invController.approvaRequestForInventory)
+(invController.approvaRequestForInventory)
 )
 
 
 router.post("/deny/Inventory",
-utilities.handleErrors(invController.denyInventoryRequest)
+(invController.denyInventoryRequest)
 )
 
 
