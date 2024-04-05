@@ -14,25 +14,23 @@
 
 <%# Classification Table %>
 
-<table>
-  <thead>
+<table class="pendingClassificationTable">
+  <thead class="pendingClassification-th">
     <tr>
-      <th colspan="3">Pending Classification</th>
+      <th colspan="3" class="th-Title">Pending Classification</th>
     </tr>
-    <tr>
+    <tr class="th-Title">
       <th colspan="1">Classification</th>
       <th colspan="1">Approve</th>
       <th colspan="1">Deny</th>
     </tr>
   </thead>
-  <tbody>
-
-
+  <tbody class="classification-tableData">
     <% unapprovedClassificationItems.forEach(classification => { %>
     <tr>
       <td><%= classification.classification_name %></td>
       <td>
-        <form action="/inv/approve/classification" method="post">
+        <form action="/inv/approve/classification" class="form_pendingApproval" method="post">
           <input name="classification_id" value="<%= classification.classification_id %>" type="hidden">
           <button class="approve-button" type="submit">Approve</button>
           <!-- Additional value for the account info -->
@@ -43,9 +41,9 @@
         </form>
       </td>
       <td>
-        <form action="/inv/deny/classification" method="post">
+        <form action="/inv/deny/classification" class="form_pendingApproval" method="post">
           <input type="hidden" name="classification_name" value="<%= classification.classification_name %>">
-          <button name="classification_id" value="<%= classification.classification_id %>"> Deny</button>
+          <button name="classification_id" class="deny-button" value="<%= classification.classification_id %>"> Deny</button>
         </form>
       </td>
 
@@ -65,14 +63,17 @@
   </tbody>
 </table>
 
+<br>
+<br>
+
 <%# Inventory Table %>
 
-<table>
-  <thead>
+<table class="pendingInventoryTable">
+  <thead class="pendingInventory-th">
     <tr>
-      <th colspan="6">Pending Inventory</th>
+      <th colspan="6" class="th-Title">Pending Inventory</th>
     </tr>
-    <tr>
+    <tr class="th-Title">
       <th colspan="1">Preview</th>
       <th colspan="1">Year</th>
       <th colspan="1">Inventory Item</th>
@@ -81,7 +82,7 @@
       <th colspan="1">Deny</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="inventory-tableData">
 
     <% unapprovedInventory.forEach(Inventory => { %>
     <tr>
@@ -100,7 +101,7 @@
       </td>
 
       <td>
-        <form action="/inv/approve/Inventory" method="post">
+        <form action="/inv/approve/Inventory" class="form_pendingApproval" method="post">
           <input name="account_id" value="<%= locals.accountData.account_id %>" type="hidden">
           <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
           <input name="inv_make" value="<%= Inventory.inv_make %>" type="hidden">
@@ -109,7 +110,7 @@
         </form>
       </td>
       <td>
-        <form action="/inv/deny/Inventory" method="post">
+        <form action="/inv/deny/Inventory" class="form_pendingApproval" method="post">
           <input name="inv_id" value="<%= Inventory.inv_id %>" type="hidden">
           <input name="inv_make" value="<%= Inventory.inv_make %>" type="hidden">
           <input name="inv_model" value="<%= Inventory.inv_model %>" type="hidden">

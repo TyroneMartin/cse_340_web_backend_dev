@@ -148,8 +148,6 @@ accountController.registerAccount = async function (req, res) {
 }
 
 
-
-
 /* ****************************************
 *  User adding classification page
 * *************************************** */

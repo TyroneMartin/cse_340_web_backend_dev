@@ -413,7 +413,7 @@ invCont.buildPendingApproval = async function (req, res, next) {
       errors: null,
       title: "Pending Approval Request",
       unapprovedInventory,
-      unapprovedClassificationItems
+      unapprovedClassificationItems,
     });
   } catch (err) {
     next(err);
@@ -433,7 +433,7 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
     let nav = await utilities.getNav()
     if (approveResultSet) { 
       req.flash("notice", `The classification request for ${classification_name} has been approved.`)
-      res.redirect("/inv/")    
+      res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {
@@ -462,7 +462,7 @@ invCont.denyClassificationRequest = async function (req, res, next) {
     const deleteResultSet = await invModel.deleteClassificationRequest(classification_id)
     if (deleteResultSet) {
       req.flash("notice", `Your rejection request for ${classification_name} was successful.`)
-      res.redirect("/inv/")    
+      res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the rejection failed. Yon may try again")
       res.render("./inventory/pending_approval", {
@@ -492,7 +492,7 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
     let nav = await utilities.getNav()
     if (approveResultSet) {
       req.flash("notice", `The Inventory request for ${inv_make} ${inv_model}  has been approved.`);
-      res.redirect("/inv/")    
+      res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the approval had failed. Yon may try again")
       res.render("./inventory/pending_approval", {
@@ -524,7 +524,7 @@ invCont.denyInventoryRequest = async function (req, res, next) {
    console.log("deleteResultSet",deleteResultSet)
     if (deleteResultSet) {
       req.flash("notice", `Your rejection request for ${inv_make} ${inv_model} was successful.`)
-      res.redirect("/inv/")    
+      res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the rejection failed. Yon may try again")
       res.render("./inventory/pending_approval", {
