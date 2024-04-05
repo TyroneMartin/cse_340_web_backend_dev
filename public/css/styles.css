@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200;500&family=Roboto:wght@300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200;500&family=Roboto:wght@300&display=swap'); */
+/* moved to head in html partial folder */
 
 /******* Change Box Model ***************/
 *,
@@ -1467,6 +1468,10 @@ table.pendingInventoryTable {
 
 .th-Title{
   border-bottom: 2px solid rgb(4, 4, 4);
+}
+
+.heading-TH {
+font-family: 'Roboto', sans-serif;
 }
 
 .deny-button {
