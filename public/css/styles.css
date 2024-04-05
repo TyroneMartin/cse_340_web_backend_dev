@@ -1470,7 +1470,7 @@ table.pendingInventoryTable {
 }
 
 .deny-button {
-  background-color: #f44336;
+  background-color: #5d3b65;
 }
 
 /* Style for preview link */
@@ -1481,7 +1481,7 @@ table.pendingInventoryTable {
 
 /* Style for icon */
 .icon {
-  font-size:20px;
+  /* font-size:20px; */
   text-align: center;
 }
 
