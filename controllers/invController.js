@@ -407,18 +407,18 @@ invCont.buildPendingApproval = async function (req, res, next) {
   try {
     let nav = await utilities.getNav()
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification() 
-    const unapprovedInventory = await invModel.getUnapprovedInventory();
+    const unapprovedInventory = await invModel.getUnapprovedInventory()
     res.render("./inventory/pending_approval", {
       nav,
       errors: null,
       title: "Pending Approval Request",
       unapprovedInventory,
       unapprovedClassificationItems,
-    });
+    })
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
 // post request to approve classification
 invCont.approvaRequestForClassification = async function (req, res, next) {
@@ -427,7 +427,7 @@ invCont.approvaRequestForClassification = async function (req, res, next) {
     const account_id =  parseInt(req.body.account_id)
     const classification_name = req.body.classification_name
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
-    const unapprovedInventory = await invModel.getUnapprovedInventory();
+    const unapprovedInventory = await invModel.getUnapprovedInventory()
     const approveResultSet = await invModel.approveClassification(classification_id)
     const currentAccountHolder = await invModel.getAccountHolderById(account_id, classification_id)
     let nav = await utilities.getNav()
@@ -457,7 +457,7 @@ invCont.denyClassificationRequest = async function (req, res, next) {
     const classification_id =  parseInt(req.body.classification_id)
     const classification_name = req.body.classification_name
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
-    const unapprovedInventory = await invModel.getUnapprovedInventory();
+    const unapprovedInventory = await invModel.getUnapprovedInventory()
     let nav = await utilities.getNav()
     const deleteResultSet = await invModel.deleteClassificationRequest(classification_id)
     if (deleteResultSet) {
@@ -491,7 +491,7 @@ invCont.approvaRequestForInventory = async function (req, res, next) {
     const currentAccountHolder = await invModel.getUserIdWhoApproveInV(account_id, inv_id)
     let nav = await utilities.getNav()
     if (approveResultSet) {
-      req.flash("notice", `The Inventory request for ${inv_make} ${inv_model}  has been approved.`);
+      req.flash("notice", `The Inventory request for ${inv_make} ${inv_model}  has been approved.`)
       res.redirect("/account/")    
     } else {
       req.flash("notice", "Sorry, the approval had failed. Yon may try again")
@@ -518,7 +518,7 @@ invCont.denyInventoryRequest = async function (req, res, next) {
     const inv_id =  parseInt(req.body.inv_id)
     console.log("inv_id :",inv_id)
     let unapprovedClassificationItems = await invModel.getUnapprovedClassification()
-    const unapprovedInventory = await invModel.getUnapprovedInventory();
+    const unapprovedInventory = await invModel.getUnapprovedInventory()
     let nav = await utilities.getNav()
     const deleteResultSet = await invModel.deleteInventoryRequest(inv_id)
    console.log("deleteResultSet",deleteResultSet)
