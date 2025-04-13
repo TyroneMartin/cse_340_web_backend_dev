@@ -26,14 +26,22 @@
       <h2>Welcome <%= accountData.account_firstname %></h2>
       <h3>Inventory Management</h3>
       <p><a class="accountMangementbtn" href="/inv/">Access Inventory Management</a></p>
+    
+      <% if (accountData.account_type === 'Admin') { %>
+        <a href="/inv/pending_approval" class="accountMangementbtn">Pending Approval</a>
+        <a href="/account/admin" class="accountMangementbtn">Admin Management</a>
+      <% } %>
+      
 
-      <% if  (accountData.account_type === 'Admin') { %>
-      <a href="/inv/pending_approval" class="accountMangementbtn">Pending Approval</a>
       <% } %>
 
-      <% } %>
-
-      <a class="accountMangementbtn" href="/account/update/<%= accountData.account_id %>">Update Account Information</a>
+      <!-- <a class="accountMangementbtn" href="/account/update/<%= accountData.account_id %>">Update Account Information</a> -->
+      <% if (accountData.account_type !== 'Admin') { %>
+        <a class="accountMangementbtn" href="/account/update/<%= accountData.account_id %>">Update Account Information</a>
+      <% } %>  
+      
+    
+    
     </div>
 
   </div>

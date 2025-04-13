@@ -7,12 +7,14 @@ const utilities = require("../utilities/")
 const regValidate = require('../utilities/account-validation')
 const logValidate = require('../utilities/account-validation')
 
+
 /* ***************************
 * Route to build inventory by login view  * Unit 4 Activity 
  * ************************** */
 
 // Deliver Login View 
 router.get('/login', utilities.handleErrors(accountController.buildLogin))
+
 // Deliver registration View 
 router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
@@ -21,6 +23,7 @@ router.get('/update/:account_id', utilities.handleErrors(accountController.accou
 
 // router for management route 
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get('/admin', utilities.checkAccountTypeAdminOnly, utilities.handleErrors(accountController.buildAdminTool))
 
 
 

@@ -101,7 +101,7 @@ nav ul li {
 
 /* Apply hover effect to the navigation bar links */
 nav ul li a:hover {
-  color: #007bff; /* Change color on hover */
+  color: #000000; 
   background-color: #f0f0f0;
   border-radius: 5px; 
   padding: 5px 10px;

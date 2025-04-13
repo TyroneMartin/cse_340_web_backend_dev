@@ -148,6 +148,30 @@ accountController.registerAccount = async function (req, res) {
 }
 
 
+// Show Admin password reset Tool Page
+accountController.buildAdminTool = async function (req, res) {
+
+  try {
+    const accounts = await accountModel.getAllAccounts()
+    const nav = await utilities.getNav()
+    res.render("account/admin", {
+      title: "Admin Account Management",
+      accounts,
+      // accountData: req.session.accountData,
+      nav,
+    })
+  } catch (error) {
+    console.error("Admin Dashboard Error:", error)
+    res.status(500).render("errors/error", {
+      title: "Server Error",
+      message: "Could not load admin dashboard.",
+      nav: await utilities.getNav(),
+      status: 500,
+      errors: null,
+    });
+  }
+}
+
 /* ****************************************
 *  User adding classification page
 * *************************************** */

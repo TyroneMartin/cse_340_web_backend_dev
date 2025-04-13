@@ -3,7 +3,7 @@
     <a href="/" title="Return to home page" class="logoText">CSE Motors</a>
   </span>
   <div id="tools">
-    <% if (locals.loggedin) { %>
+    <% if (locals.loggedin && accountData) { %>
       <a title="Welcome user signed in<%= accountData.account_firstname %>" href="/account/">Welcome <%= accountData.account_firstname %>,</a>
       <!-- <a title="Account Management" href="/account/management">Account Management</a> -->
       <a title="Click to log out" href="/account/logout">Logout</a>

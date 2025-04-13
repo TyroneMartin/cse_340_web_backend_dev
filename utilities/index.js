@@ -1,7 +1,7 @@
 const invModel = require("../models/inventory-model");
 // const utilities = require('../utilities')
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const Util = {};
 
@@ -28,13 +28,12 @@ Util.getNav = async function (req, res, next) {
   return list;
 };
 
-
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
 Util.buildClassificationGrid = async function (data) {
   let grid;
-  if ( data && data.length > 0) {
+  if (data && data.length > 0) {
     grid = '<ul id="inv-display">';
     data.forEach((vehicle) => {
       grid += "<li>";
@@ -123,47 +122,49 @@ Util.buildDetailGrid = async function (data, title) {
  * ************************************ */
 
 Util.buildLogin = async function () {
-  let grid = ''; // Initialize grid variable
+  let grid = ""; // Initialize grid variable
   grid += '<form id="loginForm" action="/account/login" method="post">';
-  grid += '<fieldset>';
-  grid += '<legend>Login Information</legend>'; // Add legend for fieldset
+  grid += "<fieldset>";
+  grid += "<legend>Login Information</legend>"; // Add legend for fieldset
   grid += '<div class="content">';
   grid += '<div class="FormContainer">';
   // For email field
   grid += '<label for="account_email"><b>Email:</b></label>';
-  grid += '<input type="email" placeholder="Enter email" id="account_email" name="account_email" required>';
+  grid +=
+    '<input type="email" placeholder="Enter email" id="account_email" name="account_email" required>';
   // For password field
   grid += '<label for="account_password"><b>Password:</b></label>';
-  grid += '<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" pattern="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$" required></span>';
+  grid +=
+    '<span><input type="password" id="account_password" name="account_password" placeholder="Enter password" autocomplete="current-password" pattern="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$" required></span>';
   // For Check box to show password()
   grid += '<span class="showPasswordContainer">';
   grid += '<input type="checkbox" id="showPasswordCheck" name="showPassword">';
   grid += '<label for="showPasswordCheck">Show password</label>';
-  grid += '</span>';
+  grid += "</span>";
   // For submit button section
-  grid += '<input type="submit" class="loginButton" id="showPasswordFunction" value="Log in">';
+  grid +=
+    '<input type="submit" class="loginButton" id="showPasswordFunction" value="Log in">';
   grid += '<p>No account? <a href="../account/register">Sign-up</a></p>';
   grid += "<br>";
-  grid += "<p>If you already have an account, use the strong password you had created to sign in.</p>"
-  grid += "<p>The the password requirements maybe found below.</p>"
-  grid += '<div class="passwordRequirements">'
-  grid += '<ul>'
-  grid += '<li>12 characters in length, minimum</li>'
-  grid += '<li>Contain at least 1 capital letter</li>'
-  grid += '<li>Contain at least 1 number</li>'
-  grid += '<li>Contain at least 1 special character</li>'
-  grid += '</ul>'
-  grid += '</div>'
+  grid +=
+    "<p>If you already have an account, use the strong password you had created to sign in.</p>";
+  grid += "<p>The the password requirements maybe found below.</p>";
+  grid += '<div class="passwordRequirements">';
+  grid += "<ul>";
+  grid += "<li>12 characters in length, minimum</li>";
+  grid += "<li>Contain at least 1 capital letter</li>";
+  grid += "<li>Contain at least 1 number</li>";
+  grid += "<li>Contain at least 1 special character</li>";
+  grid += "</ul>";
+  grid += "</div>";
 
-  grid += '</div>'; // Close FormContainer
-  grid += '</div>'; // Close content
-  grid += '</fieldset>';
-  grid += '</form>';
-
+  grid += "</div>"; // Close FormContainer
+  grid += "</div>"; // Close content
+  grid += "</fieldset>";
+  grid += "</form>";
 
   return grid;
 };
-
 
 /* **************************************
  * Build the Register view HTML
@@ -174,8 +175,6 @@ Util.buildLogin = async function () {
 // data missing data can be found in the register view/github history
 // -------------------
 
-
-
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for
@@ -184,63 +183,96 @@ Util.buildLogin = async function () {
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
-  /* ****************************************
-* Middleware to check token validity
-**************************************** */
+/* ****************************************
+ * Middleware to check token validity
+ **************************************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
     // console.log("Res.cookies : ", jwt)
-   jwt.verify(
-    req.cookies.jwt,
-    process.env.ACCESS_TOKEN_SECRET,
-    function (err, accountData) {
-     if (err) {
-      req.flash("Please log in")
-      res.clearCookie("jwt")
-      return res.redirect("/account/login")
-     }
-     res.locals.accountData = accountData
-    //  console.log("res.locals.accountData ", accountData)
-     res.locals.loggedin = 1
-     next()
-    })
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        res.locals.accountData = accountData;
+        //  console.log("res.locals.accountData ", accountData)
+        res.locals.loggedin = 1;
+        next();
+      }
+    );
   } else {
-   next()
+    next();
   }
- }
+};
 
-
- /* ****************************************
+/* ****************************************
  *  Check Login
  * ************************************ */
- Util.checkLogin = (req, res, next) => {
+Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
-    next()
+    next();
   } else {
-    req.flash("notice", "Please log in to acess your account.")
-    return res.redirect("/account/login")
+    req.flash("notice", "Please log in to acess your account.");
+    return res.redirect("/account/login");
   }
- }
+};
 
-
- // Middleware function to check account type  accountData
+// Middleware function to check account type  accountData
 Util.checkAccountType = async function (req, res, next) {
   // Check if token exists
-  console.log("checkAccountType() was called")
-    if (res.locals.loggedin) {
-      const account = res.locals.accountData
-      if (account.account_type === 'Employee' || account.account_type === 'Admin' ) { // Allow access to administrative views
-      next()
-      } else {
-        req.flash("notice", "You do not have permission to access this resource.")
-        res.redirect("/account/login")
-      }
+  console.log("checkAccountType() was called");
+  if (res.locals.loggedin) {
+    const account = res.locals.accountData;
+    if (
+      account.account_type === "Employee" ||
+      account.account_type === "Admin"
+    ) {
+      // Allow access to administrative views
+      next();
     } else {
-      req.flash("notice","You do not have permission to access this resource. You may try logging in.")
-      res.redirect("/account/login")
-    } 
+      req.flash(
+        "notice",
+        "You do not have permission to access this resource."
+      );
+      res.redirect("/account/login");
+    }
+  } else {
+    req.flash(
+      "notice",
+      "You do not have permission to access this resource. You may try logging in."
+    );
+    res.redirect("/account/login");
   }
+};
 
+Util.checkAccountTypeAdminOnly = async function (req, res, next) {
+  // Check if token exists
+  console.log("checkAccountType() was called");
+  if (res.locals.loggedin) {
+    const account = res.locals.accountData;
+    if (
+      account.account_type === "Admin"
+    ) {
+      // Allow access to administrative views
+      next();
+    } else {
+      req.flash(
+        "notice",
+        "You do not have permission to access this resource."
+      );
+      res.redirect("/account/login");
+    }
+  } else {
+    req.flash(
+      "notice",
+      "You do not have permission to access this resource. You may try logging in."
+    );
+    res.redirect("/account/login");
+  }
+};
 
-
-module.exports = Util
+module.exports = Util;

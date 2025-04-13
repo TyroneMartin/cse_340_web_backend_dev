@@ -147,11 +147,12 @@ async function updateAccountPassword(account_password, account_id) {
   }
 }
 
-
-
-
-
-
+// Get all accounts
+async function getAllAccounts() {
+  const query = "SELECT * FROM public.account ORDER BY account_type, account_lastname"
+  const result = await pool.query(query)
+  return result.rows
+}
 
 module.exports = {
   registerAccount,
@@ -162,4 +163,5 @@ module.exports = {
   updateAccountData,
   updateAccountPassword,
   getAccountById,
+  getAllAccounts
 };
