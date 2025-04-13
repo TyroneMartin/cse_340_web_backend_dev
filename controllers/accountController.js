@@ -119,7 +119,7 @@ accountController.registerAccount = async function (req, res) {
     account_firstname,
     account_lastname,
     emailExists,  //  check if email exist 
-    hashedPassword || account_password  // Fallback for test cases or seed scripts
+    hashedPassword 
   )
   console.log("Registration Result", regResult)
   if (regResult) {

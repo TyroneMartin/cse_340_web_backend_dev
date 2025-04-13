@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 DO $$
 BEGIN
   DELETE FROM public.account
@@ -11,6 +13,9 @@ END$$;
 INSERT INTO public.account (
     account_firstname, account_lastname, account_email, account_password, account_type
 ) VALUES 
-    ('Jordan', 'King', 'client@example.com', 'Client@2024!', 'Client'),
-    ('Jamie', 'Reid', 'employee@example.com', 'Employee#2024$', 'Employee'),
-    ('Tyrone', 'Martin', 'admin@example.com', 'Admin*Secure1!', 'Admin');
+    ('Jordan', 'King', 'client@example.com', crypt('Client@2024!', gen_salt('bf'::text, 10)), 'Client'),
+    ('Jamie', 'Reid', 'employee@example.com', crypt('Employee#2024$', gen_salt('bf'::text, 10)), 'Employee'),
+    ('Tyrone', 'Martin', 'admin@example.com', crypt('Admin*Secure1!', gen_salt('bf'::text, 10)), 'Admin');
+
+
+# This was intentionally uploaded to create test users since this project is not a real business
