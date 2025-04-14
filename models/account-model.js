@@ -84,7 +84,7 @@ async function checkExistingEmailReg(account_email) {
 async function getAccountById(account_id) {
   try {
     const result = await pool.query(
-      "SELECT account_firstname, account_lastname, account_email, account_id FROM account WHERE account_id = $1",
+      "SELECT account_firstname, account_lastname, account_email, account_id, account_type FROM account WHERE account_id = $1",
       [account_id]
     );
 
@@ -154,6 +154,29 @@ async function getAllAccounts() {
   return result.rows
 }
 
+
+// Allows Admins to change user role
+async function updateAccountWithRole(first, last, email, type, id) {
+  try {
+    const sql = `
+      UPDATE account
+      SET account_firstname = $1,
+          account_lastname = $2,
+          account_email = $3,
+          account_type = $4
+      WHERE account_id = $5
+    `
+    const data = [first, last, email, type, id]
+    const result = await pool.query(sql, data)
+    return result.rowCount
+  } catch (error) {
+    console.error("Admin update error:", error)
+    return null
+  }
+}
+
+
+
 module.exports = {
   registerAccount,
   checkExistingEmail,
@@ -163,5 +186,6 @@ module.exports = {
   updateAccountData,
   updateAccountPassword,
   getAccountById,
-  getAllAccounts
+  getAllAccounts,
+  updateAccountWithRole
 };

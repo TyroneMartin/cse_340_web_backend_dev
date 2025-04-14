@@ -198,8 +198,9 @@ Util.checkJWTToken = (req, res, next) => {
           res.clearCookie("jwt");
           return res.redirect("/account/login");
         }
-        res.locals.accountData = accountData;
-        //  console.log("res.locals.accountData ", accountData)
+        res.locals.accountData = accountData; // Store account data in locals & only exists for the current request-response cycle
+        req.session.accountData = accountData; // Persists across multiple requests from the same client
+        // console.log("res.locals.accountData ", accountData)
         res.locals.loggedin = 1;
         next();
       }

@@ -28,6 +28,22 @@
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="account_email" value="<%=  locals.account_email %>" placeholder="Johndoe@domain.com" required>
           </div>
+
+          <!-- Account type dropdown for Admins only -->
+          <% if ((locals.accountData && locals.accountData.account_type === 'Admin') || 
+          (accountData && accountData.account_type === 'Admin')) { %>
+          <div class="form-group">
+            <label for="account_type">Account Role</label>
+            <select id="account_type" name="account_type" class="form-control" required>
+              <option value="Client" <%= (locals.account_type === 'Client') ? 'selected' : '' %>>Client</option>
+              <option value="Employee" <%= (locals.account_type === 'Employee') ? 'selected' : '' %>>Employee</option>
+              <option value="Admin" <%= (locals.account_type === 'Admin') ? 'selected' : '' %>>Admin</option>
+            </select>
+          </div>
+        <% } else { %>
+          <input type="hidden" name="account_type" value="<%= accountData.account_type %>">
+        <% } %>
+
           <input type="hidden" name="account_id" value="<%= locals.account_id %>">
           <p><b>Update button is disabled until changes are made.</b></p>
           <button type="submit" class="accountUpdate-btn">Update Account</button>
