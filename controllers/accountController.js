@@ -219,26 +219,41 @@ accountController.buildManagement = async function (req, res, next) {
 };
 
 // get route for accountUpdate
-accountController.accountUpdate = async function (req, res, next) {
-  console.log("accountUpdate() was called");
-  try {
-    const account_id = parseInt(req.params.account_id); // Retrieve account_id from request parameters
-    const accountData = await accountModel.getAccountUpdateData(account_id);
-    const nav = await utilities.getNav();
-    res.render("account/update", {
-      title: "Account Management Portal",
-      nav,
-      errors: null,
-      account_firstname: accountData.account_firstname,
-      account_lastname: accountData.account_lastname,
-      account_email: accountData.account_email,
-      account_id: account_id,
-      account_type: accountData.account_type,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+    accountController.accountUpdate = async function (req, res, next) {
+      console.log("accountUpdate() was called");
+    
+      try {
+        const loggedInUser = res.locals.accountData || req.session.accountData
+        const account_id = parseInt(req.params.account_id)  // Retrieve account_id from request parameters
+    
+        // Only allow  access if user is an admin OR user is accessing their own account
+        if (
+          loggedInUser.account_type !== "Admin" &&
+          parseInt(loggedInUser.account_id) !== account_id
+        ) {
+          req.flash("notice", "Unauthorized access to account update.")
+          return res.redirect("/account")
+        }
+    
+        const accountData = await accountModel.getAccountUpdateData(account_id)
+        const nav = await utilities.getNav()
+    
+        return res.render("account/update", {
+          title: "Account Management Portal",
+          nav,
+          errors: null,
+          account_firstname: accountData.account_firstname,
+          account_lastname: accountData.account_lastname,
+          account_email: accountData.account_email,
+          account_id: account_id,
+          account_type: accountData.account_type,
+          accountData: loggedInUser, // for admin view dropdown
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
+    
 
 /* ****************************************
  *  Process for update(Post Method) data to the database

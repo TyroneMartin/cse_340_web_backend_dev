@@ -225,7 +225,7 @@ Util.checkLogin = (req, res, next) => {
 // Middleware function to check account type  accountData
 Util.checkAccountType = async function (req, res, next) {
   // Check if token exists
-  console.log("checkAccountType() was called");
+  // console.log("checkAccountType() was called");
   if (res.locals.loggedin) {
     const account = res.locals.accountData;
     if (
@@ -252,7 +252,7 @@ Util.checkAccountType = async function (req, res, next) {
 
 Util.checkAccountTypeAdminOnly = async function (req, res, next) {
   // Check if token exists
-  console.log("checkAccountType() was called");
+  // console.log("checkAccountType() was called");
   if (res.locals.loggedin) {
     const account = res.locals.accountData;
     if (

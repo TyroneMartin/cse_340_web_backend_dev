@@ -32,15 +32,15 @@ async function checkExistingEmail(account_email) {
   try {
     const sql = "SELECT COUNT(*) FROM account WHERE account_email = $1";
     const result = await pool.query(sql, [account_email]);
-    console.log("result from email count", result)
+    // console.log("result from email count", result)
     const count = parseInt(result.rows[0].count);
     // return result
     // return result.rows[0]
-    // Returning true if count is more than 0, false otherwise
-    return count > 0 ? true : false;
+    return count > 0 ? true : false; // Returning true if count is more than 0, false otherwise
+
 
   } catch (error) {
-    console.error("Error checking existing email:", error.message);
+    // console.error("Error checking existing email:", error.message);
     return false; // Handle error gracefully and return false
   }
 }
