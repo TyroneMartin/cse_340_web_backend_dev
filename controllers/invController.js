@@ -375,10 +375,13 @@ invCont.deleteItem = async function (req, res, next) {
     const inv_id = parseInt(req.body.inv_id)
     let nav = await utilities.getNav()
     const { inv_make, inv_model, inv_year, inv_price } = req.body
-    console.log("req.body for deleted items: ", req.body)
-    const updateResult = await invModel.deleteInventoryItem(inv_id)
-    console.log("delete item inv_id:", inv_id)
-    if (updateResult) {
+    
+    // Get the account_id from the session
+    const account_id = req.session.accountData.account_id
+    
+    const updateResult = await invModel.deleteInventoryItem(inv_id, account_id)
+    
+    if (updateResult && updateResult.rowCount > 0) {
       const itemName = inv_make + " " + inv_model
       req.flash("notice", `The ${itemName} was successfully deleted from the database.`)
       res.redirect("/inv/")
@@ -399,7 +402,6 @@ invCont.deleteItem = async function (req, res, next) {
     next(err)
   }
 }
-
 /* ***************************
  *  Get route for pending approval page
  * ************************** */

@@ -231,7 +231,7 @@ accountController.buildManagement = async function (req, res, next) {
           loggedInUser.account_type !== "Admin" &&
           parseInt(loggedInUser.account_id) !== account_id
         ) {
-          req.flash("notice", "Unauthorized access to account update.")
+          req.flash("notice", "Restricted route - access denied.");
           return res.redirect("/account")
         }
     

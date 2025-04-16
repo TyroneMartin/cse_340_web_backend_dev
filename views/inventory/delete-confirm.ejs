@@ -1,35 +1,59 @@
 <% if (title) { %>
   <h1 class="deleteViewInventoryForm_Title"><%= title %></h1>
-  <div class="flash-notice-for-confirmation-of-deletion"><%= messages.notice %></div>
-  <% } else { res.redirect("/") } %> <%- messages() %> <% if (errors) { %>
+  <% if (messages.notice) { %>
+    <div class="flash-notice-for-confirmation-of-deletion"><%= messages.notice %></div>
+  <% } %>
+<% } else { 
+  res.redirect("/") 
+} %> 
+
+<%- messages() %> 
+
+<% if (errors) { %>
   <ul class="notices_for_confirmation_of_del">
     <% errors.array().forEach(error => { %>
-    <li><%= error.msg %></li>
+      <li><%= error.msg %></li>
     <% }) %>
   </ul>
-  <% } %>
-  
-  <%- messages() %>
-  
-  <p>All deletions are permanent; ensure you are deleting the correct item.</p>
-  <form id="deleteInventoryForm" action="/inv/delete" method="post">
-    <fieldset class="deleteInventoryPageForm">
-      <legend>Confirm delete</legend>
-      <div class="deleteInventoryFormContainer">
+<% } %>
 
+<p class="delete-warning">All deletions are permanent; ensure you are deleting the correct item.</p>
+
+<form id="deleteInventoryForm" action="/inv/delete" method="post">
+  <fieldset class="deleteInventoryPageForm">
+    <legend>Confirm delete</legend>
+    <div class="deleteInventoryFormContainer">
+      <div class="vehicle-info">
+        <div class="info-group">
+          <label for="inv_make">Make:</label>
           <input name="inv_make" id="inv_make" value="<%= locals.inv_make %>" readonly>
+        </div>
+        
+        <div class="info-group">
+          <label for="inv_model">Model:</label>
           <input name="inv_model" id="inv_model" value="<%= locals.inv_model %>" readonly>
-          <input name="inv_year" value="<%= locals.inv_year %>" id="inv_year" readonly>
-          <input name="inv_price" value="<%= locals.inv_price %>" readonly>
-  
-        <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" 
-        <% } %>>
-
-        <button type="submit" class="delete_inventoryForm_Button">Delete Vehicle</button>
-        <button type="button" onclick="window.location.href='/inv/'" class="cancelButton">Cancel</button>          
-        <p>Confirm Deletion - Once the button is pushed, the deletion is permanent.</p>        
+        </div>
+        
+        <div class="info-group">
+          <label for="inv_year">Year:</label>
+          <input name="inv_year" id="inv_year" value="<%= locals.inv_year %>" readonly>
+        </div>
+        
+        <div class="info-group">
+          <label for="inv_price">Price:</label>
+          <input name="inv_price" id="inv_price" value="<%= locals.inv_price %>" readonly>
+        </div>
       </div>
-    </fieldset>
-  </form>
+
+      <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+
+      <div class="button-group">
+        <button type="submit" class="delete_inventoryForm_Button">Delete Vehicle</button>
+        <button type="button" onclick="window.location.href='/inv/'" class="cancelButton">Cancel</button>
+      </div>
       
-  
+      <p class="confirm-warning">Confirm Deletion - Once the button is pushed, the deletion is permanent.</p>
+    </div>
+  </fieldset>
+</form>
+

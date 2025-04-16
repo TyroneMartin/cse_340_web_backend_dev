@@ -148,14 +148,20 @@ async function updateInventory(
 /* ***************************
  *  Delete Inventory Item
  * ************************** */
-async function deleteInventoryItem(inv_id) {
+async function deleteInventoryItem(inv_id, account_id) {
   try {
     const sql = 'DELETE FROM inventory WHERE inv_id = $1'
     const data = await pool.query(sql, [inv_id])
-  return data
+    console.log(data.rows)
+    
+    // if (data.rowCount) { // for change logs
+    //   await logChange(account_id, "Deleted Inventory", "Inventory", inv_id)
+    // }
+
+    return data
   } catch (error) {
-    new Error("Delete Inventory Error")
-    console.log("delete item from database--- deleteInventoryItem():", deleteInventoryItem)
+    console.error("deleteInventoryItem error: ", error)
+    throw error
   }
 }
 
@@ -288,21 +294,25 @@ async function getUnapprovedInventory() {
     }
   }
 
-async function approveInventory(inv_id) {
-  try {
-    const data = await pool.query(
-      `UPDATE public.inventory 
-       SET inv_approved = true
-       WHERE inv_id = $1 
-       AND inv_approved = false`,
-      [inv_id]
-    )
-    return data.rowCount
-  } catch (error) {
-    console.error("approve Inventory BD error: ", error)
-    throw error
+  async function approveInventory(inv_id, account_id) {
+    try {
+      const data = await pool.query(
+        `UPDATE public.inventory 
+         SET inv_approved = true
+         WHERE inv_id = $1 AND inv_approved = false`,
+        [inv_id]
+      )
+   
+      // if (data.rowCount) {  // for change logs
+      //   await logChange(account_id, "Approved Inventory", "Inventory", inv_id, "Inventory item approved")
+      // }
+  
+      return data.rowCount
+    } catch (error) {
+      console.error("approve Inventory DB error: ", error)
+      throw error
+    }
   }
-}
 
 
 module.exports = { getClassifications, 
@@ -314,7 +324,6 @@ module.exports = { getClassifications,
   deleteInventoryItem, 
   getUnapprovedClassification, 
   approveClassification,  
-  // getInventory,
   getUnapprovedInventory,
   approveInventory,
   getClassificationsList,

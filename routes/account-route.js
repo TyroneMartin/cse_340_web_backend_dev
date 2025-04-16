@@ -26,6 +26,8 @@ router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.b
 router.get('/admin', utilities.checkAccountTypeAdminOnly, utilities.handleErrors(accountController.buildAdminTool))
 
 
+// router for log view | to be implemented
+// router.get('/logs', utilities.checkAccountTypeAdminOnly, utilities.handleErrors(accountController.displayLogs))
 
 /* ***************************
 * Proccess Registration * Unit 4 Activity  middleware

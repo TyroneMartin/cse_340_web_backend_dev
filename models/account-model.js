@@ -37,8 +37,6 @@ async function checkExistingEmail(account_email) {
     // return result
     // return result.rows[0]
     return count > 0 ? true : false; // Returning true if count is more than 0, false otherwise
-
-
   } catch (error) {
     // console.error("Error checking existing email:", error.message);
     return false; // Handle error gracefully and return false
@@ -56,7 +54,7 @@ async function getAccountByEmail(account_email) {
     );
     // console.log("result from db (getAccountByEmail): ", result);
 
-    return result.rows[0]
+    return result.rows[0];
   } catch (error) {
     return new Error("No matching data found for this email");
   }
@@ -91,7 +89,7 @@ async function getAccountById(account_id) {
     console.log("result from db (getAccountById): ", result);
 
     // return result.rows[0].account_id;
-    return result.rows[0]; 
+    return result.rows[0];
   } catch (error) {
     throw new Error("No matching account_id found error:", error);
   }
@@ -149,11 +147,11 @@ async function updateAccountPassword(account_password, account_id) {
 
 // Get all accounts
 async function getAllAccounts() {
-  const query = "SELECT * FROM public.account ORDER BY account_type, account_lastname"
-  const result = await pool.query(query)
-  return result.rows
+  const query =
+    "SELECT * FROM public.account ORDER BY account_type, account_lastname";
+  const result = await pool.query(query);
+  return result.rows;
 }
-
 
 // Allows Admins to change user role
 async function updateAccountWithRole(first, last, email, type, id) {
@@ -165,13 +163,13 @@ async function updateAccountWithRole(first, last, email, type, id) {
           account_email = $3,
           account_type = $4
       WHERE account_id = $5
-    `
-    const data = [first, last, email, type, id]
-    const result = await pool.query(sql, data)
-    return result.rowCount
+    `;
+    const data = [first, last, email, type, id];
+    const result = await pool.query(sql, data);
+    return result.rowCount;
   } catch (error) {
-    console.error("Admin update error:", error)
-    return null
+    console.error("Admin update error:", error);
+    return null;
   }
 }
 
@@ -187,5 +185,5 @@ module.exports = {
   updateAccountPassword,
   getAccountById,
   getAllAccounts,
-  updateAccountWithRole
+  updateAccountWithRole,
 };

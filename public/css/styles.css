@@ -1100,36 +1100,143 @@ textarea:required
   color: red;
 }
 
-/* Style for form field labels */
-.deleteInventoryFormContainerlabel {
-  display: block;
-  margin-bottom: 5px;
+
+/* Style for delete confirm  page */
+
+.deleteViewInventoryForm_Title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.flash-notice-for-confirmation-of-deletion {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c6cb;
+  border-radius: 0.25rem;
+}
+
+.delete-warning {
+  color: #721c24;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.deleteInventoryPageForm {
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9;
+}
+
+.deleteInventoryPageForm legend {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0 0.5rem;
+}
+
+.deleteInventoryFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.vehicle-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.info-group label {
+  font-weight: bold;
+  color: #555;
+}
+
+.info-group input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background-color: #f0f0f0;
+  color: #333;
   font-weight: bold;
 }
 
-/* Style for form inputs */
-.deleteInventoryFormContainer input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
 }
 
-/* Style for delete vehicle button */
 .delete_inventoryForm_Button {
-  background-color: #410606;
+  padding: 0.75rem 1.5rem;
+  background-color: #dc3545;
   color: white;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.25rem;
   cursor: pointer;
-  margin-right: 10px;
+  transition: background-color 0.2s;
 }
 
 .delete_inventoryForm_Button:hover {
-  background-color: #ff6666;
+  background-color: #c82333;
 }
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancelButton:hover {
+  background-color: #5a6268;
+}
+
+.confirm-warning {
+  color: #721c24;
+  text-align: center;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .vehicle-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .delete_inventoryForm_Button,
+  .cancelButton {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
 
 
 /* Button for update inventory page */

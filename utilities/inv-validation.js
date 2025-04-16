@@ -22,7 +22,7 @@ invAddToFormValidate.addInventoryRules =  () => {
             .notEmpty()
             .withMessage("Please provide a valid make for your car")
             .isAlpha()
-            .withMessage("Only alphabetic characters are allowed on make"),
+            .withMessage("Only alphabetic characters are allowed on make for make."),
     
         body("inv_model")
             .trim()

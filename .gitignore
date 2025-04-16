@@ -21,3 +21,7 @@ sandbox
 launch.json
 inventory_quary_local.sql
 
+# additional files
+views/account/logs.ejs
+database/change_log.sql
+database/logs.md
